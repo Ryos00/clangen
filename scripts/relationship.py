@@ -582,19 +582,16 @@ class Relationship(object):
             action_possibilies += SPECIAL_CHARACTER[self.cat_from.trait]
 
         # LOVE
-        # check settings and family
+        # check mate status and settings
         cat_from_has_mate = self.cat_from.mate != None or self.cat_from.mate != ''
-        affair_setting = (cat_from_has_mate and not self.mates and not game.settings['affair'])
-        former_mentor1 = self.cat_to.ID in [ cat.ID for cat in self.cat_from.former_apprentices]
-        former_mentor2 = self.cat_from.ID in [ cat.ID for cat in self.cat_to.former_apprentices]
-        former_mentor_setting = (former_mentor1 or former_mentor2) and not game.settings['romantic with former mentor']
-        if affair_setting or self.family or former_mentor_setting:
+
+        # only allow love actions with mate (if they have some) if the setting is turned off
+        if (cat_from_has_mate and not self.mates and not game.settings['affair']) or self.family:
             return action_possibilies
 
         # check ages of cats
-        age_group1 = ['young adult', 'adult']
+        age_group1 = ['adolescent','young adult', 'adult']
         age_group2 = ['adult', 'senior adult', 'elder']
-        both_are_appr = self.cat_from.age == 'adolescent' and self.cat_to.age == 'adolescent'
         both_are_kits = self.cat_from.age == 'kitten' and self.cat_to.age == 'kitten'
         none_of_them_are_kits = self.cat_from.age != 'kitten' and self.cat_to.age != 'kitten'
         both_in_same_age_group = (self.cat_from.age in age_group1 and self.cat_to.age in age_group1) or\
@@ -602,7 +599,7 @@ class Relationship(object):
 
         # chance to fall in love with some the character is not close to:
         love_p = randint(0,30)
-        if not self.family and (both_are_kits or none_of_them_are_kits or both_are_appr) and both_in_same_age_group:
+        if not self.family and (both_are_kits or none_of_them_are_kits) and both_in_same_age_group:
             if self.platonic_like > 30 or love_p == 1 or self.romantic_love > 5:
 
                 # increase the chance of an love event for two unmated cats

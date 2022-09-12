@@ -13,6 +13,7 @@ class Events(object):
             self.all_events[self.ID] = self
         self.cats = cats
         self.at_war = False
+        self.time_at_war = False
         self.enemy_clan = None
         self.living_cats = 0
         self.new_cat_invited = False
@@ -85,25 +86,32 @@ class Events(object):
         self.check_age(cat)
 
     def check_clan_relations(self):
-        if len(game.clan.all_clans) > 0:
+        if len(game.clan.all_clans) > 0 and randint(1,5) == 1:
             war_notice = ''
             for other_clan in game.clan.all_clans:
                 if int(other_clan.relations) <= 7:
-                    self.at_war = True
-                    if randint(1,5) == 1:
+                    if randint(1,5) == 1 and self.time_at_war > 2:
                         self.at_war = False
-                        other_clan.relations = str(int(other_clan.relations) + 5)
+                        self.time_at_war = 0
+                        other_clan.relations = 10
                         game.cur_events_list.append('The war against ' + str(other_clan.name) + 'Clan has ended')
+                    elif self.time_at_war == 0:
+                        game.cur_events_list.append('The war against ' + str(other_clan.name) + 'Clan has begun')
+                        self.time_at_war+=1
                     else:
                         self.enemy_clan = f'{str(other_clan.name)}Clan'
-                        war_notice = choice(
-                            [f'War rages between {game.clan.name}Clan and {other_clan.name}Clan', f'{other_clan.name}Clan has taken some of {game.clan.name}' + "Clan\'s territory.",
+                        possible_text = [f'War rages between {game.clan.name}Clan and {other_clan.name}Clan', f'{other_clan.name}Clan has taken some of {game.clan.name}' + "Clan\'s territory",
                             f'{game.clan.name}Clan has claimed some of {other_clan.name}' + "Clan\'s territory",
-                            f'{other_clan.name}Clan attempted to break into your camp during the war', f'The war against {other_clan.name}Clan continues.',
-                            f'{game.clan.name}Clan is starting to get tired of the war against {other_clan.name}Clan'])
+                            f'{other_clan.name}Clan attempted to break into your camp during the war', f'The war against {other_clan.name}Clan continues',
+                            f'{game.clan.name}Clan is starting to get tired of the war against {other_clan.name}Clan', f'{game.clan.name}Clan warriors plan new battle strategies for the war', f'{game.clan.name}Clan warriors reinforce the camp walls']
+                        if game.clan.medicine_cat is not None:
+                            possible_text.extend(['The medicine cats worry about having enough herbs to treat their clan\'s wounds'])
+                        war_notice = choice(possible_text)
+                        self.time_at_war+=1
+                    break
                 else:
                     self.at_war = False
-                    r_num = choice([-2, -1, 1, 2])
+                    r_num = choice([-1, 1])
                     other_clan.relations = str(int(other_clan.relations) + r_num)
             if war_notice:
                 game.cur_events_list.append(war_notice)
@@ -129,7 +137,6 @@ class Events(object):
                     cat.update_mentor()
                 elif cat.status == 'apprentice' and cat.age == 'young adult':
                     self._extracted_from_perform_ceremonies_19(cat, 'warrior', ' has earned their warrior name')
-
                 elif cat.status == 'medicine cat apprentice' and cat.age == 'young adult':
                     self._extracted_from_perform_ceremonies_19(cat, 'medicine cat', ' has earned their medicine cat name')
                     game.clan.new_medicine_cat(cat)
@@ -142,6 +149,8 @@ class Events(object):
                     game.cur_events_list.append(f'The deputy {str(cat.name)} has retired to the elder den')
             if cat.status in ['warrior', 'deputy'] and cat.age == 'elder' and len(cat.apprentice) < 1:
                 cat.status_change('elder')
+                if cat.status == 'deputy':
+                    game.clan.deputy = None
                 game.cur_events_list.append(f'{str(cat.name)} has retired to the elder den')
 
     # TODO Rename this here and in `perform_ceremonies`
@@ -529,7 +538,7 @@ class Events(object):
             if other_cat.status == 'apprentice':
                 interactions.append(f'{name} sneaks out of camp with {other_name}')
         elif cat.status == 'warrior':
-            interactions.extend([name + " is caught outside of the clan\'s territory", f'{name} is caught breaking the warrior code', f'{name} went missing for a few days',
+            interactions.extend([name + " is caught outside of the Clan\'s territory", f'{name} is caught breaking the Warrior Code', f'{name} went missing for a few days',
                                  f'{name} believes they are a part of the new prophecy'])
         elif cat.status == 'medicine cat':
             interactions.extend(
@@ -904,7 +913,7 @@ class Events(object):
 
         cats_to_choose = list(filter(lambda iter_cat_id: iter_cat_id != cat.ID, cat_class.all_cats.copy()))
         # increase chance of cats, which are already befriended
-        like_threshold = 40
+        like_threshold = 50
         relevant_relationships = list(filter(lambda relation: relation.platonic_like >= like_threshold, cat.relationships))
         for relationship in relevant_relationships:
             cats_to_choose.append(relationship.cat_to)
@@ -924,6 +933,11 @@ class Events(object):
         if cat.age == "kitten":
             kittens = list(filter(lambda cat_id: cat.all_cats.get(cat_id).age == "kitten" and cat_id != cat.ID, cat_class.all_cats.copy()))
             cats_to_choose = cats_to_choose + kittens
+
+        # increase the chance a apprentice interact with otherapprentices
+        if cat.age == "adolescent":
+            apprentices = list(filter(lambda cat_id: cat.all_cats.get(cat_id).age == "adolescent" and cat_id != cat.ID, cat_class.all_cats.copy()))
+            cats_to_choose = cats_to_choose + apprentices
 
         # choose cat and start
         random_id = random.choice(list(cat.all_cats.keys()))

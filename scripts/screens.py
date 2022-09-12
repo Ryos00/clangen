@@ -1,3 +1,4 @@
+from re import T
 from .clan import *
 from .events import *
 from .patrol import *
@@ -32,10 +33,13 @@ class Screens(object):
 # SCREEN CHILD CLASSES
 class StartScreen(Screens):
 
+    def __init__(self, name=None):
+        super().__init__(name)
+        self.bg = pygame.image.load("resources/menu.png").convert()
+
     def on_use(self):
         # background
-        bg = pygame.image.load("resources/menu.png").convert()
-        screen.blit(bg, (0, 0))
+        screen.blit(self.bg, (0, 0))
 
         # buttons
         if game.clan is not None and game.switches['error_message'] == '':
@@ -134,47 +138,85 @@ class SettingsScreen(Screens):
 
     def on_use(self):
         # layout
-        buttons.draw_button((310, 100), text='Settings', available=False)
-        buttons.draw_button((-360, 100), text='Info', cur_screen='info screen')
+        buttons.draw_button((244, 100), text='Settings', available=False)
+        buttons.draw_button((-210, 100), text='Info', cur_screen='info screen')
         buttons.draw_button((-255, 100), text='Language', cur_screen='language screen')
+        buttons.draw_button((320, 100), text = 'Relation Settings', cur_screen='relationsihp setting screen')
         verdana.text("Change the setting of your game here.", ('center', 130))
 
         # Setting names
         verdana.text("Dark mode:", (100, 200))
-        verdana.text("Allow couples to have kittens despite same-sex status:", (100, 230))
-        verdana.text("Allow unmated cats to have offspring:", (100, 260))
-        verdana.text("Enable clan page background:", (100, 290))
-        verdana.text("Automatically save every five moons:", (100, 320))
-        verdana.text("Allow mass extinction events:", (100, 350))
-        verdana.text("Force cats to retire after severe injury:", (100, 380))
-        verdana.text("Allow affairs and mate switches based on relationships:", (100, 410))
-        verdana.text("Enable shaders:", (100, 440))
-        verdana.text("Display hotkeys on text buttons:", (100, 470))
-        verdana.text("Randomize relationship values, when creating clan:", (100, 500))
+        verdana.text("Enable clan page background:", (100, 230))
+        verdana.text("Automatically save every five moons:", (100, 260))
+        verdana.text("Allow mass extinction events:", (100, 290))
+        verdana.text("Force cats to retire after severe injury:", (100, 320))
+        verdana.text("Enable shaders:", (100, 350))
+        verdana.text("Display hotkeys on text buttons:", (100, 380))
 
         # Setting values
         verdana.text(self.bool[game.settings['dark mode']], (-170, 200))
         buttons.draw_button((-80, 200), text='SWITCH', setting='dark mode')
-        verdana.text(self.bool[game.settings['no gendered breeding']], (-170, 230))
-        buttons.draw_button((-80, 230), text='SWITCH', setting='no gendered breeding')
-        verdana.text(self.bool[game.settings['no unknown fathers']], (-170, 260))
-        buttons.draw_button((-80, 260), text='SWITCH', setting='no unknown fathers')
-        verdana.text(self.bool[game.settings['backgrounds']], (-170, 290))
-        buttons.draw_button((-80, 290), text='SWITCH', setting='backgrounds')
-        verdana.text(self.bool[game.settings['autosave']], (-170, 320))
-        buttons.draw_button((-80, 320), text='SWITCH', setting='autosave')
-        verdana.text(self.bool[game.settings['disasters']], (-170, 350))
-        buttons.draw_button((-80, 350), text='SWITCH', setting='disasters')
-        verdana.text(self.bool[game.settings['retirement']], (-170, 380))
-        buttons.draw_button((-80, 380), text='SWITCH', setting='retirement')
-        verdana.text(self.bool[game.settings['affair']], (-170, 410))
-        buttons.draw_button((-80, 410), text='SWITCH', setting='affair')
-        verdana.text(self.bool[game.settings['shaders']], (-170, 440))
-        buttons.draw_button((-80, 440), text='SWITCH', setting='shaders')
-        verdana.text(self.bool[game.settings['hotkey display']], (-170, 470))
-        buttons.draw_button((-80, 470), text='SWITCH', setting='hotkey display')
-        verdana.text(self.bool[game.settings['random relation']], (-170, 500))
-        buttons.draw_button((-80, 500), text='SWITCH', setting='random relation')
+        verdana.text(self.bool[game.settings['backgrounds']], (-170, 230))
+        buttons.draw_button((-80, 230), text='SWITCH', setting='backgrounds')
+        verdana.text(self.bool[game.settings['autosave']], (-170, 260))
+        buttons.draw_button((-80, 260), text='SWITCH', setting='autosave')
+        verdana.text(self.bool[game.settings['disasters']], (-170, 290))
+        buttons.draw_button((-80, 290), text='SWITCH', setting='disasters')
+        verdana.text(self.bool[game.settings['retirement']], (-170, 320))
+        buttons.draw_button((-80, 320), text='SWITCH', setting='retirement')
+        verdana.text(self.bool[game.settings['shaders']], (-170, 350))
+        buttons.draw_button((-80, 350), text='SWITCH', setting='shaders')
+        verdana.text(self.bool[game.settings['hotkey display']], (-170, 380))
+        buttons.draw_button((-80, 380), text='SWITCH', setting='hotkey display')
+
+        # other buttons
+        buttons.draw_button((50, 50),
+                            text='<< Back to Main Menu',
+                            cur_screen='start screen')
+        if game.settings_changed:
+            buttons.draw_button(('center', -130),
+                                text='Save Settings',
+                                save_settings=True)
+        else:
+            buttons.draw_button(('center', -130),
+                                text='Save Settings',
+                                available=False)
+
+
+class RelationshipSettingsScreen(Screens):
+    text_size = {
+        '0': 'small',
+        '1': 'medium',
+        '2': 'big'
+    }  # How text sizes will show up on the screen
+    bool = {True: 'Yes', False: 'No', None: 'None'}
+
+    def on_use(self):
+        # layout
+        buttons.draw_button((244, 100), text='Settings', cur_screen='settings screen')
+        buttons.draw_button((-210, 100), text='Info', cur_screen='info screen')
+        buttons.draw_button((-255, 100), text='Language', cur_screen='language screen')
+        buttons.draw_button((320, 100), text = 'Relation Settings', available=False)
+        verdana.text("Change the setting of the relationships here.", ('center', 130))
+
+        # Setting names
+        verdana.text("Randomize relationship values, when creating clan:", (100, 200))
+        verdana.text("Allow affairs and mate switches based on relationships:", (100, 230))
+        verdana.text("Allow couples to have kittens despite same-sex status:", (100, 260))
+        verdana.text("Allow unmated cats to have offspring:", (100, 290))
+        verdana.text("Allow romantic interactions with former apprentices/mentor:", (100, 320))
+
+        # Setting values
+        verdana.text(self.bool[game.settings['random relation']], (-170, 200))
+        buttons.draw_button((-80, 200), text='SWITCH', setting='random relation')
+        verdana.text(self.bool[game.settings['affair']], (-170, 230))
+        buttons.draw_button((-80, 230), text='SWITCH', setting='affair')
+        verdana.text(self.bool[game.settings['no gendered breeding']], (-170, 260))
+        buttons.draw_button((-80, 260), text='SWITCH', setting='no gendered breeding')
+        verdana.text(self.bool[game.settings['no unknown fathers']], (-170, 290))
+        buttons.draw_button((-80, 290), text='SWITCH', setting='no unknown fathers')
+        verdana.text(self.bool[game.settings['romantic with former mentor']], (-170, 320))
+        buttons.draw_button((-80, 320), text='SWITCH', setting='romantic with former mentor')
 
         # other buttons
         buttons.draw_button((50, 50),
@@ -194,13 +236,10 @@ class InfoScreen(Screens):
 
     def on_use(self):
         # layout
-        buttons.draw_button((310, 100),
-                            text='Settings',
-                            cur_screen='settings screen')
-        buttons.draw_button((-360, 100), text='Info', available=False)
-        buttons.draw_button((-255, 100),
-                            text='Language',
-                            cur_screen='language screen')
+        buttons.draw_button((244, 100), text='Settings', cur_screen='settings screen')
+        buttons.draw_button((-210, 100), text='Info', available=False)
+        buttons.draw_button((-255, 100), text='Language', cur_screen='language screen')
+        buttons.draw_button((320, 100), text = 'Relation Settings', cur_screen='relationsihp setting screen')
 
         verdana.text("Welcome to Warrior Cats clan generator!",
                      ('center', 140))
@@ -235,11 +274,10 @@ class LanguageScreen(Screens):
 
     def on_use(self):
         # layout
-        buttons.draw_button((310, 100),
-                            text='Settings',
-                            cur_screen='settings screen')
-        buttons.draw_button((-360, 100), text='Info', cur_screen='info screen')
-        buttons.draw_button((-255, 100), text='Language', available='false')
+        buttons.draw_button((244, 100), text='Settings', cur_screen='settings screen')
+        buttons.draw_button((-210, 100), text='Info', cur_screen='info screen')
+        buttons.draw_button((-255, 100), text='Language', available=False)
+        buttons.draw_button((320, 100), text = 'Relation Settings', cur_screen='relationsihp setting screen')
         verdana.text("Choose the language of your game here:", ('center', 130))
 
         # Language options
@@ -1113,16 +1151,16 @@ class EventsScreen(Screens):
     def on_use(self):
         verdana_big.text(f'{game.clan.name}Clan', ('center', 30))
         verdana.text(
-            'Check this page to see which events are currently happening at the clan.',
-            ('center', 100))
+            'Check this page to see which events are currently happening at the Clan.',
+            ('center', 110))
 
         verdana.text(f'Current season: {str(game.clan.current_season)}',
-                     ('center', 130))
+                     ('center', 140))
                      
         if game.clan.age == 1:
-            verdana.text(f'Clan age: {str(game.clan.age)} moon', ('center', 160))
+            verdana.text(f'Clan age: {str(game.clan.age)} moon', ('center', 170))
         if game.clan.age != 1:
-            verdana.text(f'Clan age: {str(game.clan.age)} moons', ('center', 160))
+            verdana.text(f'Clan age: {str(game.clan.age)} moons', ('center', 170))
             
         if game.switches['events_left'] == 0:
             buttons.draw_button((200, 220),
@@ -1158,8 +1196,8 @@ class EventsScreen(Screens):
 
         draw_menu_buttons()
         if len(game.cur_events_list) > game.max_events_displayed:
-            buttons.draw_button((720, 250), image=game.up, arrow="UP", hotkey=[20])
-            buttons.draw_button((700, 550), image=game.down, arrow="DOWN", hotkey=[22])
+            buttons.draw_button((700, 180), image=game.up, arrow="UP", hotkey=[20])
+            buttons.draw_button((700, 630), image=game.down, arrow="DOWN", hotkey=[22])
 
 
 class ProfileScreen(Screens):
@@ -1749,7 +1787,7 @@ class ListScreen(Screens):
             buttons.draw_button((-300, 600),
                                 text='>',
                                 list_page=game.switches['list_page'] + 1, hotkey=[21])
-        buttons.draw_button((-70, 130),
+        buttons.draw_button((-70, 140),
                             text='Cats Outside Clans',
                             cur_screen='other screen')
 
@@ -1823,7 +1861,7 @@ class OtherScreen(Screens):
                                 text='>',
                                 list_page=game.switches['list_page'] + 1, hotkey=[21])
 
-        buttons.draw_button((-70, 130),
+        buttons.draw_button((-70, 140),
                             text='Cats in ' + str(game.clan.name) + 'Clan',
                             cur_screen='list screen', hotkey=[9])
         draw_menu_buttons()
@@ -2040,8 +2078,8 @@ class AllegiancesScreen(Screens):
                 verdana.text(game.allegiance_list[x][1], (170, 140 + a * 30))
                 a += 1
         if len(game.allegiance_list) > game.max_allegiance_displayed:
-            buttons.draw_button((720, 250), image=game.up, arrow="UP", hotkey=[20])
-            buttons.draw_button((700, 550), image=game.down, arrow="DOWN", hotkey=[22])
+            buttons.draw_button((700, 180), image=game.up, arrow="UP", hotkey=[20])
+            buttons.draw_button((700, 630), image=game.down, arrow="DOWN", hotkey=[22])
         draw_menu_buttons()
 
     def screen_switches(self):
@@ -2884,8 +2922,9 @@ class MapScreen(Screens):
 
 
 class RelationshipScreen(Screens):
-    def on_use(self):
+    bool = {True: 'on', False: 'of', None: 'None'}
 
+    def on_use(self):
         # get the relevant cat
         the_cat = cat_class.all_cats.get(game.switches['cat'])
         
@@ -2927,10 +2966,16 @@ class RelationshipScreen(Screens):
         if next_cat != 0:
             buttons.draw_button((-40, 40), text='Next Cat', cat=next_cat, hotkey=[21])
         if previous_cat != 0:
-            buttons.draw_button((40, 40), text='Previous Cat', cat=previous_cat, hotkey=[23])     
+            buttons.draw_button((40, 40), text='Previous Cat', cat=previous_cat, hotkey=[23])
+
+        # button for better displaying
+        verdana_small.text(f"Display dead {self.bool[game.settings['show dead relation']]}", (50, 650))
+        buttons.draw_button((50, 670), text='switch', setting='show dead relation')
+
+        verdana_small.text(f"Display empty value {self.bool[game.settings['show empty relation']]}", (180, 650))
+        buttons.draw_button((180, 670), text='switch', setting='show empty relation')
 
         # layout
-
         verdana_big.text(str(the_cat.name) + ' Relationships', ('center', 10))
         if the_cat != None and the_cat.mate != '':
             mate = cat_class.all_cats.get(the_cat.mate)
@@ -2943,6 +2988,13 @@ class RelationshipScreen(Screens):
 
         # make a list of the relationships
         relationships = the_cat.relationships
+
+        # filter relationships pased on the settings
+        if not game.settings['show dead relation']:
+            relationships = list(filter(lambda rel: not rel.cat_to.dead, relationships))
+        
+        if not game.settings['show empty relation']:
+            relationships = list(filter(lambda rel: (rel.romantic_love + rel.platonic_like + rel.dislike + rel.admiration + rel.comfortable + rel.jealousy + rel.trust) > 0, relationships))
 
         # pages
         all_pages = 1  # amount of pages
@@ -2959,7 +3011,7 @@ class RelationshipScreen(Screens):
                 game.switches['list_page'] = 1
             the_relationship = relationships[x + (game.switches['list_page'] - 1) * 10]
             the_relationship.cat_to.update_sprite()
-            buttons.draw_button((90 + pos_x, 60 + pos_y), image=the_relationship.cat_to.sprite, cat=the_relationship.cat_to.ID, cur_screen='profile screen')
+            buttons.draw_button((90 + pos_x, 60 + pos_y), image=the_relationship.cat_to.sprite, cat=the_relationship.cat_to.ID, cur_screen='relationship screen')
             # name length
             string_len = verdana.text(str('romantic love: '))
             verdana.text(str(the_relationship.cat_to.name), (140 + pos_x - string_len / 1.5, 105 + pos_y))
@@ -2980,16 +3032,23 @@ class RelationshipScreen(Screens):
                 verdana_small.text('has a mate', (140 + pos_x - string_len / 1.5, 140 + pos_y))
 
             count = 15
-            if the_relationship.romantic_love > 49 and game.settings['dark mode']:
+            different_age = the_relationship.cat_to.age != the_relationship.cat_to.age
+            adult_ages = ['young adult', 'adult', 'senior adult', 'elder']
+            both_adult = the_relationship.cat_to.age in adult_ages and the_relationship.cat_to.age in adult_ages
+            check_age = (different_age and both_adult) or both_adult
+            if the_relationship.romantic_love > 49 and game.settings['dark mode'] and check_age:
                 verdana_dark_margenta.text('romantic love:', (140 + pos_x - string_len / 1.5, 145 + pos_y + count))
-            elif the_relationship.romantic_love > 49 and not game.settings['dark mode']:
-                verdana_dark_margenta.text('romantic love:', (140 + pos_x - string_len / 1.5, 145 + pos_y + count))
+            elif the_relationship.romantic_love > 49 and not game.settings['dark mode'] and check_age:
+                verdana_margenta.text('romantic love:', (140 + pos_x - string_len / 1.5, 145 + pos_y + count))
             else:
                 verdana_small.text('romantic like:', (140 + pos_x - string_len / 1.5, 145 + pos_y + count))
             count += 20
             current_x = 140 + pos_x - string_len / 1.5
             current_y = 145 + pos_y + count
-            draw_bar(the_relationship.romantic_love, current_x, current_y)
+            if (different_age and both_adult) or both_adult:
+                draw_bar(the_relationship.romantic_love, current_x, current_y)
+            else:
+                draw_bar(0, current_x, current_y)
             count += 5
 
             if the_relationship.platonic_like > 49 and game.settings['dark mode']:
@@ -3060,11 +3119,11 @@ class RelationshipScreen(Screens):
         # page buttons
         verdana.text('page ' + str(game.switches['list_page']) + ' / ' + str(all_pages), ('center', 640))
         if game.switches['list_page'] > 1:
-            buttons.draw_button((300, 640), text='<',list_page=game.switches['list_page'] - 1, hotkey=[23])
+            buttons.draw_button((320, 640), text='<',list_page=game.switches['list_page'] - 1, hotkey=[23])
         if game.switches['list_page'] < all_pages:
 
-            buttons.draw_button((-300, 640), text='>',list_page=game.switches['list_page'] + 1, hotkey=[21])
-        # buttons.draw_button(('center', -100), text='Back',cur_screen='profile screen')
+            buttons.draw_button((-320, 640), text='>',list_page=game.switches['list_page'] + 1, hotkey=[21])
+
         buttons.draw_button(('center', 670), text='Back',cur_screen='profile screen')
 
     def screen_switches(self):
@@ -3075,20 +3134,22 @@ class RelationshipEventScreen(Screens):
     def on_use(self):
         a = 0
         verdana_big.text(f'{game.clan.name}Clan', ('center', 30))
-        verdana.text('Check this page to see which events are currently happening at the clan.', ('center', 100))
+        verdana.text(
+            'Check this page to see which events are currently happening at the Clan.',
+            ('center', 110))
 
-        verdana.text(f'Current season: {str(game.clan.current_season)}', ('center', 130))
-
+        verdana.text(f'Current season: {str(game.clan.current_season)}',
+                     ('center', 140))
+                     
         if game.clan.age == 1:
-            verdana.text(f'Clan age: {str(game.clan.age)} moon', ('center', 160))
-        elif game.clan.age != 1:
-            verdana.text(f'Clan age: {str(game.clan.age)} moons', ('center', 160))
+            verdana.text(f'Clan age: {str(game.clan.age)} moon', ('center', 170))
+        if game.clan.age != 1:
+            verdana.text(f'Clan age: {str(game.clan.age)} moons', ('center', 170))
             
         if game.switches['events_left'] == 0:
             buttons.draw_button((200, 220),
                                 text='TIMESKIP ONE MOON',
                                 timeskip=True, hotkey=[11])
-
             if game.switches['timeskip']:
                 game.cur_events_list = []
                 game.relation_events_list = []
@@ -3096,10 +3157,9 @@ class RelationshipEventScreen(Screens):
             buttons.draw_button((200, 220),
                                 text='TIMESKIP ONE MOON',
                                 available=False)        
-
         events_class.one_moon()
 
-        # show the Relationship events
+        # show the clan events
         buttons.draw_button((-250, 220), text='CLAN EVENTS', cur_screen='events screen', hotkey=[12])
 
         if game.relation_events_list is not None and game.relation_events_list != []:
@@ -3116,8 +3176,8 @@ class RelationshipEventScreen(Screens):
         draw_menu_buttons()
 
         if len(game.relation_events_list) > game.max_relation_events_displayed:
-            buttons.draw_button((720, 150), image=game.up, arrow="UP", hotkey=[20])
-            buttons.draw_button((700, 550), image=game.down, arrow="DOWN", hotkey=[22])
+            buttons.draw_button((700, 180), image=game.up, arrow="UP", hotkey=[20])
+            buttons.draw_button((700, 630), image=game.down, arrow="DOWN", hotkey=[22])
 
     def screen_switches(self):
         cat_profiles
@@ -3154,6 +3214,7 @@ other_screen = OtherScreen('other screen')
 map_screen = MapScreen('map screen')
 relationship_screen = RelationshipScreen('relationship screen')
 relationship_event_screen = RelationshipEventScreen('relationship event screen')
+relattionship_setting_screen = RelationshipSettingsScreen('relationsihp setting screen')
 
 
 # CAT PROFILES

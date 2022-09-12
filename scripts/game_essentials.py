@@ -18,7 +18,7 @@ class Game(object):
     event_scroll_ct = 0
     max_allegiance_displayed = 17
     allegiance_scroll_ct = 0
-    max_relation_events_displayed = 13
+    max_relation_events_displayed = 14
     relation_scroll_ct = 0
     cur_events_list = []
     allegiance_list = []
@@ -26,8 +26,10 @@ class Game(object):
     language_list = ['english','spanish','german']
     relation_events_list = []
 
-    down = pygame.image.load("resources/arrow_down.png").convert_alpha()
-    up = pygame.image.load("resources/arrow_up.png").convert_alpha()
+    down = pygame.image.load("sprites/down.png").convert_alpha()
+    down = pygame.transform.scale(down, (75, 75))
+    up = pygame.image.load("sprites/carrot.png").convert_alpha()
+    up = pygame.transform.scale(up, (40, 40))
 
     choose_cats = {}
     cat_buttons = {'cat0': None, 'cat1': None, 'cat2': None, 'cat3': None, 'cat4': None, 'cat5': None, 'cat6': None, 'cat7': None, 'cat8': None, 'cat9': None, 'cat10': None,
@@ -47,13 +49,11 @@ class Game(object):
 
     # SETTINGS
     settings = {'no gendered breeding': False, 'text size': '0', 'no unknown fathers': False, 'dark mode': False, 'backgrounds': True, 'autosave': False, 'disasters': False,
-                'retirement': True, 'language': 'english', 'affair': False, 'shaders': False, 'hotkey display': False, 'random relation': True, 'show dead relation': True,
-                'show empty relation': True, 'romantic with former mentor': True}  # The current settings
+                'retirement': True, 'language': 'english', 'affair': False, 'shaders': False, 'hotkey display': False, 'random relation': True}  # The current settings
     setting_lists = {'no gendered breeding': [False, True], 'text size': ['0', '1', '2'], 'no unknown fathers': [False, True], 'dark mode': [False, True],
                      'backgrounds': [True, False], 'autosave': [False, True], 'disasters': [False, True], 'retirement': [True, False],
                      'language': language_list, 'affair': [False,True], 'shaders': [False, True], 'hotkey display': [False, True],
-                     'random relation': [False,True], 'show dead relation': [False, True], 'show empty relation': [False, True],
-                     'romantic with former mentor': [False,True]}  # Lists of possible options for each setting
+                     'random relation': [False,True]}  # Lists of possible options for each setting
     settings_changed = False
 
     # CLAN

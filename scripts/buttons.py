@@ -263,7 +263,7 @@ class Button(object):
                 game.allegiance_list.append(game.allegiance_list.pop(0))
                 game.allegiance_scroll_ct -= 1
         if arrow is not None and game.switches['cur_screen'] == 'relationship event screen':
-            max_scroll_direction = len(game.relation_events_list) - game.max_relation_events_displayed
+            max_scroll_direction = len(game.relation_events_list) - game.max_events_displayed
             if arrow == "UP" and game.relation_scroll_ct < 0:
                 game.relation_events_list.insert(0, game.relation_events_list.pop())
                 game.relation_scroll_ct += 1
@@ -292,10 +292,7 @@ class Button(object):
             name = game.switches['naming_text'].split(' ')
             cat_value.name.prefix = name[0]
             if len(name) > 1:
-                # If cat is an apprentice/kit and new suffix is paw/kit, leave hidden suffix unchanged 
-                if not (cat_value.name.status == "apprentice" and name[1] == "paw") and \
-                    not (cat_value.name.status == "kitten" and name[1] == "kit"):
-                    cat_value.name.suffix = name[1]
+                cat_value.name.suffix = name[1]
             cat_class.save_cats()
             game.switches['naming_text'] = ''
             

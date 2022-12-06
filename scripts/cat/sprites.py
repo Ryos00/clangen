@@ -209,7 +209,7 @@ for x in [
         'skinextra', 'scars', 'scarsextra', 'whitenewextra', 'whitepatchesnew',
         'scarsdark', 'scarsdarkextra', 'collars', 'collarsextra',
         'bellcollars', 'bellcollarsextra', 'bowcollars', 'bowcollarsextra',
-        'singlecolours', 'speckledcolours', 'tabbycolours', 'spottedcolours', 'spottedextra',
+        'singlecolours', 'tabbycolours', 'spottedcolours', 'spottedextra',
         'patternlesscolours', 'patternlessextra', 'smokecolours', 'smokeextra', 'tickedcolours', 'tickedextra',
         'brokencolours', 'brokenextra', 'classiccolours', 'classicextra', 'speckledcolours', 'speckledextra',
         'whitepatchesryos', 'whitepatchesryosextra', 'whitepatchesbeejeans', 'whitepatchesbeejeansextra',
@@ -391,8 +391,8 @@ for a, i in enumerate(['LIGHTBROWN', 'BROWN', 'DARKBROWN', 'DARKCHOC', 'TAUPE', 
     sprites.make_group('speckledcolours', (a, 2), f'speckled{i}')
     sprites.make_group('speckledextra', (a, 2), f'speckledextra{i}', sprites_y=2)
 for a, i in enumerate(['LIGHTFAWN', 'FAWN', 'CINNAMON', 'DARKCINNAMON', 'CARAMEL', 'LIGHTCARAMEL']):
-    sprites.make_group('speckledcolours', (a, 2), f'speckled{i}')
-    sprites.make_group('speckledextra', (a, 2), f'speckledextra{i}', sprites_y=2)
+    sprites.make_group('speckledcolours', (a, 3), f'speckled{i}')
+    sprites.make_group('speckledextra', (a, 3), f'speckledextra{i}', sprites_y=2)
 #classic
 for a, i in enumerate(['WHITE', 'PALEGREY', 'SILVER', 'GREY', 'DARKGREY', 'BLACK']):
     sprites.make_group('classiccolours', (a, 0), f'classic{i}')
@@ -404,8 +404,8 @@ for a, i in enumerate(['LIGHTBROWN', 'BROWN', 'DARKBROWN', 'DARKCHOC', 'TAUPE', 
     sprites.make_group('classiccolours', (a, 2), f'classic{i}')
     sprites.make_group('classicextra', (a, 2), f'classicextra{i}', sprites_y=2)
 for a, i in enumerate(['LIGHTFAWN', 'FAWN', 'CINNAMON', 'DARKCINNAMON', 'CARAMEL', 'LIGHTCARAMEL']):
-    sprites.make_group('classiccolours', (a, 2), f'classic{i}')
-    sprites.make_group('classicextra', (a, 2), f'classicextra{i}', sprites_y=2)
+    sprites.make_group('classiccolours', (a, 3), f'classic{i}')
+    sprites.make_group('classicextra', (a, 3), f'classicextra{i}', sprites_y=2)
 #broken
 for a, i in enumerate(['WHITE', 'PALEGREY', 'SILVER', 'GREY', 'DARKGREY', 'BLACK']):
     sprites.make_group('brokencolours', (a, 0), f'broken{i}')
@@ -417,8 +417,8 @@ for a, i in enumerate(['LIGHTBROWN', 'BROWN', 'DARKBROWN', 'DARKCHOC', 'TAUPE', 
     sprites.make_group('brokencolours', (a, 2), f'broken{i}')
     sprites.make_group('brokenextra', (a, 2), f'brokenextra{i}', sprites_y=2)
 for a, i in enumerate(['LIGHTFAWN', 'FAWN', 'CINNAMON', 'DARKCINNAMON', 'CARAMEL', 'LIGHTCARAMEL']):
-    sprites.make_group('brokencolours', (a, 2), f'broken{i}')
-    sprites.make_group('brokenextra', (a, 2), f'brokenextra{i}', sprites_y=2)
+    sprites.make_group('brokencolours', (a, 3), f'broken{i}')
+    sprites.make_group('brokenextra', (a, 3), f'brokenextra{i}', sprites_y=2)
 
 #new torties
 #solids

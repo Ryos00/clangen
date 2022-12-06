@@ -436,6 +436,27 @@ def choose_pelt(gender,colour=None,white=None,pelt=None,length=None,determined=F
             return Patternless(choice(pelt_c_no_white), white, length)
         else:
             return Patternless(colour, white, length)
+    elif pelt == "Speckled":
+        if colour is None and white is None:
+            return Speckled(choice(pelt_c_no_white), choice([False, True]), length)
+        elif colour is None:
+            return Speckled(choice(pelt_c_no_white), white, length)
+        else:
+            return Speckled(colour, white, length)
+    elif pelt == "Classic":
+        if colour is None and white is None:
+            return Classic(choice(pelt_c_no_white), choice([False, True]), length)
+        elif colour is None:
+            return Classic(choice(pelt_c_no_white), white, length)
+        else:
+            return Classic(colour, white, length)
+    elif pelt == "Broken":
+        if colour is None and white is None:
+            return Broken(choice(pelt_c_no_white), choice([False, True]), length)
+        elif colour is None:
+            return Broken(choice(pelt_c_no_white), white, length)
+        else:
+            return Broken(colour, white, length)
     elif pelt == "Smoke":
         if colour is None and white is None:
             return Smoke(choice(pelt_c_no_white), choice([False, True]), length)

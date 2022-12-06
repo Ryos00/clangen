@@ -35,7 +35,10 @@ class Name():
         'Calico': ['stripe', 'dapple', 'patch', 'patch'],
         'Smoke': ['dusk', 'dawn', 'smoke'],
         'Ticked': ['spots', 'pelt', 'speckle', 'freckle'],
-        'Patternless': ['spots', 'pelt', 'speckle', 'freckle']
+        'Patternless': ['spots', 'pelt', 'speckle', 'freckle'],
+        'Speckled': ['speckle', 'pelt', 'freckle'],
+        'Classic': ['stripe', 'feather', 'fern', 'shade'],
+        'Broken': ['stripe', 'spots', 'fern', 'feather']
     }
 
     tortie_pelt_suffixes = {
@@ -43,8 +46,11 @@ class Name():
         'tortietabby': ['stripe', 'feather', 'stripe', 'shade', 'fern'],
         'tortiepatternless': ['pelt', 'shade'],
         'tortieticked': ['spots', 'pelt', 'speckle', 'freckle'],
-        'tortiesmoke': ['fade', 'dusk', 'dawn', 'smoke'],
-        'tortiespotted': ['dapple', 'speckle', 'spots', 'dapple', 'fern', 'freckle']
+        'tortiesmoke': ['dusk', 'dawn', 'smoke'],
+        'tortiespotted': ['dapple', 'speckle', 'spots', 'dapple', 'fern', 'freckle'],
+        'tortiespeckled': ['dapple', 'speckle', 'spots', 'pelt', 'fern', 'freckle'],
+        'tortieclassic': ['dapple', 'stripe', 'spots', 'dapple', 'fern', 'feather'],
+        'tortiebroken': ['stripe', 'feather', 'spots', 'shade', 'fern', 'dapple']
     }
 
     normal_prefixes = [

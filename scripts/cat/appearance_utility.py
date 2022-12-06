@@ -236,7 +236,7 @@ def init_pattern(cat):
         init_pelt(cat)
     if cat.pelt.name in ['Calico', 'Tortie']:
         cat.tortiecolour = cat.pelt.colour
-        cat.tortiebase = choice(['single', 'tabby', 'spotted', 'ticked', 'smoke', 'patternless'])
+        cat.tortiebase = choice(['single', 'tabby', 'spotted', 'ticked', 'smoke', 'patternless', 'speckled', 'classic', 'broken'])
         if cat.tortiebase == 'tabby':
             cat.tortiepattern = 'tortietabby'
         elif cat.tortiebase == 'spotted':
@@ -247,6 +247,12 @@ def init_pattern(cat):
             cat.tortiepattern = 'tortiepatternless'
         elif cat.tortiebase == 'smoke':
             cat.tortiepattern = 'tortiesmoke'
+        elif cat.tortiebase == 'speckled':
+            cat.tortiepattern = 'tortiespeckled'
+        elif cat.tortiebase == 'classic':
+            cat.tortiepattern = 'tortieclassic'
+        elif cat.tortiebase == 'broken':
+            cat.tortiepattern = 'tortiebroken'
         else:
             cat.tortiepattern = 'tortiesolid'
     else:
@@ -271,7 +277,7 @@ def init_white_patches(cat):
         init_pelt(cat)
     non_white_pelt = False
     if cat.pelt.colour != 'WHITE' and cat.pelt.name in\
-    ['Tortie', 'TwoColour', 'Tabby', 'Patternless', 'Ticked', 'Smoke', 'Spotted']:
+    ['Tortie', 'TwoColour', 'Tabby', 'Patternless', 'Ticked', 'Smoke', 'Spotted', 'Speckled', 'Classic', 'Broken']:
         non_white_pelt = True
     little_white_poss = little_white * 6
     mid_white_poss = mid_white * 4
@@ -428,9 +434,9 @@ def init_white_patches(cat):
                 cat.white_patches = choice(point_markings)
             elif pelt_choice == 1 and cat.pelt.name == 'TwoColour' and cat.pelt.colour != 'WHITE':
                 cat.white_patches = choice(point_markings + ['POINTMARK'])
-            elif pelt_choice == 2 and cat.pelt.name in ['Calico', 'TwoColour', 'Tabby', 'Spotted', 'Ticked', 'Smoke', 'Patternless']:
+            elif pelt_choice == 2 and cat.pelt.name in ['Calico', 'TwoColour', 'Tabby', 'Spotted', 'Ticked', 'Smoke', 'Patternless', 'Speckled', 'Classic', 'Broken']:
                 cat.white_patches = choice(mostly_white_poss)
-            elif pelt_choice == 3 and cat.pelt.name in ['TwoColour', 'Tabby', 'Spotted', 'Ticked', 'Smoke', 'Patternless']\
+            elif pelt_choice == 3 and cat.pelt.name in ['TwoColour', 'Tabby', 'Spotted', 'Ticked', 'Smoke', 'Patternless', 'Speckled', 'Classic', 'Broken']\
             and cat.pelt.colour != 'WHITE':
                 cat.white_patches = choice(['EXTRA', None, 'FULLWHITE'])
             else:
@@ -440,7 +446,7 @@ def init_white_patches(cat):
                     cat.white_patches = choice(little_white_poss + mid_white_poss)
                 elif cat.pelt.name in ['Calico']:
                     cat.white_patches = choice(high_white_poss)
-                elif pelt_choice == 1 and vit_chance == 1 and cat.pelt.name in ['Tortie', 'TwoColour', 'Tabby', 'Spotted', 'Ticked', 'Smoke', 'Patternless']\
+                elif pelt_choice == 1 and vit_chance == 1 and cat.pelt.name in ['Tortie', 'TwoColour', 'Tabby', 'Spotted', 'Ticked', 'Smoke', 'Patternless', 'Speckled', 'Classic', 'Broken']\
                 and cat.pelt.colour != 'WHITE':
                     cat.white_patches = choice(vit)
                 else:

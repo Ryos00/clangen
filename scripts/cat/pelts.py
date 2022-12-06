@@ -409,47 +409,47 @@ def choose_pelt(gender,colour=None,white=None,pelt=None,length=None,determined=F
         elif colour is None:
             return SingleColour("WHITE", length)
         else:
-            return SingleColour(choice(pelt_c_no_white), length)
+            return SingleColour(colour, length)
     elif pelt == "TwoColour":
         if colour is None:
             return TwoColour(choice(pelt_c_no_white), length)
         else:
-            return TwoColour(choice(pelt_c_no_white), length)
+            return TwoColour(colour, length)
     elif pelt == "Tabby":
         if colour is None and white is None:
             return Tabby(choice(pelt_c_no_white), choice([False, True]), length)
         elif colour is None:
             return Tabby(choice(pelt_c_no_white), white, length)
         else:
-            return Tabby(choice(pelt_c_no_white), white, length)
+            return Tabby(colour, white, length)
     elif pelt == "Spotted":
         if colour is None and white is None:
             return Spotted(choice(pelt_c_no_white), choice([False, True]), length)
         elif colour is None:
             return Spotted(choice(pelt_c_no_white), white, length)
         else:
-            return Spotted(choice(pelt_c_no_white), white, length)
+            return Spotted(colour, white, length)
     elif pelt == "Patternless":
         if colour is None and white is None:
             return Patternless(choice(pelt_c_no_white), choice([False, True]), length)
         elif colour is None:
             return Patternless(choice(pelt_c_no_white), white, length)
         else:
-            return Patternless(choice(pelt_c_no_white), white, length)
+            return Patternless(colour, white, length)
     elif pelt == "Smoke":
         if colour is None and white is None:
             return Smoke(choice(pelt_c_no_white), choice([False, True]), length)
         elif colour is None:
             return Smoke(choice(pelt_c_no_white), white, length)
         else:
-            return Smoke(choice(pelt_c_no_white), white, length)
+            return Smoke(colour, white, length)
     elif pelt == "Ticked":
         if colour is None and white is None:
             return Ticked(choice(pelt_c_no_white), choice([False, True]), length)
         elif colour is None:
             return Ticked(choice(pelt_c_no_white), white, length)
         else:
-            return Ticked(choice(pelt_c_no_white), white, length)
+            return Ticked(colour, white, length)
     elif pelt == "Tortie":
         if white is None:
             return Tortie(choice([False, True]), length)

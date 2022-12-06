@@ -164,7 +164,6 @@ def init_pelt(cat):
                                 choice([par1.pelt.name, par2.pelt.name, None]), choice([par1.pelt.length, par2.pelt.length, None]))                  
     else:
         cat.pelt = choose_pelt(cat.gender)
-    print(str(cat.pelt.colour))
 
 def init_sprite(cat):
     if cat.pelt is None:

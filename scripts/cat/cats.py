@@ -253,7 +253,8 @@ class Cat():
         init_accessories(self)
         init_white_patches(self)
         init_pattern(self)
-        print(str(self.pelt.colour))
+
+        self.pelt.colour = self.pelt.colour
 
         self.paralyzed = False
         self.no_kits = False

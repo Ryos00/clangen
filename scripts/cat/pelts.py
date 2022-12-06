@@ -322,12 +322,12 @@ pelt_c_no_bw = [
     'LIGHTCARAMEL'
 ]
 tortiepatterns = ['tortiesolid', 'tortietabby', 'tortiespotted', 'tortieticked',
-    'tortiesmoke', 'tortiepatternless']
+    'tortiesmoke', 'tortiepatternless', 'tortiespeckled', 'tortieclassic', 'tortiebroken']
 patch_colours = ['PALEONE', 'PALETWO', 'PALETHREE', 'PALEFOUR', 'GOLDONE', 'GOLDTWO',
     'GOLDTHREE', 'GOLDFOUR', 'GINGERONE', 'GINGERTWO', 'GINGERTHREE', 'GINGERFOUR',
     'DARKONE', 'DARKTWO', 'DARKTHREE', 'DARKFOUR', 'CREAMONE', 'CREAMTWO', 'CREAMTHREE', 'CREAMFOUR',
     'APRICOTONE', 'APRICOTTWO', 'APRICOTTHREE', 'APRICOTFOUR']
-tortiebases = ['single', 'tabby', 'spotted', 'ticked', 'smoke', 'patternless']
+tortiebases = ['single', 'tabby', 'spotted', 'ticked', 'smoke', 'patternless', 'speckled', 'classic', 'broken']
 tortiecolours = ["SILVER", "GREY", "DARKGREY", "BLACK", "LIGHTBROWN", "BROWN", "DARKBROWN", 
                 "DARKCHOC", "TAUPE", "LIGHTTAUPE", "LIGHTFAWN", "FAWN", "CINNAMON", "DARKCINNAMON", 
                 "CARAMEL", "LIGHTCARAMEL"]
@@ -495,14 +495,20 @@ def describe_color(pelt, tortiecolour, tortiepattern, white_patches):
             color_name = color_name + ' ticked tabby'
         elif pelt.name == "Smoke":
             color_name = color_name + ' smoke'
+        elif pelt.name == "Speckled":
+            color_name = color_name + ' speckled tabby'
+        elif pelt.name == "Classic":
+            color_name = color_name + ' classic tabby'
+        elif pelt.name == "Broken":
+            color_name = color_name + ' broken mackerel tabby'
 
         elif pelt.name == "Tortie":
-            if tortiepattern not in ["tortiesolid", "tortiesmoke"]:
+            if tortiepattern not in ["tortiesolid", "tortiesmoke", "tortiepatternless"]:
                 color_name = color_name + ' torbie'
             else:
                 color_name = color_name + ' tortie'
         elif pelt.name == "Calico":
-            if tortiepattern not in ["tortiesolid", "tortiesmoke"]:
+            if tortiepattern not in ["tortiesolid", "tortiesmoke", "tortiepatternless"]:
                 color_name = color_name + ' tabico'
             else:
                 color_name = color_name + ' calico'

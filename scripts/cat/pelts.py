@@ -490,7 +490,7 @@ def describe_color(pelt, tortiecolour, tortiepattern, white_patches):
         elif pelt.name == "Spotted":
             color_name = color_name + ' spotted tabby'
         elif pelt.name == "Patternless":
-            color_name = color_name + ' patternless'
+            color_name = color_name + ' agouti'
         elif pelt.name == "Ticked":
             color_name = color_name + ' ticked tabby'
         elif pelt.name == "Smoke":

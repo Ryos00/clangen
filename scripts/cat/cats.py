@@ -245,13 +245,6 @@ class Cat():
             else:
                 self.genderalign = self.gender
 
-        # NAME
-        if self.pelt is not None:
-            self.name = Name(status, prefix, suffix, self.pelt.colour,
-                             self.eye_colour, self.pelt.name)
-        else:
-            self.name = Name(status, prefix, suffix, eyes=self.eye_colour)
-
         # APPEARANCE
         init_eyes(self)
         init_pelt(self)
@@ -260,6 +253,7 @@ class Cat():
         init_accessories(self)
         init_white_patches(self)
         init_pattern(self)
+        print(str(self.pelt.colour))
 
         self.paralyzed = False
         self.no_kits = False
@@ -289,11 +283,12 @@ class Cat():
         else:
             self.experience = 0
 
-        self.paralyzed = False
-        self.no_kits = False
-        self.exiled = False
-        if self.genderalign is None:
-            self.genderalign = self.gender
+        # NAME
+        if self.pelt is not None:
+            self.name = Name(status, prefix, suffix, self.pelt.colour,
+                             self.eye_colour, self.pelt.name)
+        else:
+            self.name = Name(status, prefix, suffix, eyes=self.eye_colour)
 
         # SAVE CAT INTO ALL_CATS DICTIONARY IN CATS-CLASS
         self.all_cats[self.ID] = self

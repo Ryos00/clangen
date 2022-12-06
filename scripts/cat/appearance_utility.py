@@ -164,6 +164,7 @@ def init_pelt(cat):
                                 choice([par1.pelt.name, par2.pelt.name, None]), choice([par1.pelt.length, par2.pelt.length, None]))                  
     else:
         cat.pelt = choose_pelt(cat.gender)
+    print(str(cat.pelt.colour))
 
 def init_sprite(cat):
     if cat.pelt is None:
@@ -260,7 +261,7 @@ def init_pattern(cat):
             cat.pattern = choice(['GOLDONE', 'GOLDTWO', 'GOLDTHREE', 'GOLDFOUR', 'GINGERONE', 'GINGERTWO', 'GINGERTHREE', 'GINGERFOUR'])
         elif cat.pelt.colour in ["GREY", "DARKGREY", "LIGHTBROWN", "BROWN", "LIGHTFAWN", "FAWN"]:
             cat.pattern = choice(['CREAMONE', 'CREAMTWO', 'CREAMTHREE', 'CREAMFOUR'])
-        elif cat.pelt.colour in ["CARAMEL", "SILVER"]:
+        elif cat.pelt.colour in ["CARAMEL", "LIGHTCARAMEL", "TAUPE", "LIGHTTAUPE", "SILVER"]:
             cat.pattern = choice(['APRICOTONE', 'APRICOTTWO', 'APRICOTTHREE', 'APRICOTFOUR', 'PALEONE', 'PALETWO', 'PALETHREE', 'PALEFOUR'])
     else:
         cat.pattern = None

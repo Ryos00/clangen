@@ -469,10 +469,8 @@ class GameOver(UIWindow):
                 game.switches['cur_screen'] = 'start screen'
                 game.switch_screens = True
                 self.kill()
-                print('begin anew')
             elif event.ui_element == self.not_yet_button:
                 self.kill()
-                print('not yet')
 
 
 

@@ -1,14 +1,419 @@
+import re
 from random import choice
+import pygame_gui
 
-from .base_screens import Screens, draw_menu_buttons, cat_profiles, draw_clan_name
-
+from .base_screens import Screens, cat_profiles
+import pygame
 from scripts.events import events_class
-from scripts.patrol import patrol
-from scripts.utility import draw
-from scripts.game_structure.buttons import buttons
-from scripts.game_structure.text import *
+from scripts.utility import draw, get_text_box_theme, get_living_cat_count
+# from scripts.game_structure.text import *
+from scripts.game_structure.image_button import UIImageButton, UITextBoxTweaked
+from scripts.game_structure.game_essentials import *
+from ..cat.cats import Cat
+from ..game_structure import image_cache
 
-class SingleEventScreen(Screens):
+
+class EventsScreen(Screens):
+    event_display_type = "all events"
+    all_events = ""
+    ceremony_events = ""
+    birth_death_events = ""
+    relation_events = ""
+    health_events = ""
+    other_clans_events = ""
+    misc_events = ""
+    display_text = "<center> Check this page to see which events are currently happening at the Clan.</center>"
+    display_events = ""
+
+    def __init__(self, name=None):
+        super().__init__(name)
+        self.misc_alert = None
+        self.other_clans_alert = None
+        self.health_alert = None
+        self.relation_alert = None
+        self.birth_death_alert = None
+        self.ceremony_alert = None
+        self.misc_events_button = None
+        self.other_clans_events_button = None
+        self.health_events_button = None
+        self.birth_death_events_button = None
+        self.ceremonies_events_button = None
+        self.all_events_button = None
+        self.relationship_events_button = None
+        self.events_list_box = None
+        self.toggle_borders_button = None
+        self.timeskip_button = None
+        self.events_frame = None
+        self.clan_age = None
+        self.season = None
+        self.heading = None
+
+    def handle_event(self, event):
+        if event.type == pygame_gui.UI_BUTTON_START_PRESS:
+            if event.ui_element == self.timeskip_button:
+                events_class.one_moon()
+                if get_living_cat_count(Cat) == 0:
+                    GameOver('events screen')
+
+                # print(get_living_cat_count(Cat))
+                self.all_events = ""
+                self.event_display_type = 'all events'
+                self.all_events_button.disable()
+                if game.cur_events_list is not None and game.cur_events_list != []:
+                    for i in range(len(game.cur_events_list)):
+                        if not isinstance(game.cur_events_list[i], str):
+                            game.cur_events_list.remove(game.cur_events_list[i])
+                            break
+                    self.all_events = '\n\n'.join(game.cur_events_list)
+                else:
+                    self.all_events = "Nothing significant happened this moon"
+
+                self.ceremony_events = ""
+                self.ceremonies_events_button.enable()
+                if self.ceremony_alert:
+                    self.ceremony_alert.kill()
+                if game.ceremony_events_list is not None and game.ceremony_events_list != []:
+                    for i in range(len(game.ceremony_events_list)):
+                        if not isinstance(game.ceremony_events_list[i], str):
+                            game.ceremony_events_list.remove(game.ceremony_events_list[i])
+                            break
+                    self.ceremony_events = '\n\n'.join(game.ceremony_events_list)
+
+                    self.ceremony_alert = pygame_gui.elements.UIImage(pygame.Rect((44, 340), (4, 22)),
+                                                                      image_cache.load_image(
+                                                                          "resources/images/alert_mark.png"
+                                                                      ))
+
+                self.birth_death_events = ""
+                if self.birth_death_alert:
+                    self.birth_death_alert.kill()
+                self.birth_death_events_button.enable()
+                if game.birth_death_events_list is not None and game.birth_death_events_list != []:
+                    for i in range(len(game.birth_death_events_list)):
+                        if not isinstance(game.birth_death_events_list[i], str):
+                            game.birth_death_events_list.remove(game.birth_death_events_list[i])
+                            break
+                    self.birth_death_events = '\n\n'.join(game.birth_death_events_list)
+                    self.birth_death_alert = pygame_gui.elements.UIImage(pygame.Rect((44, 390), (4, 22)),
+                                                                         image_cache.load_image(
+                                                                             "resources/images/alert_mark.png"
+                                                                         ))
+
+                self.relation_events = ""
+                if self.relation_alert:
+                    self.relation_alert.kill()
+                self.relationship_events_button.enable()
+                if game.relation_events_list is not None and game.relation_events_list != []:
+                    for i in range(len(game.relation_events_list)):
+                        if not isinstance(game.relation_events_list[i], str):
+                            game.relation_events_list.remove(game.relation_events_list[i])
+                            break
+                    self.relation_events = '\n\n'.join(game.relation_events_list)
+                    self.relation_alert = pygame_gui.elements.UIImage(pygame.Rect((44, 440), (4, 22)),
+                                                                      image_cache.load_image(
+                                                                          "resources/images/alert_mark.png"
+                                                                      ))
+
+                self.health_events = ""
+                if self.health_alert:
+                    self.health_alert.kill()
+                self.health_events_button.enable()
+                if game.health_events_list is not None and game.health_events_list != []:
+                    for i in range(len(game.health_events_list)):
+                        if not isinstance(game.health_events_list[i], str):
+                            game.health_events_list.remove(game.health_events_list[i])
+                            break
+                    self.health_events = '\n\n'.join(game.health_events_list)
+                    self.health_alert = pygame_gui.elements.UIImage(pygame.Rect((44, 490), (4, 22)),
+                                                                    image_cache.load_image(
+                                                                        "resources/images/alert_mark.png"
+                                                                    ))
+
+                self.other_clans_events = ""
+                if self.other_clans_alert:
+                    self.other_clans_alert.kill()
+                self.other_clans_events_button.enable()
+                if game.other_clans_events_list is not None and game.other_clans_events_list != []:
+                    for i in range(len(game.other_clans_events_list)):
+                        if not isinstance(game.other_clans_events_list[i], str):
+                            game.other_clans_events_list.remove(game.other_clans_events_list[i])
+                            break
+                    self.other_clans_events = '\n\n'.join(game.other_clans_events_list)
+                    self.other_clans_alert = pygame_gui.elements.UIImage(pygame.Rect((44, 540), (4, 22)),
+                                                                         image_cache.load_image(
+                                                                             "resources/images/alert_mark.png"
+                                                                         ))
+
+                self.misc_events = ""
+                if self.misc_alert:
+                    self.misc_alert.kill()
+                self.misc_events_button.enable()
+                if game.misc_events_list is not None and game.misc_events_list != []:
+                    for i in range(len(game.misc_events_list)):
+                        if not isinstance(game.misc_events_list[i], str):
+                            game.misc_events_list.remove(game.misc_events_list[i])
+                            break
+                    self.misc_events = '\n\n'.join(game.misc_events_list)
+                    self.misc_alert = pygame_gui.elements.UIImage(pygame.Rect((44, 590), (4, 22)),
+                                                                  image_cache.load_image(
+                                                                      "resources/images/alert_mark.png"
+                                                                  ))
+
+                if self.event_display_type == "all events":
+                    self.display_events = self.all_events
+                elif self.event_display_type == "ceremony events":
+                    self.display_events = self.ceremony_events
+                elif self.event_display_type == "birth death events":
+                    self.display_events = self.birth_death_events
+                elif self.event_display_type == "relationship events":
+                    self.display_events = self.relation_events
+                elif self.event_display_type == "health events":
+                    self.display_events = self.health_events
+                elif self.event_display_type == "other clans events":
+                    self.display_events = self.other_clans_events
+                elif self.event_display_type == "misc events":
+                    self.display_events = self.misc_events
+
+                self.update_events_display()
+
+            elif event.ui_element == self.toggle_borders_button:
+                if game.clan.closed_borders:
+                    game.clan.closed_borders = False
+                    self.toggle_borders_button.set_text("Close Clan Borders")
+                else:
+                    game.clan.closed_borders = True
+                    self.toggle_borders_button.set_text("Open Clan Borders")
+
+            # Change the type of events displayed
+            elif event.ui_element == self.all_events_button:
+                self.event_display_type = "all events"
+                # Update Display
+                self.update_list_buttons(self.all_events_button)
+                self.display_events = self.all_events
+                self.update_events_display()
+            elif event.ui_element == self.ceremonies_events_button:
+                self.event_display_type = "ceremony events"
+                self.ceremonies_events_button.disable()
+                # Update Display
+                self.update_list_buttons(self.ceremonies_events_button, self.ceremony_alert)
+                self.display_events = self.ceremony_events
+                self.update_events_display()
+            elif event.ui_element == self.birth_death_events_button:
+                self.event_display_type = "birth death events"
+                self.birth_death_events_button.enable()
+                # Update Display
+                self.update_list_buttons(self.birth_death_events_button, self.birth_death_alert)
+                self.display_events = self.birth_death_events
+                self.update_events_display()
+            elif event.ui_element == self.relationship_events_button:
+                self.event_display_type = "relationship events"
+                self.relationship_events_button.enable()
+                # Update Display
+                self.update_list_buttons(self.relationship_events_button, self.relation_alert)
+                self.display_events = self.relation_events
+                self.update_events_display()
+            elif event.ui_element == self.health_events_button:
+                self.event_display_type = "health events"
+                self.health_events_button.disable()
+                # Update Display
+                self.update_list_buttons(self.health_events_button, self.health_alert)
+                self.display_events = self.health_events
+                self.update_events_display()
+            elif event.ui_element == self.other_clans_events_button:
+                self.event_display_type = "other clans events"
+                self.other_clans_events_button.disable()
+                # Update Display
+                self.update_list_buttons(self.other_clans_events_button, self.other_clans_alert)
+                self.display_events = self.other_clans_events
+                self.update_events_display()
+            elif event.ui_element == self.misc_events_button:
+                self.event_display_type = "misc events"
+                self.misc_events_button.disable()
+                # Update Display
+                self.update_list_buttons(self.misc_events_button, self.misc_alert)
+                self.display_events = self.misc_events
+                self.update_events_display()
+            else:
+                self.menu_button_pressed(event)
+
+    def screen_switches(self):
+        cat_profiles()
+
+        self.heading = pygame_gui.elements.UITextBox("Check this page to which event are currently happening in the "
+                                                     "Clan",
+                                                     pygame.Rect((100, 110), (600, 40)),
+                                                     object_id=get_text_box_theme())
+        self.season = pygame_gui.elements.UITextBox(f'Current season: {str(game.clan.current_season)}',
+                                                    pygame.Rect((100, 140), (600, 40)),
+                                                    object_id=get_text_box_theme())
+        self.clan_age = pygame_gui.elements.UITextBox("",
+                                                      pygame.Rect((100, 170), (600, 40)),
+                                                      object_id=get_text_box_theme())
+        self.events_frame = pygame_gui.elements.UIImage(pygame.Rect((206, 266), (534, 370)),
+                                                        image_cache.load_image(
+                                                            "resources/images/event_page_frame.png").convert_alpha())
+        self.events_frame.disable()
+        # Set text for clan age
+        if game.clan.age == 1:
+            self.clan_age.set_text(f'Clan age: {str(game.clan.age)} moon')
+        if game.clan.age != 1:
+            self.clan_age.set_text(f'Clan age: {str(game.clan.age)} moons')
+
+        self.timeskip_button = UIImageButton(pygame.Rect((310, 205), (180, 30)), "", object_id="#timeskip_button")
+        if game.clan.closed_borders:
+            self.toggle_borders_button = pygame_gui.elements.UIButton(pygame.Rect((500, 210), (200, 30)),
+                                                                      "Open Clan Borders")
+        else:
+            self.toggle_borders_button = pygame_gui.elements.UIButton(pygame.Rect((500, 210), (200, 30)),
+                                                                      "Close Clan Borders")
+
+        # Sets up the buttons to switch between the event types.
+        self.all_events_button = UIImageButton(
+            pygame.Rect((60, 286,), (150, 30)),
+            "",
+            object_id="#all_events_button")
+        self.ceremonies_events_button = UIImageButton(
+            pygame.Rect((60, 336), (150, 30)),
+            "",
+            object_id="#ceremony_events_button")
+        self.birth_death_events_button = UIImageButton(
+            pygame.Rect((60, 386), (150, 30)),
+            "",
+            object_id="#birth_death_events_button")
+        self.relationship_events_button = UIImageButton(
+            pygame.Rect((60, 436), (150, 30)),
+            "",
+            object_id="#relationship_events_button")
+        self.health_events_button = UIImageButton(
+            pygame.Rect((60, 486), (150, 30)),
+            "",
+            object_id="#health_events_button")
+        self.other_clans_events_button = UIImageButton(
+            pygame.Rect((60, 536), (150, 30)),
+            "",
+            object_id="#other_clans_events_button")
+        self.misc_events_button = UIImageButton(
+            pygame.Rect((60, 586), (150, 30)),
+            "",
+            object_id="#misc_events_button")
+
+        if self.event_display_type == "all events":
+            self.all_events_button.disable()
+        elif self.event_display_type == "ceremony events":
+            self.ceremonies_events_button.disable()
+        elif self.event_display_type == "birth death events":
+            self.birth_death_events_button.disable()
+        elif self.event_display_type == "relationship events":
+            self.relationship_events_button.disable()
+        elif self.event_display_type == "health events":
+            self.health_events_button.disable()
+        elif self.event_display_type == "other clans events":
+            self.other_clans_events_button.disable()
+        elif self.event_display_type == "misc events":
+            self.misc_events_button.disable()
+
+        self.misc_alert = None
+        self.other_clans_alert = None
+        self.health_alert = None
+        self.relation_alert = None
+        self.birth_death_alert = None
+        self.ceremony_alert = None
+
+        self.events_list_box = pygame_gui.elements.UITextBox(
+            self.display_events,
+            pygame.Rect((218, 271), (514, 360)),
+            object_id=get_text_box_theme("#events_box"))
+
+        # Display text
+        # self.explain_text = pygame_gui.elements.UITextBox(self.display_text, pygame.Rect((25,110),(750,40)))
+
+        # Draw and disable the correct menu buttons.
+        self.set_disabled_menu_buttons(["events_screen"])
+        self.show_menu_buttons()
+
+    def exit_screen(self):
+        self.timeskip_button.kill()
+        del self.timeskip_button
+        self.toggle_borders_button.kill()
+        del self.toggle_borders_button
+        self.all_events_button.kill()
+        del self.all_events_button
+        self.ceremonies_events_button.kill()
+        del self.ceremonies_events_button
+        if self.ceremony_alert:
+            self.ceremony_alert.kill()
+            del self.ceremony_alert
+        self.birth_death_events_button.kill()
+        del self.birth_death_events_button
+        if self.birth_death_alert:
+            self.birth_death_alert.kill()
+            del self.birth_death_alert
+        self.relationship_events_button.kill()
+        del self.relationship_events_button
+        if self.relation_alert:
+            self.relation_alert.kill()
+            del self.relation_alert
+        self.health_events_button.kill()
+        del self.health_events_button
+        if self.health_alert:
+            self.health_alert.kill()
+            del self.health_alert
+        self.other_clans_events_button.kill()
+        del self.other_clans_events_button
+        if self.other_clans_alert:
+            self.other_clans_alert.kill()
+            del self.other_clans_alert
+        self.misc_events_button.kill()
+        del self.misc_events_button
+        if self.misc_alert:
+            self.misc_alert.kill()
+            del self.misc_alert
+        self.events_frame.kill()
+        del self.events_frame
+        self.events_list_box.kill()
+        del self.events_list_box
+        self.clan_age.kill()
+        del self.clan_age
+        self.heading.kill()
+        del self.heading
+        self.season.kill()
+        del self.season
+        # self.hide_menu_buttons()
+
+    def on_use(self):
+        # What does this do?
+        if game.switches['events_left'] == 0:
+            self.timeskip_button.enable()
+        else:
+            self.timeskip_button.disable()
+
+    def update_list_buttons(self, current_list, current_alert=None):
+        """ handles the disabling and enabling of the list buttons """
+
+        # enable all the buttons
+        self.all_events_button.enable()
+        self.ceremonies_events_button.enable()
+        self.birth_death_events_button.enable()
+        self.relationship_events_button.enable()
+        self.health_events_button.enable()
+        self.other_clans_events_button.enable()
+        self.misc_events_button.enable()
+
+        # disable the current button
+        current_list.disable()
+        if current_alert:
+            current_alert.kill()
+
+    def update_events_display(self):
+        self.events_list_box.set_text(self.display_events)
+        self.season.set_text(f'Current season: {str(game.clan.current_season)}')
+        if game.clan.age == 1:
+            self.clan_age.set_text(f'Clan age: {str(game.clan.age)} moon')
+        if game.clan.age != 1:
+            self.clan_age.set_text(f'Clan age: {str(game.clan.age)} moons')
+
+
+'''class SingleEventScreen(Screens):
 
     def on_use(self):
         # LAYOUT
@@ -22,504 +427,4 @@ class SingleEventScreen(Screens):
 
     def screen_switches(self):
         pass
-
-class RelationshipEventScreen(Screens):
-
-    def on_use(self):
-        a = 0
-        draw_clan_name()
-        verdana.text(
-            'Check this page to see which events are currently happening at the Clan.',
-            ('center', 110))
-
-        verdana.text(f'Current season: {str(game.clan.current_season)}',
-                     ('center', 140))
-
-        if game.clan.age == 1:
-            verdana.text(f'Clan age: {str(game.clan.age)} moon',
-                         ('center', 170))
-        if game.clan.age != 1:
-            verdana.text(f'Clan age: {str(game.clan.age)} moons',
-                         ('center', 170))
-
-        if game.switches['events_left'] == 0:
-            buttons.draw_image_button((310, 205),
-                                      button_name='timeskip_moon',
-                                      text='TIMESKIP ONE MOON',
-                                      size=(180, 30),
-                                      timeskip=True,
-                                      hotkey=[11])
-            if game.switches['timeskip']:
-                game.cur_events_list = []
-                game.relation_events_list = []
-        else:
-            buttons.draw_image_button((310, 205),
-                                      button_name='timeskip_moon',
-                                      text='TIMESKIP ONE MOON',
-                                      available=False,
-                                      size=(180, 30),
-                                )
-        events_class.one_moon()
-
-        # show the clan events
-        buttons.draw_image_button((224, 245),
-                                  button_name='clan_events',
-                                  text='CLAN EVENTS',
-                                  cur_screen='events screen',
-                                  size=(176, 30),
-                                  hotkey=[12]
-                                  )
-
-        buttons.draw_image_button((400, 245),
-                                  button_name='relationship_events',
-                                  text='RELATIONSHIP EVENTS',
-                                  available=False,
-                                  size=(176, 30),
-                                  )
-
-        y_pos = 0
-        if game.relation_events_list is not None and game.relation_events_list != []:
-            rel_events = '\n'.join(game.relation_events_list)
-            verdana.blit_text(rel_events,
-                              (100, 290 + y_pos),
-                              x_limit=700,
-                              line_break=40)
-
-        else:
-            verdana.text("Nothing significant happened this moon.",
-                         ('center', 290 + y_pos))
-        # buttons
-        draw_menu_buttons()
-
-        if len(game.relation_events_list) > game.max_relation_events_displayed:
-            buttons.draw_button((726, 290),
-                                image=game.up,
-                                arrow="UP",
-                                hotkey=[20])
-            buttons.draw_button((726, 630),
-                                image=game.down,
-                                arrow="DOWN",
-                                hotkey=[22])
-
-    def screen_switches(self):
-        cat_profiles()
-
-class EventsScreen(Screens):
-
-    def on_use(self):
-        draw_clan_name()
-        verdana.text(
-            'Check this page to see which events are currently happening at the Clan.',
-            ('center', 110))
-
-        verdana.text(f'Current season: {str(game.clan.current_season)}',
-                     ('center', 140))
-
-        if game.clan.age == 1:
-            verdana.text(f'Clan age: {str(game.clan.age)} moon',
-                         ('center', 170))
-        if game.clan.age != 1:
-            verdana.text(f'Clan age: {str(game.clan.age)} moons',
-                         ('center', 170))
-
-        if game.switches['events_left'] == 0:
-            buttons.draw_image_button((310, 205),
-                                button_name='timeskip_moon',
-                                text='TIMESKIP ONE MOON',
-                                timeskip=True,
-                                size=(180, 30),
-                                hotkey=[11])
-            if game.switches['timeskip']:
-                game.cur_events_list = []
-                game.relation_events_list = []
-        else:
-            buttons.draw_image_button((310, 205),
-                                button_name='timeskip_moon',
-                                text='TIMESKIP ONE MOON',
-                                size=(180, 30),
-                                available=False)
-        if game.clan.closed_borders == False:
-            buttons.draw_button((500,210), button_name='close_borders', text='Close Borders', size = (50, 30), available=True)
-        else:
-            buttons.draw_button((500,210), button_name='open_borders', text='Open Borders', size = (50, 30), available=True)
-
-        events_class.one_moon()
-
-        buttons.draw_image_button((224, 245),
-                                  button_name='clan_events',
-                                  text='CLAN EVENTS',
-                                  cur_screen='events screen',
-                                  size=(176, 30),
-                                  available=False
-                                  )
-        # show the Relationship events
-        buttons.draw_image_button((400, 245),
-                                  button_name='relationship_events',
-                                  text='RELATIONSHIP EVENTS',
-                                  cur_screen='relationship event screen',
-                                  size=(176, 30),
-                                  hotkey=[12]
-                                  )
-
-        y_pos = 0
-        if game.cur_events_list is not None and game.cur_events_list != []:
-            for i in range(len(game.cur_events_list)):
-                if not isinstance(game.cur_events_list[i], str):
-                    game.cur_events_list.remove(game.cur_events_list[i])
-                    break
-                    
-            events = '\n'.join(game.cur_events_list)
-            verdana.blit_text(events,
-                              (100, 290 + y_pos),
-                              x_limit=700,
-                              line_break=40)
-
-            #for x in range(min(len(game.cur_events_list), game.max_events_displayed)):
-            #    if "Clan has no " in game.cur_events_list[x]:
-            #        verdana_red.text(game.cur_events_list[x],
-            #                         ('center', 290 + a * 30))
-            #    else:
-            #        verdana.blit_text(game.cur_events_list[x],
-            #                          (100, 290 + a * 30),
-            #                          x_limit=700)
-            #    a += 1
-
-        else:
-            verdana.text("Nothing significant happened this moon.",
-                         ('center', 290 + y_pos))
-
-        draw_menu_buttons()
-        if len(game.cur_events_list) > game.max_events_displayed:
-            buttons.draw_button((726, 290),
-                                image=game.up,
-                                arrow="UP",
-                                hotkey=[20])
-            buttons.draw_button((726, 630),
-                                image=game.down,
-                                arrow="DOWN",
-                                hotkey=[22])
-
-class PatrolEventScreen(Screens):
-
-    event_bg = pygame.image.load("resources/images/patrol_event_frame.png").convert_alpha()
-    info_bg = pygame.image.load("resources/images/patrol_info.png").convert_alpha()
-    image_frame = pygame.image.load("resources/images/patrol_sprite_frame.png").convert_alpha()
-
-    def get_list_text(self, patrol_list):
-        if not patrol_list:
-            return "None"
-        # Removes duplicates.
-        patrol_set = list(patrol_list)
-        return ", ".join(patrol_set)
-
-    def on_use(self):
-        # USER INTERFACE
-        draw_clan_name()
-        screen.blit(PatrolEventScreen.event_bg, (381, 165))
-        screen.blit(PatrolEventScreen.info_bg, (90, 456))
-        screen.blit(PatrolEventScreen.image_frame, (65, 140))
-
-        if game.switches['event'] == 0:
-            patrol.add_patrol_cats()
-            possible_events = patrol.get_possible_patrols(
-                game.clan.current_season,
-                game.clan.biome,
-                game.clan.all_clans,
-                game.settings.get('disasters')
-            )
-            patrol.patrol_event = choice(possible_events)
-
-            if patrol.patrol_event.win_trait is not None:
-                win_trait = patrol.patrol_event.win_trait
-                patrol_trait = patrol.patrol_traits.index(win_trait)
-                patrol.patrol_stat_cat = patrol.patrol_cats[patrol_trait]
-
-            game.switches['event'] = -1
-
-        if game.switches['event'] == -1:
-            intro_text = patrol.patrol_event.intro_text
-            patrol_size = len(patrol.patrol_cats)
-
-            # adjusting text for solo patrols
-            if patrol_size < 2:
-                intro_text = intro_text.replace('Your patrol',
-                                                str(patrol.patrol_leader.name))
-                intro_text = intro_text.replace('The patrol',
-                                                str(patrol.patrol_leader.name))
-                intro_text = intro_text.replace('o_c_n', str(patrol.other_clan.name) + 'Clan')
-                intro_text = intro_text.replace('c_n', str(game.clan.name) + 'Clan')
-                if patrol.patrol_stat_cat is not None:
-                    intro_text = intro_text.replace('s_c', str(patrol.patrol_stat_cat.name))
-            intro_text = patrol.patrol_event.intro_text
-            intro_text = intro_text.replace('r_c',
-                                            str(patrol.patrol_random_cat.name))
-            intro_text = intro_text.replace('p_l',
-                                            str(patrol.patrol_leader.name))
-            intro_text = intro_text.replace('o_c_n', str(patrol.other_clan.name) + 'Clan')
-            intro_text = intro_text.replace('c_n', str(game.clan.name) + 'Clan')
-
-            if patrol.patrol_stat_cat is not None:
-                intro_text = intro_text.replace('s_c', str(patrol.patrol_stat_cat.name))
-
-            verdana_dark.blit_text(intro_text,
-                              (390, 185),
-                              x_limit=715)
-
-            if game.switches['patrol_done'] is False:
-                buttons.draw_button((550, 433),
-                                    image='buttons/proceed',
-                                    text='Proceed',
-                                    patrol_done=True,
-                                    event=-2)
-                buttons.draw_button((550, 461),
-                                    image='buttons/do_not_proceed',
-                                    text='Do Not Proceed',
-                                    patrol_done=True,
-                                    event=2)
-
-                if patrol.patrol_event.patrol_id in [500, 501, 502, 503, 504, 505, 510, 800, 801, 802, 803, 804, 805]:
-                    buttons.draw_button((550, 491),
-                                        image='buttons/antagonize',
-                                        text='Antagonize',
-                                        patrol_done=True,
-                                        event=3)
-
-        if game.switches['event'] == -2:
-            patrol.calculate_success()
-            game.switches['event'] = 1
-
-        elif game.switches['event'] == 3:
-            patrol.calculate_success_antagonize()
-            game.switches['event'] = 4
-
-        if game.switches['event'] > 0:
-            if game.switches['event'] == 1:
-                if patrol.success:
-                    success_text = patrol.patrol_event.success_text
-                    patrol_size = len(patrol.patrol_cats)
-
-                    # adjusting text for solo patrols
-                    if patrol_size < 2:
-                        success_text = success_text.replace('Your patrol',
-                                                        str(patrol.patrol_leader.name))
-                        success_text = success_text.replace('The patrol',
-                                                        str(patrol.patrol_leader.name))
-                        success_text = success_text.replace(
-                        'o_c_n', str(patrol.other_clan.name) + 'Clan')
-                        success_text = success_text.replace(
-                            'c_n', str(game.clan.name) + 'Clan')
-                        if patrol.patrol_stat_cat is not None:
-                            success_text = success_text.replace(
-                            's_c', str(patrol.patrol_stat_cat.name))
-                    success_text = success_text.replace(
-                        'r_c', str(patrol.patrol_random_cat.name))
-                    success_text = success_text.replace(
-                        'p_l', str(patrol.patrol_leader.name))
-                    success_text = success_text.replace(
-                        'o_c_n', str(patrol.other_clan.name) + 'Clan')
-                    success_text = success_text.replace(
-                        'c_n', str(game.clan.name) + 'Clan')
-
-                    if patrol.patrol_stat_cat is not None:
-                        success_text = success_text.replace(
-                        's_c', str(patrol.patrol_stat_cat.name))
-
-                    verdana_dark.blit_text(success_text,
-                                      (390, 185),
-                                      x_limit=715)
-
-                else:
-                    fail_text = patrol.patrol_event.fail_text
-                    patrol_size = len(patrol.patrol_cats)
-
-                    # adjusting text for solo patrols
-                    if patrol_size < 2:
-                        fail_text = fail_text.replace('Your patrol',
-                                                            str(patrol.patrol_leader.name))
-                        fail_text = fail_text.replace('The patrol',
-                                                            str(patrol.patrol_leader.name))
-                        fail_text = fail_text.replace(
-                        'o_c_n', str(patrol.other_clan.name) + 'Clan')
-                        fail_text = fail_text.replace(
-                        'c_n', str(game.clan.name) + 'Clan')
-                        if patrol.patrol_stat_cat is not None:
-                            fail_text = fail_text.replace(
-                            's_c', str(patrol.patrol_stat_cat.name))
-                    fail_text = fail_text.replace(
-                        'r_c', str(patrol.patrol_random_cat.name))
-                    fail_text = fail_text.replace(
-                        'p_l', str(patrol.patrol_leader.name))
-                    fail_text = fail_text.replace(
-                        'o_c_n', str(patrol.other_clan.name) + 'Clan')
-                    fail_text = fail_text.replace(
-                        'c_n', str(game.clan.name) + 'Clan')
-
-                    if patrol.patrol_stat_cat is not None:
-                        fail_text = fail_text.replace(
-                        's_c', str(patrol.patrol_stat_cat.name))
-
-                    verdana_dark.blit_text(fail_text,
-                                      (390, 185),
-                                      x_limit=715)
-
-            elif game.switches['event'] == 2:
-                decline_text = patrol.patrol_event.decline_text
-                patrol_size = len(patrol.patrol_cats)
-
-                # adjusting text for solo patrols
-                if patrol_size < 2:
-                    decline_text = decline_text.replace('Your patrol',
-                                                        str(patrol.patrol_leader.name))
-                    decline_text = decline_text.replace('The patrol',
-                                                        str(patrol.patrol_leader.name))
-                    decline_text = decline_text.replace(
-                        'o_c_n', str(patrol.other_clan.name) + 'Clan')
-                    decline_text = decline_text.replace(
-                        'c_n', str(game.clan.name) + 'Clan')
-                decline_text = decline_text.replace(
-                    'r_c', str(patrol.patrol_random_cat.name))
-                decline_text = decline_text.replace(
-                    'p_l', str(patrol.patrol_leader.name))
-                decline_text = decline_text.replace(
-                        'o_c_n', str(patrol.other_clan.name) + 'Clan')
-                decline_text = decline_text.replace(
-                        'c_n', str(game.clan.name) + 'Clan')
-
-                if patrol.patrol_stat_cat is not None:
-                        decline_text = decline_text.replace(
-                        's_c', str(patrol.patrol_stat_cat.name))
-
-                verdana_dark.blit_text(decline_text,
-                                  (390, 185),
-                                  x_limit=715)
-
-            elif game.switches['event'] == 4:
-                antagonize_text = patrol.patrol_event.antagonize_text
-                patrol_size = len(patrol.patrol_cats)
-
-                # adjusting text for solo patrols
-                if patrol.success:
-                    if patrol_size < 2:  # adjusting text for solo patrols
-                        antagonize_text = antagonize_text.replace('Your patrol', str(patrol.patrol_leader.name))
-                        antagonize_text = antagonize_text.replace('The patrol', str(patrol.patrol_leader.name))
-                        antagonize_text = antagonize_text.replace(
-                            'o_c_n', str(patrol.other_clan.name) + 'Clan')
-                        antagonize_text = antagonize_text.replace(
-                            'c_n', str(game.clan.name) + 'Clan')
-                        if patrol.patrol_stat_cat is not None:
-                            antagonize_text = antagonize_text.replace(
-                            's_c', str(patrol.patrol_stat_cat.name))
-                    antagonize_text = antagonize_text.replace(
-                        'r_c', str(patrol.patrol_random_cat.name))
-                    antagonize_text = antagonize_text.replace(
-                        'p_l', str(patrol.patrol_leader.name))
-                    antagonize_text = antagonize_text.replace(
-                            'o_c_n', str(patrol.other_clan.name) + 'Clan')
-                    antagonize_text = antagonize_text.replace(
-                            'c_n', str(game.clan.name) + 'Clan')
-
-                    if patrol.patrol_stat_cat is not None:
-                            antagonize_text = antagonize_text.replace(
-                            's_c', str(patrol.patrol_stat_cat.name))
-
-                else:
-                    antagonize_fail_text = patrol.patrol_event.antagonize_fail_text
-
-                    # adjusting text for solo patrols
-                    if patrol_size < 2:
-                        antagonize_fail_text = antagonize_fail_text.replace('Your patrol',
-                                                            str(patrol.patrol_leader.name))
-                        antagonize_fail_text = antagonize_fail_text.replace('The patrol',
-                                                            str(patrol.patrol_leader.name))
-                        antagonize_fail_text = antagonize_fail_text.replace(
-                            'o_c_n', str(patrol.other_clan.name) + 'Clan')
-                        antagonize_fail_text = antagonize_fail_text.replace(
-                            'c_n', str(game.clan.name) + 'Clan')
-                        if patrol.patrol_stat_cat is not None:
-                            antagonize_fail_text = antagonize_fail_text.replace(
-                            's_c', str(patrol.patrol_stat_cat.name))
-                    antagonize_fail_text = antagonize_fail_text.replace(
-                        'r_c', str(patrol.patrol_random_cat.name))
-                    antagonize_fail_text = antagonize_fail_text.replace(
-                        'p_l', str(patrol.patrol_leader.name))
-                    antagonize_fail_text = antagonize_fail_text.replace(
-                            'o_c_n', str(patrol.other_clan.name) + 'Clan')
-                    antagonize_fail_text = antagonize_fail_text.replace(
-                            'c_n', str(game.clan.name) + 'Clan')
-
-                    if patrol.patrol_stat_cat is not None:
-                            antagonize_fail_text = antagonize_fail_text.replace(
-                            's_c', str(patrol.patrol_stat_cat.name))
-
-                verdana_dark.blit_text(antagonize_text,
-                                  (390, 185),
-                                  x_limit=715)
-
-            if game.switches['patrol_done'] is True:
-                buttons.draw_image_button((400, 137),
-                                          button_name='back_to_clan',
-                                          text='Return to Clan',
-                                          size=(162, 30),
-                                          cur_screen='clan screen',
-                                          patrol_done=False)
-                buttons.draw_image_button((560, 137),
-                                          button_name='patrol_again',
-                                          text='Patrol Again',
-                                          size=(162, 30),
-                                          cur_screen='patrol screen',
-                                          patrol_done=False)
-
-                buttons.draw_button((550, 433),
-                                    image='buttons/proceed',
-                                    text='Proceed',
-                                    patrol_done=True,
-                                    available=False,
-                                    event=-2)
-                buttons.draw_button((550, 461),
-                                    image='buttons/do_not_proceed',
-                                    text='Do Not Proceed',
-                                    patrol_done=True,
-                                    available=False,
-                                    event=2)
-        pos_x = 0
-        pos_y = 0
-        for u in range(6):
-            if u < len(patrol.patrol_cats):
-                draw(patrol.patrol_cats[u],
-                     (400 + pos_x, 475 + pos_y))
-                pos_x += 50
-                if pos_x > 50:
-                    pos_y += 50
-                    pos_x = 0
-
-        # TEXT CATEGORIES AND CHECKING FOR REPEATS
-        members = []
-        skills = []
-        traits = []
-        for x in patrol.patrol_names:
-            if x not in patrol.patrol_leader_name:
-                members.append(x)
-        for x in patrol.patrol_skills:
-            if x not in skills:
-                skills.append(x)
-        for x in patrol.patrol_traits:
-            if x not in traits:
-                traits.append(x)
-
-
-        verdana_small_dark.blit_text(
-                                f'patrol leader: {patrol.patrol_leader_name} \n'
-                                f'patrol members: {self.get_list_text(members)} \n'
-                                f'patrol skills: {self.get_list_text(skills)} \n'
-                                f'patrol traits: {self.get_list_text(traits)}',
-                                (105, 460),
-                                x_limit=345,
-                                line_break=25)
-
-        draw_menu_buttons()
-
-    def screen_switches(self):
-        game.switches['event'] = 0
-        game.switches['patrol_done'] = False
-        cat_profiles()
-
+'''

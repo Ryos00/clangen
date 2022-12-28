@@ -4,14 +4,56 @@ import os
 directory = os.path.dirname(__file__)
 if directory:
     os.chdir(directory)
-from scripts.game_structure.text import verdana
-from scripts.game_structure.buttons import buttons
 from scripts.game_structure.load_cat import *
 from scripts.cat.sprites import sprites
-#from scripts.world import load_map
 from scripts.clan import clan_class
+import pygame_gui
+import pygame
 
-# import all screens for initialization
+# from scripts.world import load_map
+
+pygame.init()
+
+# initialize pygame_gui manager, and load themes
+manager = pygame_gui.ui_manager.UIManager((800, 700), 'resources/defaults.json')
+manager.add_font_paths(
+    font_name='notosans',
+    regular_path='resources/fonts/NotoSans-Medium.ttf',
+    bold_path='resources/fonts/NotoSans-ExtraBold.ttf',
+    italic_path='resources/fonts/NotoSans-MediumItalic.ttf',
+    bold_italic_path='resources/fonts/NotoSans-ExtraBoldItalic.ttf'
+)
+manager.preload_fonts([
+    {'name': 'notosans', 'point_size': 11, 'style': 'regular'},
+    {'name': 'notosans', 'point_size': 11, 'style': 'bold'},
+    {'name': 'notosans', 'point_size': 11, 'style': 'italic'},
+    {'name': 'notosans', 'point_size': 11, 'style': 'bold_italic'},
+    {'name': 'notosans', 'point_size': 13, 'style': 'regular'},
+    {'name': 'notosans', 'point_size': 13, 'style': 'bold'},
+    {'name': 'notosans', 'point_size': 13, 'style': 'italic'},
+    {'name': 'notosans', 'point_size': 13, 'style': 'bold_italic'},
+    {'name': 'notosans', 'point_size': 15, 'style': 'regular'},
+    {'name': 'notosans', 'point_size': 15, 'style': 'bold'},
+    {'name': 'notosans', 'point_size': 15, 'style': 'italic'},
+    {'name': 'notosans', 'point_size': 15, 'style': 'bold_italic'},
+    {'name': 'notosans', 'point_size': 17, 'style': 'regular'},
+    {'name': 'notosans', 'point_size': 17, 'style': 'bold'},
+    {'name': 'notosans', 'point_size': 17, 'style': 'italic'},
+    {'name': 'notosans', 'point_size': 17, 'style': 'bold_italic'},
+    {'name': 'notosans', 'point_size': 20, 'style': 'regular'},
+    {'name': 'notosans', 'point_size': 20, 'style': 'bold'},
+    {'name': 'notosans', 'point_size': 20, 'style': 'italic'},
+    {'name': 'notosans', 'point_size': 20, 'style': 'bold_italic'},
+])
+manager.get_theme().load_theme('resources/buttons.json')
+manager.get_theme().load_theme('resources/text_boxes.json')
+manager.get_theme().load_theme('resources/text_boxes_dark.json')
+manager.get_theme().load_theme('resources/vertical_scroll_bar.json')
+manager.get_theme().load_theme('resources/windows.json')
+manager.get_theme().load_theme('resources/tool_tips.json')
+
+
+# import all screens for initialization (Note - must be done after pygame_gui manager is created)
 from scripts.screens.all_screens import *
 
 # P Y G A M E
@@ -23,16 +65,15 @@ if not os.path.exists('saves/clanlist.txt'):
     os.makedirs('saves', exist_ok=True)
     with open('saves/clanlist.txt', 'w') as write_file:
         write_file.write('')
-with open('saves/clanlist.txt', 'r') as read_file:
-    clan_list = read_file.read()
-    if_clans = len(clan_list.strip())
-if if_clans > 0:
-    game.switches['clan_list'] = clan_list.split('\n')
+
+clan_list = game.read_clans()
+if clan_list:
+    game.switches['clan_list'] = clan_list
     try:
         load_cats()
         clan_class.load_clan()
     except Exception as e:
-        print("\nERROR MESSAGE:\n",e,"\n")
+        print("\nERROR MESSAGE:\n", e, "\n")
         if not game.switches['error_message']:
             game.switches[
                 'error_message'] = 'There was an error loading the cats file!'
@@ -52,180 +93,26 @@ if not os.path.exists('saves/settings.txt'):
         write_file.write('')
 game.load_settings()
 
-# reset brightness to allow for dark mode to not look crap
-verdana.change_text_brightness()
-buttons.change_button_brightness()
 sprites.load_scars()
 
-pygame.event.set_allowed([pygame.KEYDOWN, pygame.QUIT, pygame.MOUSEBUTTONDOWN])
-
+start_screen.screen_switches()
 while True:
-    if game.settings['dark mode']:
-        screen.fill((57, 50, 36))
-    else:
-        screen.fill((206, 194, 168))
-
-    if game.settings_changed:
-        verdana.change_text_brightness()
-        buttons.change_button_brightness()
+    time_delta = clock.tick(30) / 1000.0
+    if game.switches['cur_screen'] not in ['start screen']:
+        if game.settings['dark mode']:
+            screen.fill((57, 50, 36))
+        else:
+            screen.fill((206, 194, 168))
 
     mouse.check_pos()
 
+    # Draw screens
+    # This occurs before events are handled to stop pygame_gui buttons from blinking.
+    game.all_screens[game.current_screen].on_use()
+
     # EVENTS
     for event in pygame.event.get():
-        if game.current_screen == 'profile screen':
-            previous_cat = 0
-            next_cat = 0
-            the_cat = Cat.all_cats.get(game.switches['cat'],
-                                             game.clan.instructor)
-            for check_cat in Cat.all_cats:
-                if Cat.all_cats[check_cat].ID == the_cat.ID:
-                    next_cat = 1
-                if next_cat == 0 and Cat.all_cats[
-                        check_cat].ID != the_cat.ID and Cat.all_cats[
-                            check_cat].dead == the_cat.dead and Cat.all_cats[
-                                check_cat].ID != game.clan.instructor.ID and not Cat.all_cats[
-                                    check_cat].exiled:
-                    previous_cat = Cat.all_cats[check_cat].ID
-                elif next_cat == 1 and Cat.all_cats[
-                        check_cat].ID != the_cat.ID and Cat.all_cats[
-                            check_cat].dead == the_cat.dead and Cat.all_cats[
-                                check_cat].ID != game.clan.instructor.ID and not Cat.all_cats[
-                                    check_cat].exiled:
-                    next_cat = Cat.all_cats[check_cat].ID
-                elif int(next_cat) > 1:
-                    break
-            if next_cat == 1:
-                next_cat = 0
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT and previous_cat != 0:
-                    game.switches['cat'] = previous_cat
-                if event.key == pygame.K_RIGHT and next_cat != 0:
-                    game.switches['cat'] = next_cat
-                if event.key == pygame.K_0:
-                    game.switches['cur_screen'] = 'list screen'
-                if event.key == pygame.K_1:
-                    game.switches['cur_screen'] = 'options screen'
-                    game.switches['last_screen'] = 'profile screen'
-
-        if game.current_screen == 'make clan screen' and game.switches[
-                'clan_name'] == '' and event.type == pygame.KEYDOWN:
-            if event.unicode.isalpha(
-            ):  # only allows alphabet letters as an input
-                if len(
-                        game.switches['naming_text']
-                ) < game.max_name_length:  # can't type more than max name length
-                    game.switches['naming_text'] += event.unicode
-            elif event.key == pygame.K_BACKSPACE:  # delete last character of clan name
-                game.switches['naming_text'] = game.switches[
-                    'naming_text'][:-1]
-
-        if game.current_screen == 'events screen' and len(
-                game.cur_events_list) > game.max_events_displayed:
-            max_scroll_direction = len(
-                game.cur_events_list) - game.max_events_displayed
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP and game.event_scroll_ct < 0:
-                    game.cur_events_list.insert(0, game.cur_events_list.pop())
-                    game.event_scroll_ct += 1
-                if event.key == pygame.K_DOWN and abs(
-                        game.event_scroll_ct) < max_scroll_direction:
-                    game.cur_events_list.append(game.cur_events_list.pop(0))
-                    game.event_scroll_ct -= 1
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 4 and game.event_scroll_ct < 0:
-                    game.cur_events_list.insert(0, game.cur_events_list.pop())
-                    game.event_scroll_ct += 1
-                if event.button == 5 and abs(
-                        game.event_scroll_ct) < max_scroll_direction:
-                    game.cur_events_list.append(game.cur_events_list.pop(0))
-                    game.event_scroll_ct -= 1
-
-        if game.current_screen == 'relationship event screen' and len(
-                game.relation_events_list) > game.max_relation_events_displayed:
-            max_scroll_direction = len(
-                game.relation_events_list) - game.max_relation_events_displayed
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP and game.relation_scroll_ct < 0:
-                    game.relation_events_list.insert(0, game.relation_events_list.pop())
-                    game.relation_scroll_ct += 1
-                if event.key == pygame.K_DOWN and abs(
-                        game.relation_scroll_ct) < max_scroll_direction:
-                    game.relation_events_list.append(game.relation_events_list.pop(0))
-                    game.relation_scroll_ct -= 1
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 4 and game.relation_scroll_ct < 0:
-                    game.relation_events_list.insert(0, game.relation_events_list.pop())
-                    game.relation_scroll_ct += 1
-                if event.button == 5 and abs(
-                        game.relation_scroll_ct) < max_scroll_direction:
-                    game.relation_events_list.append(game.relation_events_list.pop(0))
-                    game.relation_scroll_ct -= 1
-
-        if game.current_screen == 'allegiances screen' and len(
-                game.allegiance_list) > game.max_allegiance_displayed:
-            max_scroll_direction = len(
-                game.allegiance_list) - game.max_allegiance_displayed
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP and game.allegiance_scroll_ct < 0:
-                    game.allegiance_list.insert(0, game.allegiance_list.pop())
-                    game.allegiance_scroll_ct += 1
-                if event.key == pygame.K_DOWN and abs(
-                        game.allegiance_scroll_ct) < max_scroll_direction:
-                    game.allegiance_list.append(game.allegiance_list.pop(0))
-                    game.allegiance_scroll_ct -= 1
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 4 and game.allegiance_scroll_ct < 0:
-                    game.allegiance_list.insert(0, game.allegiance_list.pop())
-                    game.allegiance_scroll_ct += 1
-                if event.button == 5 and abs(
-                        game.allegiance_scroll_ct) < max_scroll_direction:
-                    game.allegiance_list.append(game.allegiance_list.pop(0))
-                    game.allegiance_scroll_ct -= 1
-
-        if game.current_screen == 'patrol screen':
-            random_options = []
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_9:
-                    for u in range(12):
-                        i_max = len(game.patrol_cats)
-                        if u < i_max:
-                            game.switches['current_patrol'].append(
-                                game.patrol_cats[u])
-
-        if game.current_screen == 'change name screen' and game.switches[
-                'change_name'] == '' and event.type == pygame.KEYDOWN:
-            if event.unicode.isalpha() or event.unicode.isspace(
-            ):  # only allows alphabet letters/space as an input
-                if len(game.switches['naming_text']
-                       ) < 20:  # can't type more than max name length
-                    game.switches['naming_text'] += event.unicode
-            elif event.key == pygame.K_BACKSPACE:  # delete last character
-                game.switches['naming_text'] = game.switches[
-                    'naming_text'][:-1]
-
-        if game.current_screen == 'change gender screen' and game.switches[
-                'change_name'] == '' and event.type == pygame.KEYDOWN:
-            if event.unicode.isalpha() or event.unicode.isspace(
-            ):  # only allows alphabet letters/space as an input
-                if len(game.switches['naming_text']
-                       ) < 20:  # can't type more than max name length
-                    game.switches['naming_text'] += event.unicode
-            elif event.key == pygame.K_BACKSPACE:  # delete last character
-                game.switches['naming_text'] = game.switches[
-                    'naming_text'][:-1]
-
-        if game.current_screen in [
-                'list screen', 'starclan screen', 'dark forest screen', 'other screen', 'relationship screen'
-        ] and event.type == pygame.KEYDOWN:
-            if event.unicode.isalpha() or event.unicode.isspace(
-            ):  # only allows alphabet letters/space as an input
-                if len(game.switches['search_text']
-                       ) < 20:  # can't type more than max name length
-                    game.switches['search_text'] += event.unicode
-            elif event.key == pygame.K_BACKSPACE:  # delete last character
-                game.switches['search_text'] = game.switches[
-                    'search_text'][:-1]
+        game.all_screens[game.current_screen].handle_event(event)
 
         if event.type == pygame.QUIT:
             # close pygame
@@ -237,67 +124,25 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             game.clicked = True
 
+        # F2 turns toggles visual debug mode for pygame_gui, allowed for easier bug fixes.
         if event.type == pygame.KEYDOWN:
-            game.keyspressed = []
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_0]:
-                game.keyspressed.append(0)
-            if keys[pygame.K_1]:
-                game.keyspressed.append(1)
-            if keys[pygame.K_2]:
-                game.keyspressed.append(2)
-            if keys[pygame.K_3]:
-                game.keyspressed.append(3)
-            if keys[pygame.K_4]:
-                game.keyspressed.append(4)
-            if keys[pygame.K_5]:
-                game.keyspressed.append(5)
-            if keys[pygame.K_6]:
-                game.keyspressed.append(6)
-            if keys[pygame.K_7]:
-                game.keyspressed.append(7)
-            if keys[pygame.K_8]:
-                game.keyspressed.append(8)
-            if keys[pygame.K_9]:
-                game.keyspressed.append(9)
-            if keys[pygame.K_KP0]:
-                game.keyspressed.append(10)
-            if keys[pygame.K_KP1]:
-                game.keyspressed.append(11)
-            if keys[pygame.K_KP2]:
-                game.keyspressed.append(12)
-            if keys[pygame.K_KP3]:
-                game.keyspressed.append(13)
-            if keys[pygame.K_KP4]:
-                game.keyspressed.append(14)
-            if keys[pygame.K_KP5]:
-                game.keyspressed.append(15)
-            if keys[pygame.K_KP6]:
-                game.keyspressed.append(16)
-            if keys[pygame.K_KP7]:
-                game.keyspressed.append(17)
-            if keys[pygame.K_KP8]:
-                game.keyspressed.append(18)
-            if keys[pygame.K_KP9]:
-                game.keyspressed.append(19)
-            if keys[pygame.K_UP]:
-                game.keyspressed.append(20)
-            if keys[pygame.K_RIGHT]:
-                game.keyspressed.append(21)
-            if keys[pygame.K_DOWN]:
-                game.keyspressed.append(22)
-            if keys[pygame.K_LEFT]:
-                game.keyspressed.append(23)
+            if event.key == pygame.K_F2:
+                if not manager.visual_debug_active:
+                    manager.set_visual_debug_mode(True)
+                else:
+                    manager.set_visual_debug_mode(False)
 
-    # SCREENS
-    game.all_screens[game.current_screen].on_use()
+        manager.process_events(event)
+
+    manager.update(time_delta)
 
     # update
     game.update_game()
     if game.switch_screens:
+        game.all_screens[game.last_screen_forupdate].exit_screen()
         game.all_screens[game.current_screen].screen_switches()
         game.switch_screens = False
     # END FRAME
-    clock.tick(30)
+    manager.draw_ui(screen)
 
     pygame.display.update()

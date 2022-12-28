@@ -3,7 +3,8 @@ from .game_essentials import *
 
 from scripts.cat.cats import Cat
 from scripts.cat.pelts import choose_pelt
-from scripts.utility import update_sprite
+from scripts.utility import update_sprite, is_iterable
+
 
 def load_cats():
     directory = 'saves/' + game.switches['clan_list'][0] + '/clan_cats.json'
@@ -66,18 +67,37 @@ def json_load():
         new_cat.tortiepattern = cat["tortie_pattern"]
         new_cat.skin = cat["skin"]
         new_cat.skill = cat["skill"]
-        new_cat.specialty = cat["specialty"]
-        new_cat.specialty2 = cat["specialty2"]
+        new_cat.scars = cat["scars"] if "scars" in cat else []
+
+        # converting old specialty saves into new scar parameter
+        if "specialty" in cat or "specialty2" in cat:
+            if cat["specialty"] is not None:
+                new_cat.scars.append(cat["specialty"])
+            if cat["specialty2"] is not None:
+                new_cat.scars.append(cat["specialty2"])
+
         new_cat.accessory = cat["accessory"]
         new_cat.mate = cat["mate"]
         new_cat.dead = cat["dead"]
+        new_cat.died_by = cat["died_by"] if "died_by" in cat else []
         new_cat.age_sprites['dead'] = cat["spirit_dead"]
         new_cat.experience = cat["experience"]
         new_cat.dead_for = cat["dead_moons"]
         new_cat.apprentice = cat["current_apprentice"]
         new_cat.former_apprentices = cat["former_apprentices"]
+        new_cat.possible_scar = cat["possible_scar"] if "possible_scar" in cat else None
         new_cat.scar_event = cat["scar_event"] if "scar_event" in cat else []
+        new_cat.death_event = cat["death_event"] if "death_event" in cat else []
         new_cat.df = cat["df"] if "df" in cat else False
+        new_cat.corruption = cat["corruption"] if "corruption" in cat else 0
+        new_cat.life_givers = cat["life_givers"] if "life_givers" in cat else []
+        new_cat.known_life_givers = cat["known_life_givers"] if "known_life_givers" in cat else []
+        new_cat.virtues = cat["virtues"] if "virtues" in cat else []
+        new_cat.outside = cat["outside"] if "outside" in cat else False
+        new_cat.retired = cat["retired"] if "retired" in cat else False
+        new_cat.faded_offspring = cat["faded_offspring"] if "faded_offspring" in cat else []
+        new_cat.opacity = cat["opacity"] if "opacity" in cat else 100
+        new_cat.prevent_fading = cat["prevent_fading"] if "prevent_fading" in cat else False
         all_cats.append(new_cat)
 
     # replace cat ids with cat objects and add other needed variables

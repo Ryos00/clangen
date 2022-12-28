@@ -1,3 +1,5 @@
+from random import choice
+
 import ujson
 
 def get_thoughts(cat, other_cat):
@@ -8,8 +10,10 @@ def get_thoughts(cat, other_cat):
         return thoughts
 
     # actions or thoughts for all cats. These switch either every moon or every time the game is re-opened
-    if cat.is_alive() and not cat.exiled:
+    if cat.is_alive() and not cat.outside:
         thoughts = get_alive_thoughts(cat, other_cat)
+    elif cat.is_alive() and cat.outside and not cat.exiled:
+        thoughts = get_outside_thoughts(cat, other_cat)
     elif cat.is_alive() and cat.exiled:
         thoughts = get_exile_thoughts(cat, other_cat)
     elif cat.df:
@@ -52,7 +56,7 @@ def get_dead_thoughts(cat, other_cat):
             thoughts += [
                 'Hoped that they were a good leader',
                 'Wishes that they had ten lives',
-                'Is proud of their clan from StarClan',
+                'Is proud of their Clan from StarClan',
                 'Is pleased to see the new direction the Clan is heading in',
                 'Still frets over their beloved former Clanmates from afar'
             ]
@@ -354,6 +358,8 @@ def get_elder_thoughts(cat, other_cat):
 
     # trait specific medicine cat apprentice thoughts    
     trait = cat.trait
+    if trait in cat.kit_traits:
+        cat.trait = choice(cat.traits)
     thoughts += ELDER_TRAITS[trait]
 
     return thoughts
@@ -588,6 +594,25 @@ def get_exile_thoughts(cat, other_cat):
     
     return thoughts
 
+def get_outside_thoughts(cat, other_cat):
+    thoughts = []
+    thoughts += OUTSIDE['lost']['general']
+    if cat.age == 'kitten':
+        thoughts += OUTSIDE['lost']['kitten']
+    elif cat.age == 'adolescent':
+        thoughts += OUTSIDE['lost']['apprentice']
+    elif cat.age in ['young adult', 'adult', 'senior adult']:
+        thoughts += OUTSIDE['lost']['warrior']
+    elif cat.status == 'medicine cat' or cat.status == 'medicine cat apprentice':
+        thoughts += OUTSIDE['lost']['med']
+    elif cat.status == 'deputy':
+        thoughts += OUTSIDE['lost']['deputy']
+    elif cat.status == 'leader':
+        thoughts += OUTSIDE['lost']['leader']
+    elif cat.age == 'elder':
+        thoughts += OUTSIDE['lost']['elder']
+    return thoughts
+
 # ---------------------------------------------------------------------------- #
 #                             load general thoughts                            #
 # ---------------------------------------------------------------------------- #
@@ -605,6 +630,10 @@ with open(f"{resource_directory}cat_alive_general.json", 'r') as read_file:
 EXILE = None
 with open(f"{resource_directory}exile.json", 'r') as read_file:
     EXILE = ujson.loads(read_file.read())
+    
+OUTSIDE = None
+with open(f"{resource_directory}other.json", 'r') as read_file:
+    OUTSIDE = ujson.loads(read_file.read())
 
 FAMILY = None
 with open(f"{resource_directory}family.json", 'r') as read_file:

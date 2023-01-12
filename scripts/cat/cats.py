@@ -331,8 +331,13 @@ class Cat():
 
         # NAME
         if self.pelt is not None:
-            self.name = Name(status, prefix, suffix, self.pelt.colour,
-                             self.eye_colour, self.pelt.name, self.tortiepattern)
+            self.name = Name(status,
+                             prefix,
+                             suffix,
+                             self.pelt.colour,
+                             self.eye_colour,
+                             self.pelt.name,
+                             self.tortiepattern)
         else:
             self.name = Name(status, prefix, suffix, eyes=self.eye_colour)
 
@@ -1937,8 +1942,6 @@ class Cat():
                 self.relationships[self.mate] = Relationship(self, mate)
 
         self.mate = None
-        if self.mate in Cat.all_cats:
-            Cat.all_cats[self.mate].mate = None
 
     def set_mate(self, other_cat):
         """Assigns other_cat as mate to self."""
@@ -2230,40 +2233,6 @@ class Cat():
             return cat.moons
 
 
-        # Sillotette sprite
-        if self.age in ['kitten']:
-            file_name = "faded_kitten.png"
-        elif self.age in ['adult', 'young adult', 'senior adult']:
-            file_name = "faded_adult.png"
-        elif self.age in ["adolescent"]:
-            file_name = "faded_adol.png"
-        else:
-            file_name = "faded_elder.png"
-
-        self.sprite = image_cache.load_image(f"sprites/faded/{file_name}").convert_alpha()
-
-    @staticmethod
-    def load_faded_cat(cat):
-        """Loads a faded cat, returning the cat object. This object is saved nowhere else. """
-        print("loading faded cat")
-        try:
-            with open('saves/' + game.clan.name + '/faded_cats/' + cat + ".json", 'r') as read_file:
-                cat_info = ujson.loads(read_file.read())
-        except:
-            print("Error in loading faded cat")
-            return False
-
-        cat_ob = Cat(ID=cat_info["ID"], prefix=cat_info["name_prefix"], suffix=cat_info["name_suffix"],
-                     status=cat_info["status"], moons=cat_info["moons"], faded=True)
-        if cat_info["parent1"]:
-            cat_ob.parent1 = cat_info["parent1"]
-        if cat_info["parent2"]:
-            cat_ob.parent2 = cat_info["parent2"]
-        cat_ob.paralyzed = cat_info["paralyzed"]
-        cat_ob.faded_offspring = cat_info["faded_offspring"]
-        cat_ob.faded = True
-
-        return cat_ob
 # ---------------------------------------------------------------------------- #
 #                                  properties                                  #
 # ---------------------------------------------------------------------------- #

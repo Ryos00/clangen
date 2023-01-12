@@ -225,8 +225,6 @@ class Sprites():
         for a, i in enumerate([
             "CRIMSONBELL", "BLUEBELL", "YELLOWBELL", "CYANBELL", "REDBELL",
             "LIMEBELL"
-            "CRIMSONBELL", "BLUEBELL", "YELLOWBELL", "CYANBELL", "REDBELL",
-            "LIMEBELL"
         ]):
             sprites.make_group('bellcollars', (a, 0), f'collars{i}')
             sprites.make_group('bellcollarsextra', (a, 0),
@@ -290,11 +288,6 @@ for x in [
     sprites.spritesheet(f"sprites/{x}.png", x)
 
 for sprite in [
-    'Paralyzed_lineart', 'singleparalyzed', 'speckledparalyzed',
-    'tabbyparalyzed', 'whiteallparalyzed', 'eyesparalyzed',
-    'tabbyparalyzed', 'tortiesparalyzed', 'scarsparalyzed', 'skinparalyzed',
-    'medcatherbsparalyzed'
-
     'Paralyzed_lineart', 'singleparalyzed', 'speckledparalyzed',
     'tabbyparalyzed', 'whiteallparalyzed', 'eyesparalyzed',
     'tabbyparalyzed', 'tortiesparalyzed', 'scarsparalyzed', 'skinparalyzed',

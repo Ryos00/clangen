@@ -420,10 +420,20 @@ class Name():
                 self.prefix = random.choice(prefix_category)
             else:
                 self.prefix = random.choice(self.normal_prefixes)
-        if suffix is None:
-            loop = True
-            while loop:
-                if pelt is None or pelt == 'SingleColour':
+        # set suffix
+        while self.suffix is None or self.suffix == self.prefix.casefold():
+            if pelt is None or pelt == 'SingleColour':
+                self.suffix = random.choice(self.normal_suffixes)
+            else:
+                named_after_pelt = not random.getrandbits(3) # Chance for True is '1/8'.
+                # Pelt name only gets used if there's an associated suffix.
+                if (named_after_pelt
+                    and pelt in ["Tortie", "Calico"]
+                    and tortiepattern in self.tortie_pelt_suffixes):
+                    self.suffix = random.choice(self.tortie_pelt_suffixes[tortiepattern])
+                elif named_after_pelt and pelt in self.pelt_suffixes:
+                    self.suffix = random.choice(self.pelt_suffixes[pelt])
+                else:
                     self.suffix = random.choice(self.normal_suffixes)
 
 

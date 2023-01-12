@@ -405,14 +405,13 @@ class Name():
         self.status = status
         self.prefix = prefix
         self.suffix = suffix
+        loop = False
         
         # Set prefix
         if prefix is None:
-            named_after_appearance = not random.getrandbits(3)  # Chance for True is '1/8'.
+            named_after_appearance = True  # Chance for True is '1/8'.
             # Add possible prefix categories to list.
             possible_prefix_categories = []
-            if eyes in self.eye_prefixes:
-                possible_prefix_categories.append(self.eye_prefixes[eyes])
             if colour in self.colour_prefixes:
                 possible_prefix_categories.append(self.colour_prefixes[colour])
             # Choose appearance-based prefix if possible and named_after_appearance because True.
@@ -421,15 +420,12 @@ class Name():
                 self.prefix = random.choice(prefix_category)
             else:
                 self.prefix = random.choice(self.normal_prefixes)
-            else:
-                self.prefix = random.choice(self.colour_prefixes[colour])    
-        else:
-            self.prefix = prefix
         if suffix is None:
             loop = True
             while loop:
                 if pelt is None or pelt == 'SingleColour':
                     self.suffix = random.choice(self.normal_suffixes)
+
 
     def __repr__(self):
         if self.status in ["deputy", "warrior", "medicine cat", "elder"]:

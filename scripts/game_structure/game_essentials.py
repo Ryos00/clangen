@@ -1,6 +1,10 @@
 import pygame
 import pygame_gui
-import ujson
+try:
+    import ujson
+except ImportError as e:
+    print(f"{e}\nFailed to import ujson, saving may be slower.")
+    import json as ujson
 import os
 from ast import literal_eval
 
@@ -14,9 +18,6 @@ screen_y = 700
 screen = pygame.display.set_mode((screen_x, screen_y), pygame.HWSURFACE)
 pygame.display.set_caption('Clan Generator')
 
-SAVE_DEATH = False
-
-
 # G A M E
 class Game():
     max_name_length = 10
@@ -27,6 +28,8 @@ class Game():
     #max_relation_events_displayed = 10
     #relation_scroll_ct = 0
 
+    ranks_changed_timeskip = False  # Flag for when a cat's status changes occurs during a timeskip.
+
     cur_events_list = []
     ceremony_events_list = []
     birth_death_events_list = []
@@ -34,6 +37,8 @@ class Game():
     health_events_list = []
     other_clans_events_list = []
     misc_events_list = []
+    herb_events_list = []
+
     allegiance_list = []
     language = {}
     game_mode = ''
@@ -49,6 +54,9 @@ class Game():
 
     #down = pygame.image.load("resources/images/buttons/arrow_down.png").convert_alpha()
     #up = pygame.image.load("resources/images/buttons/arrow_up.png").convert_alpha()
+
+    # Sort-type
+    sort_type = "rank"
 
     choose_cats = {}
     '''cat_buttons = {
@@ -328,8 +336,8 @@ class Game():
                 "trait": inter_cat.trait,
                 "parent1": inter_cat.parent1,
                 "parent2": inter_cat.parent2,
-                "mentor": inter_cat.mentor.ID if inter_cat.mentor else None,
-                "former_mentor": [cat.ID for cat in inter_cat.former_mentor] if inter_cat.former_mentor else [],
+                "mentor": inter_cat.mentor if inter_cat.mentor else None,
+                "former_mentor": [cat for cat in inter_cat.former_mentor] if inter_cat.former_mentor else [],
                 "patrol_with_mentor": inter_cat.patrol_with_mentor if inter_cat.patrol_with_mentor else 0,
                 "mentor_influence": inter_cat.mentor_influence if inter_cat.mentor_influence else [],
                 "mate": inter_cat.mate,
@@ -357,13 +365,14 @@ class Game():
                 "tortie_color": inter_cat.tortiecolour,
                 "tortie_pattern": inter_cat.tortiepattern,
                 "skin": inter_cat.skin,
+                "tint": inter_cat.tint,
                 "skill": inter_cat.skill,
                 "scars": inter_cat.scars if inter_cat.scars else [],
                 "accessory": inter_cat.accessory,
                 "experience": inter_cat.experience,
                 "dead_moons": inter_cat.dead_for,
-                "current_apprentice": [appr.ID for appr in inter_cat.apprentice],
-                "former_apprentices": [appr.ID for appr in inter_cat.former_apprentices],
+                "current_apprentice": [appr for appr in inter_cat.apprentice],
+                "former_apprentices": [appr for appr in inter_cat.former_apprentices],
                 "possible_scar": inter_cat.possible_scar if inter_cat.possible_scar else None,
                 "scar_event": inter_cat.scar_event if inter_cat.scar_event else [],
                 "df": inter_cat.df,
@@ -404,9 +413,7 @@ class Game():
             inter_cat = self.cat_class.all_cats[cat]
 
             # Add ID to list of faded cats.
-            print(self.clan.faded_ids)
             self.clan.faded_ids.append(cat)
-            print(self.clan.faded_ids)
 
             # If they have a mate, break it up
             if inter_cat.mate:
@@ -447,7 +454,7 @@ class Game():
                 "parent1": {inter_cat.parent1},
                 "parent2": {inter_cat.parent2},
                 "mentor": {inter_cat.mentor.ID if inter_cat.mentor else None},
-                "former_mentor": {[cat.ID for cat in inter_cat.former_mentor] if inter_cat.former_mentor else []},
+                "former_mentor": {inter_cat.former_mentor if inter_cat.former_mentor else []},
                 "patrol_with_mentor": {inter_cat.patrol_with_mentor if inter_cat.patrol_with_mentor else 0},
                 "mentor_influence": {inter_cat.mentor_influence if inter_cat.mentor_influence else []},
                 "mate": {inter_cat.mate},
@@ -479,8 +486,8 @@ class Game():
                 "accessory": {inter_cat.accessory},
                 "experience": {inter_cat.experience},
                 "dead_moons": {inter_cat.dead_for},
-                "current_apprentice":{[appr.ID for appr in inter_cat.apprentice]},
-                "former_apprentices": {[appr.ID for appr in inter_cat.former_apprentices]},
+                "current_apprentice":{inter_cat.apprentice},
+                "former_apprentices": {inter_cat.former_apprentices},
                 "possible_scar": {inter_cat.possible_scar if inter_cat.possible_scar else None},
                 "scar_event": {inter_cat.scar_event if inter_cat.scar_event else []},
                 "df": {inter_cat.df},
@@ -604,7 +611,7 @@ class GameOver(UIWindow):
 
         if event.type == pygame_gui.UI_BUTTON_START_PRESS:
             if event.ui_element == self.begin_anew_button:
-                game.last_screen_forupdate = self.last_screen
+                game.last_screen_forupdate = game.switches['cur_screen']
                 game.switches['cur_screen'] = 'start screen'
                 game.switch_screens = True
                 self.kill()

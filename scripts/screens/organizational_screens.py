@@ -17,6 +17,7 @@ class StartScreen(Screens):
 
     def __init__(self, name=None):
         super().__init__(name)
+        self.warning_label = None
         self.bg = pygame.image.load("resources/images/menu.png").convert()
 
     def handle_event(self, event):
@@ -43,6 +44,7 @@ class StartScreen(Screens):
         self.new_clan_button.kill()
         self.settings_button.kill()
         self.error_label.kill()
+        self.warning_label.kill()
 
     def screen_switches(self):
         # Make those unslightly menu button hide away
@@ -58,8 +60,15 @@ class StartScreen(Screens):
         self.settings_button = UIImageButton(pygame.Rect((70, 445), (192, 35)), "",
                                              object_id=pygame_gui.core.ObjectID(object_id="#settings_button"))
 
-        self.error_label = pygame_gui.elements.UILabel(pygame.Rect(50, 50, -1, -1), "")
+        self.error_label = pygame_gui.elements.UILabel(pygame.Rect(50, 50, 700, -1), "",
+                                                       object_id="#save_text_box")
         self.error_label.hide()
+
+        self.warning_label = pygame_gui.elements.UITextBox(
+            "Warning: this game includes some mild descriptions of gore.",
+            pygame.Rect((50, 622), (700, 30)),
+            object_id="#default_dark"
+        )
 
         if game.clan is not None and game.switches['error_message'] == '':
             self.continue_button.enable()
@@ -73,7 +82,7 @@ class StartScreen(Screens):
 
         if game.switches['error_message']:
             # TODO: Switch to another kind of ui element here
-            error_text = f"There was an error loading the game: \n {game.switches['error_message']}"
+            error_text = f"There was an error loading the game: {game.switches['error_message']}"
             self.error_label.set_text(error_text)
             self.error_label.show()
 
@@ -102,14 +111,15 @@ class SwitchClanScreen(Screens):
         del self.main_menu
         self.info.kill()
         del self.info
+        self.current_clan.kill()
+        del self.current_clan
 
         del self.screen  # No need to keep that in memory.
 
         for button in self.clan_buttons:
             button.kill()
-        button = []
+        self.clan_buttons = []
 
-        self.clan_name = []
 
     def screen_switches(self):
         self.screen = pygame.image.load("resources/images/clan_saves_frame.png").convert_alpha()
@@ -119,13 +129,20 @@ class SwitchClanScreen(Screens):
             'Note: This will close the game.\n When you open it next, it should have the new clan.',
             pygame.Rect((100, 540), (600, 70)), object_id=get_text_box_theme())
 
+        self.current_clan = pygame_gui.elements.UITextBox("", pygame.Rect((100, 100), (600, 70)),
+                                                          object_id=get_text_box_theme())
+        if game.clan:
+            self.current_clan.set_text(f"The currently loaded clan is {game.clan.name}Clan")
+        else:
+            self.current_clan.set_text("There is no clan currently loaded.")
+
         self.clan_list = game.read_clans()
 
         self.clan_buttons = []
         self.clan_name = []
         i = 0
         y_pos = 189
-        for clan in self.clan_list:
+        for clan in self.clan_list[1:]:
             self.clan_name.append(clan)
             self.clan_buttons.append(pygame_gui.elements.UIButton(pygame.Rect((300, y_pos), (200, 39)), clan + "Clan",
                                                                   object_id="#saved_clan"))

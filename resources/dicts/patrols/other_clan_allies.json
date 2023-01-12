@@ -1,6 +1,6 @@
 [
 {
-    "patrol_id": "gen_border_otherclan1",
+    "patrol_id": "gen_bord_otherclan1",
     "biome": "Any",
     "season": "Any",
     "tags": ["border", "other_clan"],
@@ -31,7 +31,7 @@
 },
 
 {
-    "patrol_id": "gen_border_otherclan2",
+    "patrol_id": "gen_bord_otherclan2",
     "biome": "Any",
     "season": "Any",
     "tags": ["border", "other_clan"],
@@ -62,7 +62,7 @@
 },
 
 {
-    "patrol_id": "gen_border_otherclan3",
+    "patrol_id": "gen_bord_otherclan3",
     "biome": "Any",
     "season": "Any",
     "tags": ["border", "other_clan", "hunting"],
@@ -95,8 +95,8 @@
     "patrol_id": "gen_med_borderherb1",
     "biome": "Any",
     "season": "leaf-bare",
-    "tags": ["med_cat", "herbs", "other_clan", "med_only"],
-    "intro_text": "p_l pads along, mouth open slightly as they scent for any traces of herbs. Oh! They can smell some bearberries nearby - but it seems that they're just over the border.",
+    "tags": ["med_cat", "herb", "raspberry", "other_clan", "med_only"],
+    "intro_text": "p_l pads along, mouth open slightly as they scent for any traces of herbs. Oh! They can smell some raspberries nearby - but it seems that they're just over the border.",
     "decline_text": "They decide that trespassing isn't worth it in this case.",
     "chance_of_success": 60,
     "exp": 20,
@@ -118,7 +118,7 @@
     "antagonize_fail_text": null
 },
 {
-    "patrol_id": "gen_border_scent1",
+    "patrol_id": "gen_bord_scent1",
     "biome": "Any",
     "season": "Any",
     "tags": ["border", "other_clan", "death", "bite-wound", "torn pelt", "injury", "scar"],
@@ -153,7 +153,7 @@
     ]
 },
 {
-    "patrol_id": "gen_border_scent2",
+    "patrol_id": "gen_bord_scent2",
     "biome": "Any",
     "season": "Any",
     "tags": ["border", "other_clan", "death", "bite-wound", "mangled tail", "injury", "scar"],

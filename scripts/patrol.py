@@ -1,6 +1,7 @@
-from random import choice, randint
+from random import choice, randint, choices
 from math import floor
 
+from scripts.clan import HERBS
 from scripts.game_structure.game_essentials import *
 from scripts.cat.names import *
 from scripts.cat.cats import *
@@ -17,6 +18,7 @@ When adding new patrols, use \n to add a paragraph break in the text
 class Patrol():
 
     def __init__(self):
+        self.results_text = []
         self.patrol_event = None
         self.patrol_leader = None
         self.patrol_cats = []
@@ -66,7 +68,7 @@ class Patrol():
             self.patrol_traits.append(cat.trait)
             self.patrol_total_experience += cat.experience
             self.experience_levels.append(cat.experience_level)
-            if cat.status == 'apprentice':
+            if cat.status == 'apprentice' or cat.status == 'medicine cat apprentice':
                 self.patrol_apprentices.append(cat)
             game.patrolled.append(cat)
         # sets medcat as leader if they're in the patrol
@@ -129,7 +131,7 @@ class Patrol():
                 self.app6_name = str(self.patrol_apprentices[5].name)
 
         self.other_clan = choice(game.clan.all_clans)
-        #print(self.patrol_total_experience)
+        # print(self.patrol_total_experience)
 
     def get_possible_patrols(self, current_season, biome, all_clans, patrol_type,
                              game_setting_disaster=game.settings['disasters']):
@@ -150,7 +152,7 @@ class Patrol():
         clan_allies = False
         clan_size = int(len(game.clan.clan_cats))
         chance = 0
-        #print(str(self.patrol_statuses))
+        # print(str(self.patrol_statuses))
         # assigning other_clan relations
         if clan_relations > 17:
             clan_allies = True
@@ -217,7 +219,7 @@ class Patrol():
 
         if game_setting_disaster:
             possible_patrols.extend(self.generate_patrol_events(DISASTER))
-        
+
         # new cat patrols
         if chance == 1:
             if welcoming_rep:
@@ -242,15 +244,14 @@ class Patrol():
                 continue
             if patrol_size > patrol.max_cats:
                 continue
-            if patrol.biome not in [biome, 'Any']:
+            if patrol.biome not in [biome, "Any"]:
                 continue
-            if patrol.season not in [current_season, 'Any']:
+            if patrol.season not in [current_season, "Any"]:
                 continue
             # makes sure that an apprentice is present if the apprentice tag is
             if "apprentice" in patrol.tags:
-                if "apprentice" not in self.patrol_statuses:
+                if "apprentice" not in self.patrol_statuses and "medicine cat apprentice" not in self.patrol_statuses:
                     continue
-                
 
             # makes sure that the deputy is present if the deputy tag is
             if "deputy" in patrol.tags:
@@ -280,7 +281,7 @@ class Patrol():
             # makes sure no apps are present if they're not supposed to be
             # mostly for romance patrols between warriors/dumb stuff that they wouldn't involve apprentices in
             if "no_app" in patrol.tags:
-                if "apprentice" in self.patrol_statuses:
+                if "apprentice" in self.patrol_statuses or "medicine cat apprentice" in self.patrol_statuses:
                     continue
 
             # makes sure no warriors/warrior apps are present. for med patrols
@@ -324,7 +325,7 @@ class Patrol():
                 else:
                     if not self.patrol_random_cat.is_potential_mate(self.patrol_leader, for_patrol=True):
                         continue
-
+            # print(str(patrol.patrol_id))
             final_patrols.append(patrol)
 
         return final_patrols
@@ -364,13 +365,12 @@ class Patrol():
             gm_modifier = 1
         elif game.clan.game_mode == "expanded":
             gm_modifier = 2
-        elif game.clan.game_mode == "cruel_season":
+        elif game.clan.game_mode == "cruel season":
             gm_modifier = 3
         # initially setting stat_cat
         if self.patrol_event.win_skills is not None and self.patrol_event.win_trait is not None:
-            for cat in self.patrol_cats:
-                if cat.skill in self.patrol_event.win_skills or cat.trait in self.patrol_event.win_trait:
-                    self.patrol_stat_cat = cat
+            if cat_class.skill in self.patrol_event.win_skills or cat_class.trait in self.patrol_event.win_trait:
+                self.patrol_stat_cat = cat_class
         # if patrol contains cats with autowin skill, chance of success is high
         # otherwise it will calculate the chance by adding the patrolevent's chance of success plus the patrol's total exp
         chance = self.patrol_event.chance_of_success + int(
@@ -390,24 +390,11 @@ class Patrol():
                 chance = chance + 50
 
         # resetting stat_cat to fails
-        if self.patrol_event.fail_skills is not None and self.patrol_event.fail_trait is not None:
-            for cat in self.patrol_cats:
-                if cat.skill in self.patrol_event.fail_skills or cat.trait in self.patrol_event.fail_trait:
-                    self.patrol_stat_cat = cat
-        if self.patrol_event.fail_skills is not None:
-            if set(self.patrol_skills).isdisjoint(
-                    self.patrol_event.fail_skills):
-                chance = chance - 50
-                if self.patrol_stat_cat is not None:
-                    if "bad" in self.patrol_stat_cat.skill:
-                        chance = chance - 5
-                    elif "awful" in self.patrol_stat_cat.skill:
-                        chance = chance - 10
         if self.patrol_event.fail_trait is not None:
             if set(self.patrol_traits).isdisjoint(
                     self.patrol_event.fail_trait):
                 chance = chance - 50
-        
+
         c = randint(0, 100)
         outcome = int(random.getrandbits(4))
         print(str(self.patrol_event.patrol_id))
@@ -429,10 +416,6 @@ class Patrol():
         if c < chance:
             self.success = True
             # this adds the stat cat (if there is one)
-            if self.patrol_event.win_skills is not None and self.patrol_event.win_trait is not None:
-                for cat in self.patrol_cats:
-                    if cat.skill in self.patrol_event.win_skills or cat.trait in self.patrol_event.win_trait:
-                        self.patrol_stat_cat = cat
             if self.patrol_stat_cat is not None:
                 if self.patrol_stat_cat.trait in self.patrol_event.win_trait:
                     n = 3
@@ -471,6 +454,8 @@ class Patrol():
                         self.handle_reputation(10)
             self.handle_mentor_app_pairing()
             self.handle_relationships()
+            if game.clan.game_mode != 'classic' and not antagonize:
+                self.handle_herbs(n)
             self.final_success = self.patrol_event.success_text[n]
             if antagonize:
                 self.antagonize = self.patrol_event.antagonize_text
@@ -488,11 +473,14 @@ class Patrol():
                 unscathed = True
             else:
                 unscathed = False
+
             # pick stat cat
             if self.patrol_event.fail_skills is not None and self.patrol_event.fail_trait is not None:
                 for cat in self.patrol_cats:
                     if cat.skill in self.patrol_event.fail_skills or cat.trait in self.patrol_event.fail_trait:
                         self.patrol_stat_cat = cat
+
+            n = 0
             if self.patrol_stat_cat is not None and len(fail_text) > 1:
                 if rare and unscathed and fail_text[1] is not None:
                     n = 1
@@ -520,8 +508,7 @@ class Patrol():
                     n = 2
             elif rare and len(fail_text) >= 7 and fail_text[6] is not None and self.patrol_leader == game.clan.leader:
                 n = 6
-            else:
-                n = 0
+
             if n == 2:
                 self.handle_deaths(self.patrol_random_cat)
             elif n == 4:
@@ -550,6 +537,11 @@ class Patrol():
             if antagonize:
                 self.antagonize_fail = self.patrol_event.antagonize_fail_text
 
+    def results(self):
+        text = "<br>".join(self.results_text)
+        self.results_text.clear()
+        return text
+
     def handle_exp_gain(self):
         gm_modifier = 1
         base_exp = 0
@@ -563,9 +555,9 @@ class Patrol():
             gm_modifier = gm_modifier
         elif game.clan.game_mode == 'expanded':
             gm_modifier = 3
-        elif game.clan.game_mode == 'cruel_season':
+        elif game.clan.game_mode == 'cruel season':
             gm_modifier = 6
-        lvl_modifier = 1 # this makes exp gain slower after the cat reaches average
+        lvl_modifier = 1  # this makes exp gain slower after the cat reaches average
         for cat in self.patrol_cats:
             gained_exp = ((patrol_exp + base_exp + max_boost) / len(self.patrol_cats)) / gm_modifier
             if cat.experience_level == "average":
@@ -586,21 +578,26 @@ class Patrol():
             if cat.status == 'leader':
                 if 'all_lives' in self.patrol_event.tags:
                     game.clan.leader_lives -= 10
+                    self.results_text.append(f"{cat.name} lost all their lives.")
                 elif "some_lives" in self.patrol_event.tags:
                     if game.clan.leader_lives > 2:
                         current_lives = int(game.clan.leader_lives)
                         game.clan.leader_lives -= random.randrange(1, current_lives - 1)
+                        self.results_text.append(f"{cat.name} lost some of their lives.")
                     else:
                         game.clan.leader_lives -= 1
+                        self.results_text.append(f"{cat.name} lost one life.")
                 else:
                     game.clan.leader_lives -= 1
-            print("history text len", len(self.patrol_event.history_text))
+                    self.results_text.append(f"{cat.name} lost one life.")
             if len(self.patrol_event.history_text) >= 2 and cat.status != 'leader':
                 cat.died_by.append(event_text_adjust(Cat, f'{self.patrol_event.history_text[1]}', cat, cat))
+                self.results_text.append(f"{cat.name} died.")
             elif len(self.patrol_event.history_text) >= 2 and cat.status == 'leader':
                 cat.died_by.append(event_text_adjust(Cat, f'{self.patrol_event.history_text[2]}', cat, cat))
             elif cat.status != 'leader':
                 cat.died_by.append(f'This cat died while patrolling.')
+                self.results_text.append(f"{cat.name} died.")
             else:
                 cat.died_by.append(f'died while patrolling')
 
@@ -618,19 +615,25 @@ class Patrol():
                 if cat.status == 'leader':
                     if 'all_lives' in self.patrol_event.tags:
                         game.clan.leader_lives -= 10
+                        self.results_text.append(f"{cat.name} lost all their lives.")
                     elif "some_lives" in self.patrol_event.tags:
                         if game.clan.leader_lives > 2:
                             current_lives = int(game.clan.leader_lives)
                             game.clan.leader_lives -= random.randrange(1, current_lives - 1)
+                            self.results_text.append(f"{cat.name} lost some of their lives.")
                         else:
+                            self.results_text.append(f"{cat.name} lost one life.")
                             game.clan.leader_lives -= 1
                     else:
+                        self.results_text.append(f"{cat.name} lost all their lives.")
                         game.clan.leader_lives -= 10
                 if len(self.patrol_event.history_text) >= 2 and cat.status != 'leader':
+                    self.results_text.append(f"{cat.name} died.")
                     cat.died_by.append(event_text_adjust(Cat, f'{self.patrol_event.history_text[1]}', cat, cat))
                 elif len(self.patrol_event.history_text) >= 2 and cat.status == 'leader':
                     cat.died_by.append(event_text_adjust(Cat, f'{self.patrol_event.history_text[2]}', cat, cat))
                 elif cat.status != 'leader':
+                    self.results_text.append(f"{cat.name} died.")
                     cat.died_by.append(f'This cat died while patrolling.')
                 else:
                     cat.died_by.append(f'died while patrolling')
@@ -641,11 +644,32 @@ class Patrol():
             if cats_dying >= len(self.patrol_cats):
                 cats_dying = int(len(self.patrol_cats) - 1)
             for d in range(0, cats_dying):
-                self.patrol_cats[d].die(body)
+                if self.patrol_cats[d].status == 'leader':
+                    if 'all_lives' in self.patrol_event.tags:
+                        game.clan.leader_lives -= 10
+                        self.results_text.append(f"{self.patrol_cats[d].name} lost all their lives.")
+                    elif "some_lives" in self.patrol_event.tags:
+                        if game.clan.leader_lives > 2:
+                            current_lives = int(game.clan.leader_lives)
+                            game.clan.leader_lives -= random.randrange(1, current_lives - 1)
+                            self.results_text.append(f"{self.patrol_cats[d].name} lost some of their lives.")
+                        else:
+                            self.results_text.append(f"{self.patrol_cats[d].name} lost one life.")
+                            game.clan.leader_lives -= 1
+                    else:
+                        self.results_text.append(f"{self.patrol_cats[d].name} lost all their lives.")
+                        game.clan.leader_lives -= 10
+                else:
+                    self.results_text.append(f"{self.patrol_cats[d].name} died.")
+                    self.patrol_cats[d].die(body)
                 if len(self.patrol_event.history_text) >= 2 and self.patrol_cats[d].status != 'leader':
-                    self.patrol_cats[d].died_by.append(event_text_adjust(Cat, f'{self.patrol_event.history_text[1]}', self.patrol_cats[d], self.patrol_cats[d]))
+                    self.patrol_cats[d].died_by.append(
+                        event_text_adjust(Cat, f'{self.patrol_event.history_text[1]}', self.patrol_cats[d],
+                                          self.patrol_cats[d]))
                 elif len(self.patrol_event.history_text) >= 2 and self.patrol_cats[d].status == 'leader':
-                    self.patrol_cats[d].died_by.append(event_text_adjust(Cat, f'{self.patrol_event.history_text[2]}', self.patrol_cats[d], self.patrol_cats[d]))
+                    self.patrol_cats[d].died_by.append(
+                        event_text_adjust(Cat, f'{self.patrol_event.history_text[2]}', self.patrol_cats[d],
+                                          self.patrol_cats[d]))
                 elif cat.status != 'leader':
                     cat.died_by.append(f'This cat died while patrolling.')
                 else:
@@ -654,13 +678,16 @@ class Patrol():
         # cats disappearing on patrol is also handled under this def for simplicity's sake
         elif "gone" in self.patrol_event.tags:
             if len(self.patrol_event.fail_text) > 4 and self.final_fail == self.patrol_event.fail_text[4]:
+                self.results_text.append(f"{self.patrol_stat_cat.name} died.")
                 self.patrol_stat_cat.die(body)
             else:
+                self.results_text.append(f"{self.patrol_random_cat.name} has been lost.")
                 self.patrol_random_cat.gone()
                 self.patrol_random_cat.grief(body=False)
 
         elif "disaster_gone" in self.patrol_event.tags:
             for cat in self.patrol_cats:
+                self.results_text.append(f"{cat.name} has been lost.")
                 cat.experience += self.patrol_event.exp
                 cat.experience = min(cat.experience, 80)
                 cat.gone()
@@ -671,6 +698,7 @@ class Patrol():
             if cats_gone >= len(self.patrol_cats):
                 cats_gone = int(len(self.patrol_cats) - 1)
             for g in range(0, cats_gone):
+                self.results_text.append(f"{self.patrol_cats[g].name} has been lost.")
                 self.patrol_cats[g].gone()
                 self.patrol_cats[g].grief(body=False)
 
@@ -736,6 +764,7 @@ class Patrol():
             # now we hurt the kitty
             if len(possible_conditions) > 0:
                 new_condition = choice(possible_conditions)
+                self.results_text.append(f"{cat.name} got: {new_condition}")
                 if new_condition in INJURIES:
                     cat.get_injured(new_condition, lethal=lethal)
                 elif new_condition in ILLNESSES:
@@ -748,13 +777,79 @@ class Patrol():
             if "scar" in self.patrol_event.tags:
                 if len(self.patrol_random_cat.scars) < 4:
                     self.patrol_random_cat.scars.append(choice(
-                        [choice(scars1),
-                         choice(scars2)]))
+                        [choice(scars1)]))
                     if len(self.patrol_event.history_text) >= 1:
                         self.patrol_random_cat.scar_event.append(
                             f'{self.patrol_event.history_text[0]}')
                     else:
                         self.patrol_random_cat.death_event.append(f'This cat gained a scar while patrolling.')
+
+    def handle_herbs(self, outcome):
+        herbs_gotten = []
+        no_herbs_tags = ["no_herbs1", "no_herbs2", "no_herbs3", "no_herbs4"]
+        many_herbs_tags = ["many_herbs1", "many_herbs2", "many_herbs3", "many_herbs4"]
+
+        for x in range(len(no_herbs_tags)):
+            if f"no_herbs{x}" in patrol.patrol_event.tags and outcome == x:
+                return
+
+        for x in range(len(many_herbs_tags)):
+            large_amount = None
+            if f"many_herbs{x}" in patrol.patrol_event.tags and outcome == x:
+                large_amount = 5
+
+        if "random_herbs" in patrol.patrol_event.tags:
+            number_of_herb_types = choices([1, 2, 3], [5, 3, 1], k=1)
+            herbs_picked = choices(HERBS, k=number_of_herb_types[0])
+            for herb in herbs_picked:
+                herbs_gotten.append(str(herb).replace('_', ' '))
+                if not large_amount:
+                    amount_gotten = choices([1, 2, 3], [1, 3, 2], k=1)
+                    print(game.clan.herbs)
+                    if herb in game.clan.herbs.keys():
+                        game.clan.herbs[herb] += amount_gotten[0] * len(patrol.patrol_cats)
+                    else:
+                        game.clan.herbs.update({herb: amount_gotten[0] * len(patrol.patrol_cats)})
+                    print(herb, amount_gotten * len(patrol.patrol_cats))
+                else:
+                    print(game.clan.herbs)
+                    if herb in game.clan.herbs.keys():
+                        game.clan.herbs[herb] += large_amount * len(patrol.patrol_cats)
+                    else:
+                        game.clan.herbs.update({herb: large_amount})
+                    print(herb, large_amount * len(patrol.patrol_cats))
+                print(game.clan.herbs)
+        elif "herb" in patrol.patrol_event.tags:
+            for tag in patrol.patrol_event.tags:
+                if tag in HERBS:
+                    herbs_gotten.append(str(tag).replace('_', ' '))
+                    if not large_amount:
+                        amount_gotten = choices([1, 2, 3], [1, 3, 2], k=1)
+                        print(game.clan.herbs)
+                        if tag in game.clan.herbs.keys():
+                            game.clan.herbs[tag] += amount_gotten[0] * len(patrol.patrol_cats)
+                        else:
+                            game.clan.herbs.update({tag: amount_gotten[0] * len(patrol.patrol_cats)})
+                        print(tag, amount_gotten[0] * len(patrol.patrol_cats))
+                    else:
+                        print(game.clan.herbs)
+                        if tag in game.clan.herbs.keys():
+                            game.clan.herbs[tag] += large_amount * len(patrol.patrol_cats)
+                        else:
+                            game.clan.herbs.update({tag: large_amount * len(patrol.patrol_cats)})
+                        print(tag, large_amount * len(patrol.patrol_cats))
+                    print(game.clan.herbs)
+        if herbs_gotten:
+            if len(herbs_gotten) == 1 and herbs_gotten[0] != 'cobwebs':
+                insert = f"{herbs_gotten[0]} was"
+            elif len(herbs_gotten) == 1 and herbs_gotten[0] == 'cobwebs':
+                insert = f"{herbs_gotten[0]} were"
+            elif len(herbs_gotten) == 2:
+                insert = f"{herbs_gotten[0]} and {herbs_gotten[1]} were"
+            else:
+                insert = f"{', '.join(herbs_gotten[:-1])}, and {herbs_gotten[-1]} were"
+            game.herb_events_list.append(f"{insert.capitalize()} gathered on a patrol.")
+            self.results_text.append(f"{insert.capitalize()} gathered during this patrol.")
 
     def handle_clan_relations(self, difference):
         """
@@ -763,10 +858,15 @@ class Patrol():
         if "other_clan" in self.patrol_event.tags:
             other_clan = patrol.other_clan
             change_clan_relations(other_clan, difference)
+            if difference > 0:
+                insert = "improved"
+            else:
+                insert = "worsened"
+            self.results_text.append(f"Relations with {other_clan} have {insert}.")
 
     def handle_mentor_app_pairing(self):
         for cat in self.patrol_cats:
-            if cat.mentor in self.patrol_cats:
+            if Cat.fetch_cat(cat.mentor) in self.patrol_cats:
                 cat.patrol_with_mentor += 1
 
     def handle_reputation(self, difference):
@@ -774,6 +874,11 @@ class Patrol():
         reputation with outsiders
         """
         change_clan_reputation(difference)
+        if difference > 0:
+            insert = "improved"
+        else:
+            insert = "worsened"
+        self.results_text.append(f"Your Clan's reputation towards Outsiders has {insert}.")
 
     def handle_relationships(self):
         n = 5
@@ -922,30 +1027,31 @@ class Patrol():
     def add_new_cats(self, litter_choice):
         tags = self.patrol_event.tags
         if "new_cat" in tags:
-            if "new_cat_majorinjury" in tags:
-                majoryinjury = True
+            if "new_cat_majorinjury" in tags and game.clan.game_mode != 'classic':
+                major_injury = True
             else:
-                majoryinjury = False
+                major_injury = False
             if "new_cat_kit" in tags:  # new kit
                 backstory_choice = choice(['abandoned2', 'abandoned1', 'abandoned3'])
                 created_cats = self.create_new_cat(loner=False, loner_name=False, kittypet=choice([True, False]),
                                                    kit=True, backstory=backstory_choice)
                 new_cat = created_cats[0]
 
-            elif "new_cat_adult" in tags: 
-                if "kittypet" in self.patrol_event.patrol_id: # new kittypet
-                    created_cats = self.create_new_cat(loner=False, loner_name=True, kittypet=True, kit=False, litter=False,
-                                                   relevant_cat=None,
-                                                   backstory=choice(['kittypet1', 'kittypet2']))
+            elif "new_cat_adult" in tags:
+                if "kittypet" in self.patrol_event.patrol_id:  # new kittypet
+                    created_cats = self.create_new_cat(loner=False, loner_name=True, kittypet=True, kit=False,
+                                                       litter=False,
+                                                       relevant_cat=None,
+                                                       backstory=choice(['kittypet1', 'kittypet2']))
                     new_cat = created_cats[0]
                     # add litter if the kits text is rolled
                     if litter_choice == True:
                         new_backstory = 'outsider_roots2'
                         created_cats = self.create_new_cat(loner=True, loner_name=True, backstory=new_backstory,
-                                                        litter=True, relevant_cat=new_cat)
-                    if majoryinjury:
-                        new_cat.get_injured("broken bone")                      
-                else: # new loner
+                                                           litter=True, relevant_cat=new_cat)
+                    if major_injury:
+                        new_cat.get_injured("broken bone")
+                else:  # new loner
                     new_backstory = choice(['loner1', 'loner2', 'rogue1', 'rogue2',
                                             'ostracized_warrior', 'disgraced', 'retired_leader', 'refugee',
                                             'tragedy_survivor'])
@@ -955,8 +1061,8 @@ class Patrol():
                     if litter_choice == True:
                         new_backstory = 'outsider_roots2'
                         created_cats = self.create_new_cat(loner=True, loner_name=True, backstory=new_backstory,
-                                                        litter=True, relevant_cat=new_cat)
-                    if majoryinjury:
+                                                           litter=True, relevant_cat=new_cat)
+                    if major_injury:
                         new_cat.get_injured("broken bone")
 
             elif "new_cat_med" in tags:  # new med cat
@@ -976,34 +1082,39 @@ class Patrol():
                 if "kittypet" in self.patrol_event.patrol_id:
                     kittypet = True
                 if kittypet is True:
-                    new_backstory=choice(['kittypet1', 'kittypet2'])
-                    created_cats = self.create_new_cat(loner=False, loner_name=True, kittypet=True, queen=True, backstory=new_backstory)
+                    new_backstory = choice(['kittypet1', 'kittypet2'])
+                    created_cats = self.create_new_cat(loner=False, loner_name=True, kittypet=True, queen=True,
+                                                       backstory=new_backstory)
                     new_cat = created_cats[0]
-                    new_cat.get_injured("recovering from birth")
+                    if game.clan.game_mode != 'classic':
+                        new_cat.get_injured("recovering from birth")
                 else:
                     new_backstory = choice(['loner1', 'loner2', 'rogue1', 'rogue2',
                                             'ostracized_warrior', 'disgraced', 'retired_leader', 'refugee',
                                             'tragedy_survivor'])
-                    created_cats = self.create_new_cat(loner=True, loner_name=True, kittypet=False, queen=True, backstory=new_backstory)
+                    created_cats = self.create_new_cat(loner=True, loner_name=True, kittypet=False, queen=True,
+                                                       backstory=new_backstory)
                     new_cat = created_cats[0]
-                    new_cat.get_injured("recovering from birth")
+                    if game.clan.game_mode != 'classic':
+                        new_cat.get_injured("recovering from birth")
                 if "new_cat_kits" in tags:
                     if "new_cat_newborn" in tags:
                         new_backstory = 'outsider_roots2'
                         created_cats = self.create_new_cat(loner=False, loner_name=True, backstory=new_backstory,
-                                                        litter=True, relevant_cat=new_cat, age='newborn')
+                                                           litter=True, relevant_cat=new_cat, age='newborn')
                     else:
                         new_backstory = 'outsider_roots2'
                         created_cats = self.create_new_cat(loner=False, loner_name=True, backstory=new_backstory,
-                                                        litter=True, relevant_cat=new_cat)
-                
+                                                           litter=True, relevant_cat=new_cat)
+
             elif "new_cat_kits" in tags:  # new kits
                 kittypet = choice([True, False])
                 if "kittypet" in self.patrol_event.patrol_id:
                     kittypet = True
                 if kittypet is True:
-                    new_backstory=choice(['kittypet1', 'kittypet2'])
-                    created_cats = self.create_new_cat(loner=False, loner_name=True, kittypet=True, queen=True, backstory=new_backstory)
+                    new_backstory = choice(['kittypet1', 'kittypet2'])
+                    created_cats = self.create_new_cat(loner=False, loner_name=True, kittypet=True, queen=True,
+                                                       backstory=new_backstory)
                     new_cat = created_cats[0]
                     new_cat.name.prefix = "unnamed"
                     new_cat.name.suffix = " queen"
@@ -1013,7 +1124,8 @@ class Patrol():
                     new_backstory = choice(['loner1', 'loner2', 'rogue1', 'rogue2',
                                             'ostracized_warrior', 'disgraced', 'retired_leader', 'refugee',
                                             'tragedy_survivor'])
-                    created_cats = self.create_new_cat(loner=True, loner_name=True, kittypet=False, queen=True, backstory=new_backstory)
+                    created_cats = self.create_new_cat(loner=True, loner_name=True, kittypet=False, queen=True,
+                                                       backstory=new_backstory)
                     new_cat = created_cats[0]
                     new_cat.name.prefix = "unnamed"
                     new_cat.name.suffix = " queen"
@@ -1021,71 +1133,75 @@ class Patrol():
                     new_cat.dead = True
                 if "new_cat_newborn" in tags:
                     created_cats = self.create_new_cat(loner=False, loner_name=True, backstory='orphaned',
-                                                        litter=True, age='newborn', relevant_cat=new_cat)
+                                                       litter=True, age='newborn', relevant_cat=new_cat)
                 else:
                     created_cats = self.create_new_cat(loner=False, loner_name=True, backstory='orphaned',
-                                                        litter=True, relevant_cat=new_cat)
-            
+                                                       litter=True, relevant_cat=new_cat)
+
             elif "new_cat_apprentice" in tags:
                 kittypet = choice([True, False])
                 if "kittypet" in self.patrol_event.patrol_id:
                     kittypet = True
-                if kittypet: # new kittypet
+                if kittypet:  # new kittypet
                     created_cats = self.create_new_cat(loner=False, loner_name=True, kittypet=True,
-                                                   age='young', backstory=choice(['kittypet1', 'kittypet2']))
+                                                       age='young', backstory=choice(['kittypet1', 'kittypet2']))
                     new_cat = created_cats[0]
-                    if majoryinjury:
+                    if major_injury:
                         new_cat.get_injured("broken bone")
                 else:
                     new_backstory = choice(['loner1', 'loner2', 'rogue1', 'rogue2', 'refugee',
-                                                'tragedy_survivor'])
-                    created_cats = self.create_new_cat(loner=True, loner_name=True, kittypet=False, backstory=new_backstory,
-                                                    age='young')
-                    if majoryinjury:
+                                            'tragedy_survivor'])
+                    created_cats = self.create_new_cat(loner=True, loner_name=True, kittypet=False,
+                                                       backstory=new_backstory,
+                                                       age='young')
+                    new_cat = created_cats[0]
+                    if major_injury:
                         new_cat.get_injured("broken bone")
+                    new_cat.update_mentor()
 
             elif "new_cat_elder" in tags:
                 kittypet = choice([True, False])
                 if "kittypet" in self.patrol_event.patrol_id:
                     kittypet = True
-                if kittypet: # new kittypet
+                if kittypet:  # new kittypet
                     created_cats = self.create_new_cat(loner=False, loner_name=True, kittypet=True, age='old',
-                                                   backstory=choice(['kittypet1', 'kittypet2']))
+                                                       backstory=choice(['kittypet1', 'kittypet2']))
                     new_cat = created_cats[0]
-                    if majoryinjury:
-                        new_cat.get_injured("broken bone")                      
-                else: # new loner
+                    if major_injury:
+                        new_cat.get_injured("broken bone")
+                else:  # new loner
                     new_backstory = choice(['loner1', 'loner2', 'rogue1', 'rogue2',
                                             'ostracized_warrior', 'disgraced', 'retired_leader', 'refugee',
                                             'tragedy_survivor'])
                     created_cats = self.create_new_cat(loner=True, kittypet=False, backstory=new_backstory, age='old')
                     new_cat = created_cats[0]
-                    if majoryinjury:
+                    if major_injury:
                         new_cat.get_injured("broken bone")
 
             else:
                 kittypet = choice([True, False])
                 if "kittypet" in self.patrol_event.patrol_id:
                     kittypet = True
-                if kittypet is True: # new kittypet
+                if kittypet is True:  # new kittypet
                     created_cats = self.create_new_cat(loner=False, loner_name=True, kittypet=True,
-                                                   backstory=choice(['kittypet1', 'kittypet2']))
+                                                       backstory=choice(['kittypet1', 'kittypet2']))
                     new_cat = created_cats[0]
-                    if majoryinjury:
-                        new_cat.get_injured("broken bone")                      
-                else: # new loner
+                    if major_injury:
+                        new_cat.get_injured("broken bone")
+                else:  # new loner
                     new_backstory = choice(['loner1', 'loner2', 'rogue1', 'rogue2',
                                             'ostracized_warrior', 'disgraced', 'retired_leader', 'refugee',
                                             'tragedy_survivor'])
                     created_cats = self.create_new_cat(loner=True, kittypet=False, backstory=new_backstory)
                     new_cat = created_cats[0]
-                    if majoryinjury:
+                    if major_injury:
                         new_cat.get_injured("broken bone")
-
+            for cat in created_cats:
+                self.results_text.append(f"{cat.name} has joined the Clan.")
 
     def create_new_cat(self,
                        loner=False,
-                       loner_name=False, # loner name actually means kittypet name
+                       loner_name=False,  # loner name actually means kittypet name
                        kittypet=False,
                        kit=False,
                        litter=False,
@@ -1152,13 +1268,16 @@ class Patrol():
         for number in range(amount):
             new_cat = None
             if loner_name and a == 1:
-                new_cat = Cat(moons=age, prefix=name, status=status, gender=gender if gender is not None else choice(['female', 'male']),
+                new_cat = Cat(moons=age, prefix=name, status=status,
+                              gender=gender if gender is not None else choice(['female', 'male']),
                               backstory=backstory)
             elif loner_name:
-                new_cat = Cat(moons=age, prefix=name, suffix=None, status=status, gender=gender if gender is not None else choice(['female', 'male']),
+                new_cat = Cat(moons=age, prefix=name, suffix=None, status=status,
+                              gender=gender if gender is not None else choice(['female', 'male']),
                               backstory=backstory)
             else:
-                new_cat = Cat(moons=age, status=status, gender=gender if gender is not None else choice(['female', 'male']), backstory=backstory)
+                new_cat = Cat(moons=age, status=status,
+                              gender=gender if gender is not None else choice(['female', 'male']), backstory=backstory)
             if skill:
                 new_cat.skill = skill
             if accessory:
@@ -1185,15 +1304,6 @@ class Patrol():
 
         return created_cats
 
-    def check_territories(self):
-        hunting_claim = str(game.clan.name) + 'Clan Hunting Grounds'
-        self.hunting_grounds = []
-        for y in range(44):
-            for x in range(40):
-                claim_type = game.map_info[(x, y)][3]
-                if claim_type == hunting_claim:
-                    self.hunting_claim_info[(x, y)] = game.map_info[(x, y)]
-                    self.hunting_grounds.append((x, y))
 
 
 # ---------------------------------------------------------------------------- #
@@ -1244,21 +1354,22 @@ class PatrolEvent():
         self.history_text = history_text
 
         tags = [
-            "hunting", "small_prey", "big_prey", "training", "border", "med_cat", "herbs", 
-            "other_clan", "reputation", "fighting", 
+            "hunting", "small_prey", "big_prey", "training", "border", "med_cat", "herb", "random_herbs", "many_herbs#"
+                                                                                                          "other_clan",
+            "reputation", "fighting",
             "new_cat", "new_cat_med", "new_cat_queen", "new_cat_female", "new_cat_tom", "new_cat_neutered",
-            "new_cat_elder", "new_cat_majorinjury", "new_cat_kit", "new_cat_kits", "new_cat_newborn", 
-            "new_cat_apprentice", "new_cat_adult", 
+            "new_cat_elder", "new_cat_majorinjury", "new_cat_kit", "new_cat_kits", "new_cat_newborn",
+            "new_cat_apprentice", "new_cat_adult",
             "npc", "gone_cat"
-            "death", "disaster", "multi_deaths", "no_body", "cruel_season", "gone", "multi_gone", "disaster_gone",
+                   "death", "disaster", "multi_deaths", "no_body", "cruel_season", "gone", "multi_gone",
+            "disaster_gone",
             "romantic", "platonic", "comfort", "respect", "trust", "dislike", "jealousy", "distrust", "disrespect",
-            "apprentice", "two_apprentices", "three_apprentices", "warrior", "no_app", "med_only", "no_leader", 
-            "no_deputy", "leader", "deputy", 
-            "clan_to_p_l", "clan_to_r_c", "patrol_to_p_l", "patrol_to_r_c", 
+            "apprentice", "two_apprentices", "three_apprentices", "warrior", "no_app", "med_only", "no_leader",
+            "no_deputy", "leader", "deputy",
+            "clan_to_p_l", "clan_to_r_c", "patrol_to_p_l", "patrol_to_r_c",
             "rel_two_apps", "p_l_to_r_c", "s_c_to_r_c", "clan_to_patrol", "rel_patrol",
             "sacrificial", "pos_fail", "no_change_fail", "no_change_success", "big_change",
             "all_lives", "some_lives"
-
 
         ]
 
@@ -1297,7 +1408,28 @@ class PatrolEvent():
         Keep in mind that the “non_lethal” tag will apply to ALL the conditions for that patrol.
         Right now, nonlethal shock is auto applied to all cats present when another cat dies. This may change in the future.
 
-        "two_apprentices" is for patrols with two apprentices (at least) in them. It works with the "apprentice" tag. "rel_two_apps" is for patrols with relationship changes between app1 and app2 that don't affect the rest of the patrol, and also works with "two_apprentices" and "apprentice".
+        HERB TAGGING:
+        herbs are given on successes only
+        “random_herbs” <give a random assortment of herbs
+        
+        “herbs” < use to mark that this patrol gives a specific herb, use in conjunction with a herb tag. 
+        
+        Herb tags:
+         reference herbs.json, you can use any herb name listed there
+        
+        “many_herbs#” < to cause the patrol to give a large number of herbs automatically. Replace the # with the 
+        outcome number (i.e. if you want success outcome 3 - which is the skill success - to give lots of herbs, then 
+        use “many_herbs3”)
+        
+        "no_herbs#" < to cause the patrol to give no herbs on a certain outcome, while still giving herbs on other 
+        outcomes. Replace the # with the outcome number (i.e. if you want success outcome 3 - which is the skill 
+        success - to give no herbs, then use “no_herbs3”)
+
+
+
+        "two_apprentices" is for patrols with two apprentices (at least) in them. It works with the "apprentice" tag. 
+        "rel_two_apps" is for patrols with relationship changes between app1 and app2 that don't affect the rest of the 
+        patrol, and also works with "two_apprentices" and "apprentice".
 
         "warrior" is used to specify that the patrol should only trigger with at least 1 warrior in it. 
         "no_app" is for when no apps should be on the patrol
@@ -1358,117 +1490,117 @@ med_directory = "med/"
 
 # HUNTING #
 HUNTING = None
-with open(f"{resource_directory}{hunting_directory}hunting.json", 'r') as read_file:
+with open(f"{resource_directory}{hunting_directory}hunting.json", 'r', encoding='ascii') as read_file:
     HUNTING = ujson.loads(read_file.read())
 
 HUNTING_FST = None
-with open(f"{resource_directory}{hunting_directory}hunting_forest.json", 'r') as read_file:
+with open(f"{resource_directory}{hunting_directory}hunting_forest.json", 'r', encoding='ascii') as read_file:
     HUNTING_FST = ujson.loads(read_file.read())
 
 HUNTING_PLN = None
-with open(f"{resource_directory}{hunting_directory}hunting_plains.json", 'r') as read_file:
+with open(f"{resource_directory}{hunting_directory}hunting_plains.json", 'r', encoding='ascii') as read_file:
     HUNTING_PLN = ujson.loads(read_file.read())
 
 HUNTING_MTN = None
-with open(f"{resource_directory}{hunting_directory}hunting_mountains.json", 'r') as read_file:
+with open(f"{resource_directory}{hunting_directory}hunting_mountains.json", 'r', encoding='ascii') as read_file:
     HUNTING_MTN = ujson.loads(read_file.read())
 
 HUNTING_BCH = None
-with open(f"{resource_directory}{hunting_directory}hunting_beach.json", 'r') as read_file:
+with open(f"{resource_directory}{hunting_directory}hunting_beach.json", 'r', encoding='ascii') as read_file:
     HUNTING_BCH = ujson.loads(read_file.read())
 
 HUNTING_WTLND = None
-with open(f"{resource_directory}{hunting_directory}hunting_wetlands.json", 'r') as read_file:
+with open(f"{resource_directory}{hunting_directory}hunting_wetlands.json", 'r', encoding='ascii') as read_file:
     HUNTING_WTLND = ujson.loads(read_file.read())
 
 # BORDER #
 BORDER = None
-with open(f"{resource_directory}{border_directory}border.json", 'r') as read_file:
+with open(f"{resource_directory}{border_directory}border.json", 'r', encoding='ascii') as read_file:
     BORDER = ujson.loads(read_file.read())
 
 BORDER_FST = None
-with open(f"{resource_directory}{border_directory}border_forest.json", 'r') as read_file:
+with open(f"{resource_directory}{border_directory}border_forest.json", 'r', encoding='ascii') as read_file:
     BORDER_FST = ujson.loads(read_file.read())
 
 BORDER_PLN = None
-with open(f"{resource_directory}{border_directory}border_plains.json", 'r') as read_file:
+with open(f"{resource_directory}{border_directory}border_plains.json", 'r', encoding='ascii') as read_file:
     BORDER_PLN = ujson.loads(read_file.read())
 
 BORDER_MTN = None
-with open(f"{resource_directory}{border_directory}border_mountains.json", 'r') as read_file:
+with open(f"{resource_directory}{border_directory}border_mountains.json", 'r', encoding='ascii') as read_file:
     BORDER_MTN = ujson.loads(read_file.read())
 
 BORDER_BCH = None
-with open(f"{resource_directory}{border_directory}border_beach.json", 'r') as read_file:
+with open(f"{resource_directory}{border_directory}border_beach.json", 'r', encoding='ascii') as read_file:
     BORDER_BCH = ujson.loads(read_file.read())
 
 # TRAINING #
 TRAINING = None
-with open(f"{resource_directory}{training_directory}training.json", 'r') as read_file:
+with open(f"{resource_directory}{training_directory}training.json", 'r', encoding='ascii') as read_file:
     TRAINING = ujson.loads(read_file.read())
 
 TRAINING_FST = None
-with open(f"{resource_directory}{training_directory}training_forest.json", 'r') as read_file:
+with open(f"{resource_directory}{training_directory}training_forest.json", 'r', encoding='ascii') as read_file:
     TRAINING_FST = ujson.loads(read_file.read())
 
 TRAINING_PLN = None
-with open(f"{resource_directory}{training_directory}training_plains.json", 'r') as read_file:
+with open(f"{resource_directory}{training_directory}training_plains.json", 'r', encoding='ascii') as read_file:
     TRAINING_PLN = ujson.loads(read_file.read())
 
 TRAINING_MTN = None
-with open(f"{resource_directory}{training_directory}training_mountains.json", 'r') as read_file:
+with open(f"{resource_directory}{training_directory}training_mountains.json", 'r', encoding='ascii') as read_file:
     TRAINING_MTN = ujson.loads(read_file.read())
 
 TRAINING_BCH = None
-with open(f"{resource_directory}{training_directory}training_beach.json", 'r') as read_file:
+with open(f"{resource_directory}{training_directory}training_beach.json", 'r', encoding='ascii') as read_file:
     TRAINING_BCH = ujson.loads(read_file.read())
 
 # MED CAT #
 
 MEDCAT = None
-with open(f"{resource_directory}{med_directory}medcat.json", 'r') as read_file:
+with open(f"{resource_directory}{med_directory}medcat.json", 'r', encoding='ascii') as read_file:
     MEDCAT = ujson.loads(read_file.read())
 
 MEDCAT_FST = None
-with open(f"{resource_directory}{med_directory}medcat_forest.json", 'r') as read_file:
+with open(f"{resource_directory}{med_directory}medcat_forest.json", 'r', encoding='ascii') as read_file:
     MEDCAT_FST = ujson.loads(read_file.read())
 
 MEDCAT_PLN = None
-with open(f"{resource_directory}{med_directory}medcat_plains.json", 'r') as read_file:
+with open(f"{resource_directory}{med_directory}medcat_plains.json", 'r', encoding='ascii') as read_file:
     MEDCAT_PLN = ujson.loads(read_file.read())
 
 MEDCAT_MTN = None
-with open(f"{resource_directory}{med_directory}medcat_mountains.json", 'r') as read_file:
+with open(f"{resource_directory}{med_directory}medcat_mountains.json", 'r', encoding='ascii') as read_file:
     MEDCAT_MTN = ujson.loads(read_file.read())
 
 MEDCAT_BCH = None
-with open(f"{resource_directory}{med_directory}medcat_beach.json", 'r') as read_file:
+with open(f"{resource_directory}{med_directory}medcat_beach.json", 'r', encoding='ascii') as read_file:
     MEDCAT_BCH = ujson.loads(read_file.read())
 
 # NEW CAT #
 NEW_CAT = None
-with open(f"{resource_directory}new_cat.json", 'r') as read_file:
+with open(f"{resource_directory}new_cat.json", 'r', encoding='ascii') as read_file:
     NEW_CAT = ujson.loads(read_file.read())
 
 NEW_CAT_HOSTILE = None
-with open(f"{resource_directory}new_cat_hostile.json", 'r') as read_file:
+with open(f"{resource_directory}new_cat_hostile.json", 'r', encoding='ascii') as read_file:
     NEW_CAT_HOSTILE = ujson.loads(read_file.read())
 
 NEW_CAT_WELCOMING = None
-with open(f"{resource_directory}new_cat_welcoming.json", 'r') as read_file:
+with open(f"{resource_directory}new_cat_welcoming.json", 'r', encoding='ascii') as read_file:
     NEW_CAT_WELCOMING = ujson.loads(read_file.read())
 
 # OTHER CLAN #
 OTHER_CLAN = None
-with open(f"{resource_directory}other_clan.json", 'r') as read_file:
+with open(f"{resource_directory}other_clan.json", 'r', encoding='ascii') as read_file:
     OTHER_CLAN = ujson.loads(read_file.read())
 
 OTHER_CLAN_ALLIES = None
-with open(f"{resource_directory}other_clan_allies.json", 'r') as read_file:
+with open(f"{resource_directory}other_clan_allies.json", 'r', encoding='ascii') as read_file:
     OTHER_CLAN_ALLIES = ujson.loads(read_file.read())
 
 OTHER_CLAN_HOSTILE = None
-with open(f"{resource_directory}other_clan_hostile.json", 'r') as read_file:
+with open(f"{resource_directory}other_clan_hostile.json", 'r', encoding='ascii') as read_file:
     OTHER_CLAN_HOSTILE = ujson.loads(read_file.read())
 
 # ---------------------------------------------------------------------------- #
@@ -1476,5 +1608,5 @@ with open(f"{resource_directory}other_clan_hostile.json", 'r') as read_file:
 # ---------------------------------------------------------------------------- #
 
 DISASTER = None
-with open(f"{resource_directory}disaster.json", 'r') as read_file:
+with open(f"{resource_directory}disaster.json", 'r', encoding='ascii') as read_file:
     DISASTER = ujson.loads(read_file.read())

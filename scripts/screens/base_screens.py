@@ -14,6 +14,7 @@ class Screens():
     game_y = screen_y
     last_screen = ''
 
+    # menu buttons are used very often, so they are generated here.
     menu_buttons = {
         "events_screen": UIImageButton(
             pygame.Rect((246, 60), (82, 30)),
@@ -76,7 +77,8 @@ class Screens():
         game.last_screen_forupdate = self.name
 
         # This keeps track of the last list-like screen for the back button on cat profiles
-        if self.name in ['clan screen', 'list screen', 'starclan screen', 'dark forest screen']:
+        if self.name in ['clan screen', 'list screen', 'starclan screen', 'dark forest screen', 'events screen',
+                         'med den screen']:
             game.last_screen_forProfile = self.name
 
         game.switches['cur_screen'] = new_screen
@@ -125,7 +127,7 @@ class Screens():
 
     # Enables all menu buttons but the ones passed in.
     # Sloppy, but works. Consider making it nicer.
-    def set_disabled_menu_buttons(self, disabled_buttons=[]):
+    def set_disabled_menu_buttons(self, disabled_buttons=()):
         """This sets all menu buttons as interact-able, except buttons listed in disabled_buttons.  """
         for button in self.menu_buttons:
             self.menu_buttons[button].enable()
@@ -168,12 +170,10 @@ class Screens():
 
 # CAT PROFILES
 def cat_profiles():
+    """Updates every cat's sprites"""
     game.choose_cats.clear()
-    #print(game.choose_cats)
-    #game.cat_buttons.clear()
+
     for x in Cat.all_cats:
-        #game.choose_cats[x] = Cat.all_cats[x]
         update_sprite(Cat.all_cats[x])
 
-    #print(game.choose_cats)
 

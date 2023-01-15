@@ -3,12 +3,7 @@ import math
 from scripts.game_structure.game_essentials import game
 
 
-def medical_cats_condition_fulfilled(all_cats, amount_per_med, give_clanmembers_covered=False):
-    """
-    returns True if the player has enough meds for the whole clan
-
-    set give_clanmembers_covered to True to return the int of clanmembers that the meds can treat
-    """
+def medical_cats_condition_fulfilled(all_cats, amount_per_med):
     fulfilled = False
 
     medicine_apprentices = list(filter(
@@ -31,15 +26,15 @@ def medical_cats_condition_fulfilled(all_cats, amount_per_med, give_clanmembers_
     normal_meds = float(
         len(list(filter(lambda c: c.skill not in ['good healer', 'great healer', 'fantastic healer'], medicine_cats))))
 
-    total_med_number = good_healer + great_healer + fantastic_healer + normal_meds + total_exp + (len(medicine_apprentices) / 2)
-
-    can_care_for = int(total_med_number * (amount_per_med + 1))
+    total_adult_med_number = good_healer + great_healer + fantastic_healer + normal_meds + total_exp
 
     relevant_cats = list(filter(lambda c: not c.dead and not c.outside, all_cats))
+    number = len(relevant_cats) / (amount_per_med + 1)
 
-    if give_clanmembers_covered is True:
-        return can_care_for
-    if can_care_for >= len(relevant_cats):
+    meds_available = int(total_adult_med_number + (len(medicine_apprentices) / 2))
+    needed_meds = math.ceil(number)
+
+    if meds_available >= needed_meds:
         fulfilled = True
     return fulfilled
 
@@ -66,7 +61,6 @@ class Illness:
                  medicine_duration,
                  medicine_mortality,
                  risks,
-                 herbs=None,
                  event_triggered=False):
         self.name = name
         self.severity = severity
@@ -76,7 +70,6 @@ class Illness:
         self.medicine_duration = int(medicine_duration)
         self.medicine_mortality = int(medicine_mortality)
         self.risks = risks
-        self.herbs = herbs if herbs else []
         self.new = event_triggered
 
         self.current_duration = duration
@@ -129,7 +122,6 @@ class Injury:
                  illness_infectiousness=None,
                  also_got=None,
                  cause_permanent=None,
-                 herbs=None,
                  event_triggered=False):
         self.name = name
         self.severity = severity
@@ -140,7 +132,6 @@ class Injury:
         self.illness_infectiousness = illness_infectiousness
         self.also_got = also_got
         self.cause_permanent = cause_permanent
-        self.herbs = herbs if herbs else []
         self.new = event_triggered
 
         self.current_duration = duration
@@ -185,7 +176,6 @@ class PermanentCondition:
                  mortality=0,
                  risks=None,
                  illness_infectiousness=None,
-                 herbs=None,
                  event_triggered=False):
         self.name = name
         self.severity = severity
@@ -194,7 +184,6 @@ class PermanentCondition:
         self.mortality = mortality
         self.risks = risks
         self.illness_infectiousness = illness_infectiousness
-        self.herbs = herbs if herbs else []
         self.new = event_triggered
 
         self.current_mortality = mortality

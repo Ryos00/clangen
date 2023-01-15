@@ -1,10 +1,6 @@
 import pygame
 import pygame_gui
-try:
-    import ujson
-except ImportError as e:
-    print(f"{e}\nFailed to import ujson, saving may be slower.")
-    import json as ujson
+import ujson
 import os
 from ast import literal_eval
 
@@ -28,8 +24,6 @@ class Game():
     #max_relation_events_displayed = 10
     #relation_scroll_ct = 0
 
-    ranks_changed_timeskip = False  # Flag for when a cat's status changes occurs during a timeskip.
-
     cur_events_list = []
     ceremony_events_list = []
     birth_death_events_list = []
@@ -37,8 +31,6 @@ class Game():
     health_events_list = []
     other_clans_events_list = []
     misc_events_list = []
-    herb_events_list = []
-
     allegiance_list = []
     language = {}
     game_mode = ''
@@ -54,9 +46,6 @@ class Game():
 
     #down = pygame.image.load("resources/images/buttons/arrow_down.png").convert_alpha()
     #up = pygame.image.load("resources/images/buttons/arrow_up.png").convert_alpha()
-
-    # Sort-type
-    sort_type = "rank"
 
     choose_cats = {}
     '''cat_buttons = {
@@ -168,8 +157,7 @@ class Game():
         'den labels': True,
         'fading': True,
         "save_faded_copy": False,
-        'favorite sub tab': None,
-        'first_cousin_mates': True
+        'favorite sub tab': None
     }  # The current settings
     setting_lists = {
         'no gendered breeding': [False, True],
@@ -193,8 +181,7 @@ class Game():
         'den labels': [False, True],
         'favorite sub tab': sub_tab_list,
         'fading': [True, False],
-        'save_faded_copy': [False, True],
-        'first_cousin_mates': [True, False]
+        'save_faded_copy': [False, True]
     }  # Lists of possible options for each setting
     settings_changed = False
 
@@ -367,7 +354,6 @@ class Game():
                 "tortie_color": inter_cat.tortiecolour,
                 "tortie_pattern": inter_cat.tortiepattern,
                 "skin": inter_cat.skin,
-                "tint": inter_cat.tint,
                 "skill": inter_cat.skill,
                 "scars": inter_cat.scars if inter_cat.scars else [],
                 "accessory": inter_cat.accessory,
@@ -613,7 +599,7 @@ class GameOver(UIWindow):
 
         if event.type == pygame_gui.UI_BUTTON_START_PRESS:
             if event.ui_element == self.begin_anew_button:
-                game.last_screen_forupdate = game.switches['cur_screen']
+                game.last_screen_forupdate = self.last_screen
                 game.switches['cur_screen'] = 'start screen'
                 game.switch_screens = True
                 self.kill()

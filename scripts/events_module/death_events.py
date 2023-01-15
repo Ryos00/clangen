@@ -1,14 +1,10 @@
-try:
-    import ujson
-except ImportError:
-    import json as ujson
+import ujson
 import random
 
 from scripts.cat.cats import Cat, INJURIES
 from scripts.events_module.generate_events import GenerateEvents
 from scripts.utility import event_text_adjust, change_clan_relations, change_relationship_values
 from scripts.game_structure.game_essentials import game
-from scripts.event_class import Single_Event
 
 # ---------------------------------------------------------------------------- #
 #                               Death Event Class                              #
@@ -28,7 +24,7 @@ class Death_Events():
         """ 
         This function handles the deaths
         """
-        involved_cats = [cat.ID]
+
         other_clan = random.choice(game.clan.all_clans)
         other_clan_name = f'{str(other_clan.name)}Clan'
         current_lives = int(game.clan.leader_lives)
@@ -135,15 +131,13 @@ class Death_Events():
 
         # give death history to other cat if they die
         if "other_cat_death" in death_cause.tags or "multi_death" in death_cause.tags:
-            involved_cats.append(other_cat.ID)
             if other_cat.status != "leader" and death_cause.history_text[0] is not None:
                 other_history_text = event_text_adjust(Cat, death_cause.history_text[0], other_cat, cat, other_clan_name)
             elif other_cat.status == "leader" and death_cause.history_text[1] is not None:
                 other_history_text = event_text_adjust(Cat, death_cause.history_text[1], other_cat, cat, other_clan_name)
 
         # give injuries to other cat if tagged as such
-        if "other_cat_injured" in death_cause.tags:
-            involved_cats.append(other_cat.ID)
+        if "other_cat_injure" in death_cause.tags:
             print("TAG DETECTED", other_cat.name)
             for tag in death_cause.tags:
                 if tag in INJURIES:
@@ -191,11 +185,10 @@ class Death_Events():
             difference = 5
             change_clan_relations(other_clan, difference=difference)
 
-        types = ["birth_death"]
+        game.cur_events_list.append(death_text)
+        game.birth_death_events_list.append(death_text)
         if "other_clan" in death_cause.tags:
-            types.append("other_clans")
-        game.cur_events_list.append(Single_Event(death_text, types, involved_cats))
-        # game.birth_death_events_list.append(death_text)
+            game.other_clans_events_list.append(death_text)
 
     def handle_relationship_changes(self, cat, death_cause, other_cat):
         cat_to = None

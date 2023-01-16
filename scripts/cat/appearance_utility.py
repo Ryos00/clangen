@@ -671,3 +671,12 @@ def init_white_patches(cat):
     else:
         cat.white_patches = None
         cat.white = False
+
+def init_tint(cat):
+    # Basic tints as possible for all colors.
+    possible_tints = Sprites.cat_tints["possible_tints"]["basic"].copy()
+    if cat.pelt.colour in Sprites.cat_tints["colour_groups"]:
+        color_group = Sprites.cat_tints["colour_groups"][cat.pelt.colour]
+        possible_tints += Sprites.cat_tints["possible_tints"][color_group]
+        cat.tint = choice(possible_tints)
+

@@ -320,7 +320,6 @@ class Game():
         if not os.path.exists(directory):
             os.makedirs(directory)
 
-        self.save_otherclan_cats(clanname) # saves cats from other clans
         self.save_faded_cats(clanname)  # Fades cat and saves them, if needed
 
         clan_cats = []
@@ -334,7 +333,6 @@ class Game():
                 "birth_cooldown": inter_cat.birth_cooldown,
                 "status": inter_cat.status,
                 "backstory": inter_cat.backstory if inter_cat.backstory else None,
-                "clan": inter_cat.clan if inter_cat.clan else None,
                 "age": inter_cat.age,
                 "moons": inter_cat.moons,
                 "trait": inter_cat.trait,
@@ -379,20 +377,19 @@ class Game():
                 "former_apprentices": [appr for appr in inter_cat.former_apprentices],
                 "possible_scar": inter_cat.possible_scar if inter_cat.possible_scar else None,
                 "scar_event": inter_cat.scar_event if inter_cat.scar_event else [],
-                "df": inter_cat.df,               
+                "df": inter_cat.df,
+                "outside": inter_cat.outside,                
                 "corruption": inter_cat.corruption if inter_cat.corruption else 0,
                 "life_givers": inter_cat.life_givers if inter_cat.life_givers else [],
                 "known_life_givers": inter_cat.known_life_givers if inter_cat.known_life_givers else [],
                 "virtues": inter_cat.virtues if inter_cat.virtues else [],
+                "retired": inter_cat.retired if inter_cat.retired else False,
                 "outside": inter_cat.outside,
                 "retired": inter_cat.retired if inter_cat.retired else False,
                 "faded_offspring": inter_cat.faded_offspring,
                 "opacity": inter_cat.opacity,
-                "prevent_fading": inter_cat.prevent_fading,
-                "otherclan": inter_cat.otherclan if inter_cat.otherclan else False
+                "prevent_fading": inter_cat.prevent_fading
             }
-            if cat_data["otherclan"] == True:
-                continue
             clan_cats.append(cat_data)
             inter_cat.save_condition()
             if not inter_cat.dead:
@@ -555,56 +552,8 @@ class Game():
 
         return True
 
-    def save_otherclan_cats(self, clanname):
-        """Deals with otherclan cats"""
-        directory = 'saves/' + clanname
-        if not os.path.exists(directory):
-            os.makedirs(directory)
 
-        otherclan_cats = []
-        for inter_cat in self.cat_class.otherclans.values():
-            cat_data = {
-                "ID": inter_cat.ID,
-                "name_prefix": inter_cat.name.prefix,
-                "name_suffix": inter_cat.name.suffix,
-                "gender": inter_cat.gender,
-                "gender_align": inter_cat.genderalign,
-                "status": inter_cat.status,
-                "backstory": inter_cat.backstory if inter_cat.backstory else None,
-                "clan": inter_cat.clan if inter_cat.clan else None,
-                "age": inter_cat.age,
-                "moons": inter_cat.moons,
-                "trait": inter_cat.trait,
-                "parent1": inter_cat.parent1,
-                "parent2": inter_cat.parent2,
-                "dead": inter_cat.dead,
-                "pelt_name": inter_cat.pelt.name,
-                "pelt_color": inter_cat.pelt.colour,
-                "pelt_white": inter_cat.pelt.white,
-                "pelt_length": inter_cat.pelt.length,
-                "eye_colour": inter_cat.eye_colour,
-                "reverse": inter_cat.reverse,
-                "white_patches": inter_cat.white_patches,
-                "pattern": inter_cat.pattern,
-                "tortie_base": inter_cat.tortiebase,
-                "tortie_color": inter_cat.tortiecolour,
-                "tortie_pattern": inter_cat.tortiepattern,
-                "skin": inter_cat.skin,
-                "tint": inter_cat.tint,
-                "skill": inter_cat.skill,
-                "faded_offspring": inter_cat.faded_offspring,
-                "opacity": inter_cat.opacity,
-                "prevent_fading": inter_cat.prevent_fading,
-                "otherclan": inter_cat.otherclan if inter_cat.otherclan else False
-            }
-            otherclan_cats.append(cat_data)
-            print(str(otherclan_cats))
-        try:
-            with open(directory + '/other_clans.json', 'w') as write_file:
-                json_string = ujson.dumps(otherclan_cats, indent=4)
-                write_file.write(json_string)
-        except:
-            print("Saving cats from other clans didn't work.")
+
 
 # M O U S E
 class Mouse():

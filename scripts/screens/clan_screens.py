@@ -78,7 +78,7 @@ class ClanScreen(Screens):
         self.leader_den_label = pygame_gui.elements.UIImage(pygame.Rect(game.clan.cur_layout["leader den"], (112, 28)),
                                                             image_cache.load_image('resources/images/leader_den.png'))
         self.med_den_label = pygame_gui.elements.UIImage(pygame.Rect(game.clan.cur_layout["medicine den"], (151, 28)),
-                                                         image_cache.load_image('resources/images/med_den.png'))
+                                                         image_cache.load_image('resources/images/buttons/med_den.png'))
         self.elder_den_label = pygame_gui.elements.UIImage(pygame.Rect(game.clan.cur_layout["elder den"], (103, 28)),
                                                            image_cache.load_image('resources/images/elder_den.png'))
         self.nursery_label = pygame_gui.elements.UIImage(pygame.Rect(game.clan.cur_layout['nursery'], (80, 28)),

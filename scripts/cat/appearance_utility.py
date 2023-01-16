@@ -1,4 +1,6 @@
+import random
 from .pelts import *
+from scripts.cat.sprites import Sprites
 
 # ---------------------------------------------------------------------------- #
 #                               utility functions                              #

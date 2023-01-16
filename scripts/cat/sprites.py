@@ -4,6 +4,8 @@ from scripts.game_structure.game_essentials import *
 
 class Sprites():
 
+    cat_tints = {}
+
     def __init__(self, original_size, new_size=None):
         self.size = original_size  # size of a single sprite in a spritesheet
         self.new_size = self.size * 2 if new_size is None else new_size
@@ -11,6 +13,16 @@ class Sprites():
         self.images = {}
         self.groups = {}
         self.sprites = {}
+
+        self.load_tints()
+
+    def load_tints(self):
+        try:
+            with open("sprites/dicts/tint.json", 'r') as read_file:
+                Sprites.cat_tints = ujson.loads(read_file.read())
+        except:
+            print("Error Reading Tints")
+
 
     def spritesheet(self, a_file, name):
         """

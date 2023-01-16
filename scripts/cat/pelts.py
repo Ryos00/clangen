@@ -1472,13 +1472,20 @@ class DilutedSokoke():
         'VAN', 'VANCREAMY', 'ONEEAR', 'LIGHTSONG', 'TAIL', 'HEART', 'MOORISH',
         'MASKMANTLE', 'APRON', 'CAPSADDLE',
         'COLOURPOINT', 'COLOURPOINTCREAMY', 'RAGDOLL', 'POINTMARK', 'VITILIGO',
-        'VITILIGO2', 'BLACKSTAR', 'JASMINE', 'BADGER', 'DILUTEDTUXEDO', 'DILUTEDCOLOURPOINT', 'SNOWBACK', 'REVERSEHEART', 'KARPATILIGO',
-        'BLACKSTARCREAMY', 'HEARTCREAMY', 'REVERSEHEARTCREAMY', 'TAILCREAMY', 'DILUTEDTAIL', 'CREAMBACK', 'PIEBALDCREAMY', 'GLASSCREAMY',
-        'DILUTEDPIEBALD', 'DILUTEDGLASS', 'DILUTEDHEART', 'BROKENCREAMY', 'DILUTEDBROKEN', 'RAGDOLLCREAMY', 'LILTWOCREAMY', 'RINGTAILCREAMY',
-        'HALFCREAMY', 'HALFFACECREAMY', 'STARCREAMY', 'TOESTAILCREAMY', 'RAVENPAWCREAMY', 'SPINE', 'SCOURGECREAMY', 'SPINECREAMY',
-        'REVERSEANY', 'REVERSEANYCREAMY', 'REVERSEANY2', 'REVERSEANY2CREAMY', 'REVERSECURVED', 'REVERSECURVEDCREAMY', 'REVERSEHALFFACE', 'REVERSEHALFFACECREAMY',
-        'ANYFADE', 'REVERSEANYFADE', 'ANY2FADE', 'REVERSEANY2FADE', 'REVERSECURVEDFADE', 'CURVEDFADE', 'REVERSEHALFFACEFADE', 'HALFFACEFADE',
-        'REVERSEVAN', 'REVERSEVANCREAMY', 'VANFADE', 'LIGHTSONGCREAMY', 'CURVEDCREAMY', 'MOORISHFADE', 'MOORISHCREAMY', 'SKUNKCREAMY'
+        'VITILIGO2', 'BLACKSTAR', 'JASMINE', 'BADGER', 'DILUTEDTUXEDO', 
+        'DILUTEDCOLOURPOINT', 'SNOWBACK', 'REVERSEHEART', 'KARPATILIGO',
+        'BLACKSTARCREAMY', 'HEARTCREAMY', 'REVERSEHEARTCREAMY', 'TAILCREAMY', 
+        'DILUTEDTAIL', 'CREAMBACK', 'PIEBALDCREAMY', 'GLASSCREAMY',
+        'DILUTEDPIEBALD', 'DILUTEDGLASS', 'DILUTEDHEART', 'BROKENCREAMY', 
+        'DILUTEDBROKEN', 'RAGDOLLCREAMY', 'LILTWOCREAMY', 'RINGTAILCREAMY',
+        'HALFCREAMY', 'HALFFACECREAMY', 'STARCREAMY', 'TOESTAILCREAMY', 
+        'RAVENPAWCREAMY', 'SPINE', 'SCOURGECREAMY', 'SPINECREAMY',
+        'REVERSEANY', 'REVERSEANYCREAMY', 'REVERSEANY2', 'REVERSEANY2CREAMY', 
+        'REVERSECURVED', 'REVERSECURVEDCREAMY', 'REVERSEHALFFACE', 'REVERSEHALFFACECREAMY',
+        'ANYFADE', 'REVERSEANYFADE', 'ANY2FADE', 'REVERSEANY2FADE', 'REVERSECURVEDFADE', 
+        'CURVEDFADE', 'REVERSEHALFFACEFADE', 'HALFFACEFADE',
+        'REVERSEVAN', 'REVERSEVANCREAMY', 'VANFADE', 'LIGHTSONGCREAMY', 'CURVEDCREAMY', 
+        'MOORISHFADE', 'MOORISHCREAMY', 'SKUNKCREAMY'
 
     ]
     def __init__(self, colour, white, length):
@@ -1540,13 +1547,20 @@ class DilutedFreckled():
         'VAN', 'VANCREAMY', 'ONEEAR', 'LIGHTSONG', 'TAIL', 'HEART', 'MOORISH',
         'MASKMANTLE', 'APRON', 'CAPSADDLE',
         'COLOURPOINT', 'COLOURPOINTCREAMY', 'RAGDOLL', 'POINTMARK', 'VITILIGO',
-        'VITILIGO2', 'BLACKSTAR', 'JASMINE', 'BADGER', 'DILUTEDTUXEDO', 'DILUTEDCOLOURPOINT', 'SNOWBACK', 'REVERSEHEART', 'KARPATILIGO',
-        'BLACKSTARCREAMY', 'HEARTCREAMY', 'REVERSEHEARTCREAMY', 'TAILCREAMY', 'DILUTEDTAIL', 'CREAMBACK', 'PIEBALDCREAMY', 'GLASSCREAMY',
-        'DILUTEDPIEBALD', 'DILUTEDGLASS', 'DILUTEDHEART', 'BROKENCREAMY', 'DILUTEDBROKEN', 'RAGDOLLCREAMY', 'LILTWOCREAMY', 'RINGTAILCREAMY',
-        'HALFCREAMY', 'HALFFACECREAMY', 'STARCREAMY', 'TOESTAILCREAMY', 'RAVENPAWCREAMY', 'SPINE', 'SCOURGECREAMY', 'SPINECREAMY',
-        'REVERSEANY', 'REVERSEANYCREAMY', 'REVERSEANY2', 'REVERSEANY2CREAMY', 'REVERSECURVED', 'REVERSECURVEDCREAMY', 'REVERSEHALFFACE', 'REVERSEHALFFACECREAMY',
-        'ANYFADE', 'REVERSEANYFADE', 'ANY2FADE', 'REVERSEANY2FADE', 'REVERSECURVEDFADE', 'CURVEDFADE', 'REVERSEHALFFACEFADE', 'HALFFACEFADE',
-        'REVERSEVAN', 'REVERSEVANCREAMY', 'VANFADE', 'LIGHTSONGCREAMY', 'CURVEDCREAMY', 'MOORISHFADE', 'MOORISHCREAMY', 'SKUNKCREAMY'
+        'VITILIGO2', 'BLACKSTAR', 'JASMINE', 'BADGER', 'DILUTEDTUXEDO', 
+        'DILUTEDCOLOURPOINT', 'SNOWBACK', 'REVERSEHEART', 'KARPATILIGO',
+        'BLACKSTARCREAMY', 'HEARTCREAMY', 'REVERSEHEARTCREAMY', 'TAILCREAMY', 
+        'DILUTEDTAIL', 'CREAMBACK', 'PIEBALDCREAMY', 'GLASSCREAMY',
+        'DILUTEDPIEBALD', 'DILUTEDGLASS', 'DILUTEDHEART', 'BROKENCREAMY', 
+        'DILUTEDBROKEN', 'RAGDOLLCREAMY', 'LILTWOCREAMY', 'RINGTAILCREAMY',
+        'HALFCREAMY', 'HALFFACECREAMY', 'STARCREAMY', 'TOESTAILCREAMY', 
+        'RAVENPAWCREAMY', 'SPINE', 'SCOURGECREAMY', 'SPINECREAMY',
+        'REVERSEANY', 'REVERSEANYCREAMY', 'REVERSEANY2', 'REVERSEANY2CREAMY', 
+        'REVERSECURVED', 'REVERSECURVEDCREAMY', 'REVERSEHALFFACE', 'REVERSEHALFFACECREAMY',
+        'ANYFADE', 'REVERSEANYFADE', 'ANY2FADE', 'REVERSEANY2FADE', 'REVERSECURVEDFADE', 
+        'CURVEDFADE', 'REVERSEHALFFACEFADE', 'HALFFACEFADE',
+        'REVERSEVAN', 'REVERSEVANCREAMY', 'VANFADE', 'LIGHTSONGCREAMY', 'CURVEDCREAMY', 
+        'MOORISHFADE', 'MOORISHCREAMY', 'SKUNKCREAMY'
 
     ]
     def __init__(self, colour, white, length):
@@ -1574,13 +1588,20 @@ class Tonkinese():
         'VAN', 'VANCREAMY', 'ONEEAR', 'LIGHTSONG', 'TAIL', 'HEART', 'MOORISH',
         'MASKMANTLE', 'APRON', 'CAPSADDLE',
         'COLOURPOINT', 'COLOURPOINTCREAMY', 'RAGDOLL', 'POINTMARK', 'VITILIGO',
-        'VITILIGO2', 'BLACKSTAR', 'JASMINE', 'BADGER', 'DILUTEDTUXEDO', 'DILUTEDCOLOURPOINT', 'SNOWBACK', 'REVERSEHEART', 'KARPATILIGO',
-        'BLACKSTARCREAMY', 'HEARTCREAMY', 'REVERSEHEARTCREAMY', 'TAILCREAMY', 'DILUTEDTAIL', 'CREAMBACK', 'PIEBALDCREAMY', 'GLASSCREAMY',
-        'DILUTEDPIEBALD', 'DILUTEDGLASS', 'DILUTEDHEART', 'BROKENCREAMY', 'DILUTEDBROKEN', 'RAGDOLLCREAMY', 'LILTWOCREAMY', 'RINGTAILCREAMY',
-        'HALFCREAMY', 'HALFFACECREAMY', 'STARCREAMY', 'TOESTAILCREAMY', 'RAVENPAWCREAMY', 'SPINE', 'SCOURGECREAMY', 'SPINECREAMY',
-        'REVERSEANY', 'REVERSEANYCREAMY', 'REVERSEANY2', 'REVERSEANY2CREAMY', 'REVERSECURVED', 'REVERSECURVEDCREAMY', 'REVERSEHALFFACE', 'REVERSEHALFFACECREAMY',
-        'ANYFADE', 'REVERSEANYFADE', 'ANY2FADE', 'REVERSEANY2FADE', 'REVERSECURVEDFADE', 'CURVEDFADE', 'REVERSEHALFFACEFADE', 'HALFFACEFADE',
-        'REVERSEVAN', 'REVERSEVANCREAMY', 'VANFADE', 'LIGHTSONGCREAMY', 'CURVEDCREAMY', 'MOORISHFADE', 'MOORISHCREAMY', 'SKUNKCREAMY'
+        'VITILIGO2', 'BLACKSTAR', 'JASMINE', 'BADGER', 'DILUTEDTUXEDO', 
+        'DILUTEDCOLOURPOINT', 'SNOWBACK', 'REVERSEHEART', 'KARPATILIGO',
+        'BLACKSTARCREAMY', 'HEARTCREAMY', 'REVERSEHEARTCREAMY', 'TAILCREAMY', 
+        'DILUTEDTAIL', 'CREAMBACK', 'PIEBALDCREAMY', 'GLASSCREAMY',
+        'DILUTEDPIEBALD', 'DILUTEDGLASS', 'DILUTEDHEART', 'BROKENCREAMY', 
+        'DILUTEDBROKEN', 'RAGDOLLCREAMY', 'LILTWOCREAMY', 'RINGTAILCREAMY',
+        'HALFCREAMY', 'HALFFACECREAMY', 'STARCREAMY', 'TOESTAILCREAMY', 
+        'RAVENPAWCREAMY', 'SPINE', 'SCOURGECREAMY', 'SPINECREAMY',
+        'REVERSEANY', 'REVERSEANYCREAMY', 'REVERSEANY2', 'REVERSEANY2CREAMY', 
+        'REVERSECURVED', 'REVERSECURVEDCREAMY', 'REVERSEHALFFACE', 'REVERSEHALFFACECREAMY',
+        'ANYFADE', 'REVERSEANYFADE', 'ANY2FADE', 'REVERSEANY2FADE', 'REVERSECURVEDFADE', 
+        'CURVEDFADE', 'REVERSEHALFFACEFADE', 'HALFFACEFADE',
+        'REVERSEVAN', 'REVERSEVANCREAMY', 'VANFADE', 'LIGHTSONGCREAMY', 'CURVEDCREAMY', 
+        'MOORISHFADE', 'MOORISHCREAMY', 'SKUNKCREAMY'
 
     ]
     def __init__(self, colour, white, length):
@@ -1608,13 +1629,20 @@ class DilutedTonkinese():
         'VAN', 'VANCREAMY', 'ONEEAR', 'LIGHTSONG', 'TAIL', 'HEART', 'MOORISH',
         'MASKMANTLE', 'APRON', 'CAPSADDLE',
         'COLOURPOINT', 'COLOURPOINTCREAMY', 'RAGDOLL', 'POINTMARK', 'VITILIGO',
-        'VITILIGO2', 'BLACKSTAR', 'JASMINE', 'BADGER', 'DILUTEDTUXEDO', 'DILUTEDCOLOURPOINT', 'SNOWBACK', 'REVERSEHEART', 'KARPATILIGO',
-        'BLACKSTARCREAMY', 'HEARTCREAMY', 'REVERSEHEARTCREAMY', 'TAILCREAMY', 'DILUTEDTAIL', 'CREAMBACK', 'PIEBALDCREAMY', 'GLASSCREAMY',
-        'DILUTEDPIEBALD', 'DILUTEDGLASS', 'DILUTEDHEART', 'BROKENCREAMY', 'DILUTEDBROKEN', 'RAGDOLLCREAMY', 'LILTWOCREAMY', 'RINGTAILCREAMY',
-        'HALFCREAMY', 'HALFFACECREAMY', 'STARCREAMY', 'TOESTAILCREAMY', 'RAVENPAWCREAMY', 'SPINE', 'SCOURGECREAMY', 'SPINECREAMY',
-        'REVERSEANY', 'REVERSEANYCREAMY', 'REVERSEANY2', 'REVERSEANY2CREAMY', 'REVERSECURVED', 'REVERSECURVEDCREAMY', 'REVERSEHALFFACE', 'REVERSEHALFFACECREAMY',
-        'ANYFADE', 'REVERSEANYFADE', 'ANY2FADE', 'REVERSEANY2FADE', 'REVERSECURVEDFADE', 'CURVEDFADE', 'REVERSEHALFFACEFADE', 'HALFFACEFADE',
-        'REVERSEVAN', 'REVERSEVANCREAMY', 'VANFADE', 'LIGHTSONGCREAMY', 'CURVEDCREAMY', 'MOORISHFADE', 'MOORISHCREAMY', 'SKUNKCREAMY'
+        'VITILIGO2', 'BLACKSTAR', 'JASMINE', 'BADGER', 'DILUTEDTUXEDO', 
+        'DILUTEDCOLOURPOINT', 'SNOWBACK', 'REVERSEHEART', 'KARPATILIGO',
+        'BLACKSTARCREAMY', 'HEARTCREAMY', 'REVERSEHEARTCREAMY', 'TAILCREAMY', 
+        'DILUTEDTAIL', 'CREAMBACK', 'PIEBALDCREAMY', 'GLASSCREAMY',
+        'DILUTEDPIEBALD', 'DILUTEDGLASS', 'DILUTEDHEART', 'BROKENCREAMY', 
+        'DILUTEDBROKEN', 'RAGDOLLCREAMY', 'LILTWOCREAMY', 'RINGTAILCREAMY',
+        'HALFCREAMY', 'HALFFACECREAMY', 'STARCREAMY', 'TOESTAILCREAMY', 
+        'RAVENPAWCREAMY', 'SPINE', 'SCOURGECREAMY', 'SPINECREAMY',
+        'REVERSEANY', 'REVERSEANYCREAMY', 'REVERSEANY2', 'REVERSEANY2CREAMY', 
+        'REVERSECURVED', 'REVERSECURVEDCREAMY', 'REVERSEHALFFACE', 'REVERSEHALFFACECREAMY',
+        'ANYFADE', 'REVERSEANYFADE', 'ANY2FADE', 'REVERSEANY2FADE', 'REVERSECURVEDFADE', 
+        'CURVEDFADE', 'REVERSEHALFFACEFADE', 'HALFFACEFADE',
+        'REVERSEVAN', 'REVERSEVANCREAMY', 'VANFADE', 'LIGHTSONGCREAMY', 'CURVEDCREAMY', 
+        'MOORISHFADE', 'MOORISHCREAMY', 'SKUNKCREAMY'
 
     ]
     def __init__(self, colour, white, length):
@@ -1638,11 +1666,15 @@ class Tortie(object):
         'COLOURPOINT', 'COLOURPOINTCREAMY', 'RAGDOLL', 'POINTMARK', 'VITILIGO', 'VITILIGO2',
         'FRECKLES2', 'HALFHEART', 'WHITEEAR', 'HUSKY', 'MASK', 'S',
         'BADGER', 'DILUTEDTUXEDO', 'DILUTEDCOLOURPOINT', 'REVERSEHEART', 'KARPATILIGO',
-        'REVERSEHEARTCREAMY', 'DILUTEDTAIL','DILUTEDPIEBALD', 'DILUTEDGLASS', 'DILUTEDHEART', 'DILUTEDBROKEN', 'RAGDOLLCREAMY', 'LILTWOCREAMY',
+        'REVERSEHEARTCREAMY', 'DILUTEDTAIL','DILUTEDPIEBALD', 'DILUTEDGLASS', 
+        'DILUTEDHEART', 'DILUTEDBROKEN', 'RAGDOLLCREAMY', 'LILTWOCREAMY',
         'STARCREAMY', 'TOESTAILCREAMY', 'RAVENPAWCREAMY', 'SCOURGECREAMY',
-        'REVERSEANY', 'REVERSEANYCREAMY', 'REVERSEANY2', 'REVERSEANY2CREAMY', 'REVERSECURVED', 'REVERSECURVEDCREAMY', 'REVERSEHALFFACE', 'REVERSEHALFFACECREAMY',
-        'ANYFADE', 'REVERSEANYFADE', 'ANY2FADE', 'REVERSEANY2FADE', 'REVERSECURVEDFADE', 'CURVEDFADE', 'REVERSEHALFFACEFADE', 'HALFFACEFADE',
-        'REVERSEVAN', 'REVERSEVANCREAMY', 'VANFADE', 'LIGHTSONGCREAMY', 'CURVEDCREAMY', 'MOORISHFADE', 'MOORISHCREAMY', 'SKUNKCREAMY'
+        'REVERSEANY', 'REVERSEANYCREAMY', 'REVERSEANY2', 'REVERSEANY2CREAMY', 
+        'REVERSECURVED', 'REVERSECURVEDCREAMY', 'REVERSEHALFFACE', 'REVERSEHALFFACECREAMY',
+        'ANYFADE', 'REVERSEANYFADE', 'ANY2FADE', 'REVERSEANY2FADE', 'REVERSECURVEDFADE', 
+        'CURVEDFADE', 'REVERSEHALFFACEFADE', 'HALFFACEFADE',
+        'REVERSEVAN', 'REVERSEVANCREAMY', 'VANFADE', 'LIGHTSONGCREAMY', 'CURVEDCREAMY', 
+        'MOORISHFADE', 'MOORISHCREAMY', 'SKUNKCREAMY'
         ]
 
     def __init__(self, white, length):
@@ -1672,12 +1704,16 @@ class Calico(object):
         'VAN', 'VANCREAMY', 'ONEEAR', 'LIGHTSONG', 'TAIL', 'HEART', 'MOORISH',
         'MASKMANTLE', 'APRON', 'CAPSADDLE',
         'MOJO', 'STAINS', 'STAINS2', 'CRESCENT',
-        'COW', 'SWIFTPAW', 'BLACKSTAR', 'JASMINE', 'SNOWBACK','BLACKSTARCREAMY', 'HEARTCREAMY', 'TAILCREAMY', 'CREAMBACK', 'PIEBALDCREAMY', 'GLASSCREAMY',
+        'COW', 'SWIFTPAW', 'BLACKSTAR', 'JASMINE', 'SNOWBACK','BLACKSTARCREAMY', 
+        'HEARTCREAMY', 'TAILCREAMY', 'CREAMBACK', 'PIEBALDCREAMY', 'GLASSCREAMY',
         'BROKENCREAMY', 'RAGDOLLCREAMY', 'LILTWOCREAMY', 'RINGTAILCREAMY',
         'HALFCREAMY', 'HALFFACECREAMY', 'SPINE', 'SPINECREAMY',
-        'REVERSEANY', 'REVERSEANYCREAMY', 'REVERSEANY2', 'REVERSEANY2CREAMY', 'REVERSECURVED', 'REVERSECURVEDCREAMY', 'REVERSEHALFFACE', 'REVERSEHALFFACECREAMY',
-        'ANYFADE', 'REVERSEANYFADE', 'ANY2FADE', 'REVERSEANY2FADE', 'REVERSECURVEDFADE', 'CURVEDFADE', 'REVERSEHALFFACEFADE', 'HALFFACEFADE',
-        'REVERSEVAN', 'REVERSEVANCREAMY', 'VANFADE', 'LIGHTSONGCREAMY', 'CURVEDCREAMY', 'MOORISHFADE', 'MOORISHCREAMY', 'SKUNKCREAMY'
+        'REVERSEANY', 'REVERSEANYCREAMY', 'REVERSEANY2', 'REVERSEANY2CREAMY', 
+        'REVERSECURVED', 'REVERSECURVEDCREAMY', 'REVERSEHALFFACE', 'REVERSEHALFFACECREAMY',
+        'ANYFADE', 'REVERSEANYFADE', 'ANY2FADE', 'REVERSEANY2FADE', 
+        'REVERSECURVEDFADE', 'CURVEDFADE', 'REVERSEHALFFACEFADE', 'HALFFACEFADE',
+        'REVERSEVAN', 'REVERSEVANCREAMY', 'VANFADE', 'LIGHTSONGCREAMY', 
+        'CURVEDCREAMY', 'MOORISHFADE', 'MOORISHCREAMY', 'SKUNKCREAMY'
     ]
     def __init__(self, length):
         self.colour = choice(["SILVER", "GREY", "DARKGREY", "BLACK",
@@ -1705,10 +1741,14 @@ pelt_colours = [
     'DARKGREEN', 'LIGHTPURPLE', 'PURPLE', 'DARKPURPLE', 'SNOW', 'LIGHTGREY2',
     'GREY2', 'DARKGREY2', 'BLACK3', 'EBONY', 'PALEYELLOW', 'YELLOW', 'GOLD',
     'DARKCREAM', 'LIGHTGB2', 'GB2', 'DARKGB2', 'LIGHTBROWN2', 'BROWN2', 'DARKBROWN2',
-    'WHITE3', 'PALEGREY2', 'LIGHTGREY3', 'GREY3', 'DARKGREY3', 'STONE', 'COAL', 'OBSIDIAN', 'BLACK4', 'PALECREAM', 'CREAM4', 'DARKCREAM2',
-    'FAWN2', 'TAN', 'LIGHTBROWN3', 'BROWN3', 'CHOCOLATE', 'DARKBROWN3', 'EBONY1', 'PALEGINGER3', 'LIGHTGINGER3', 'GINGER3', 'FIRE',
-    'DARKGINGER3', 'RUSSET', 'RED', 'AUBURN', 'PALELILAC', 'LIGHTLILAC', 'LILAC2', 'DARKLILAC', 'ROSE', 'LIGHTGOLD', 'GOLDEN2', 'DARKGOLD',
-    'HONEY', 'LIGHTSILVER', 'SILVER2', 'DARKSILVER', 'PALEBLUE', 'LIGHTBLUE', 'BLUE1', 'RUSSIAN', 'DARKBLUE'
+    'WHITE3', 'PALEGREY2', 'LIGHTGREY3', 'GREY3', 'DARKGREY3', 'STONE', 'COAL', 
+    'OBSIDIAN', 'BLACK4', 'PALECREAM', 'CREAM4', 'DARKCREAM2',
+    'FAWN2', 'TAN', 'LIGHTBROWN3', 'BROWN3', 'CHOCOLATE', 'DARKBROWN3', 'EBONY1', 
+    'PALEGINGER3', 'LIGHTGINGER3', 'GINGER3', 'FIRE',
+    'DARKGINGER3', 'RUSSET', 'RED', 'AUBURN', 'PALELILAC', 'LIGHTLILAC', 'LILAC2', 
+    'DARKLILAC', 'ROSE', 'LIGHTGOLD', 'GOLDEN2', 'DARKGOLD',
+    'HONEY', 'LIGHTSILVER', 'SILVER2', 'DARKSILVER', 'PALEBLUE', 'LIGHTBLUE', 
+    'BLUE1', 'RUSSIAN', 'DARKBLUE'
 ]
 pelt_c_no_white = [
     'PALEGREY', 'SILVER', 'GREY', 'DARKGREY', 'BLACK', 'PALEGINGER', 'GOLDEN',
@@ -1718,12 +1758,16 @@ pelt_c_no_white = [
     'PINK', 'DARKPINK', 'LIGHTBG', 'BG', 'DARKBG', 'CREAM3', 'PALEGINGER2',
     'GINGER2', 'DARKGINGER2', 'LIGHTGB', 'GB', 'DARKGB', 'LIGHTGREEN', 'GREEN',
     'DARKGREEN', 'LIGHTPURPLE', 'PURPLE', 'DARKPURPLE', 'SNOW', 'LIGHTGREY2',
-    'GREY2', 'DARKGREY2', 'BLACK3', 'PALEYELLOW', 'YELLOW', 'GOLD', 'DARKCREAM', 'LIGHTGB2',
-    'GB2', 'DARKGB2', 'LIGHTBROWN2', 'BROWN2', 'DARKBROWN2',
-    'PALEGREY2', 'LIGHTGREY3', 'GREY3', 'DARKGREY3', 'STONE', 'COAL', 'OBSIDIAN', 'BLACK4', 'PALECREAM', 'CREAM4', 'DARKCREAM2',
-    'FAWN2', 'TAN', 'LIGHTBROWN3', 'BROWN3', 'CHOCOLATE2', 'DARKBROWN3', 'EBONY1', 'PALEGINGER3', 'LIGHTGINGER3', 'GINGER3', 'FIRE',
-    'DARKGINGER3', 'RUSSET', 'RED', 'AUBURN', 'PALELILAC', 'LIGHTLILAC', 'LILAC2', 'DARKLILAC', 'ROSE', 'LIGHTGOLD', 'GOLDEN2', 'DARKGOLD',
-    'HONEY', 'LIGHTSILVER', 'SILVER2', 'DARKSILVER', 'PALEBLUE', 'LIGHTBLUE', 'BLUE1', 'RUSSIAN', 'DARKBLUE'
+    'GREY2', 'DARKGREY2', 'BLACK3', 'PALEYELLOW', 'YELLOW', 'GOLD', 'DARKCREAM', 
+    'LIGHTGB2', 'GB2', 'DARKGB2', 'LIGHTBROWN2', 'BROWN2', 'DARKBROWN2',
+    'PALEGREY2', 'LIGHTGREY3', 'GREY3', 'DARKGREY3', 'STONE', 'COAL', 'OBSIDIAN', 
+    'BLACK4', 'PALECREAM', 'CREAM4', 'DARKCREAM2',
+    'FAWN2', 'TAN', 'LIGHTBROWN3', 'BROWN3', 'CHOCOLATE2', 'DARKBROWN3', 'EBONY1', 
+    'PALEGINGER3', 'LIGHTGINGER3', 'GINGER3', 'FIRE',
+    'DARKGINGER3', 'RUSSET', 'RED', 'AUBURN', 'PALELILAC', 'LIGHTLILAC', 'LILAC2', 
+    'DARKLILAC', 'ROSE', 'LIGHTGOLD', 'GOLDEN2', 'DARKGOLD',
+    'HONEY', 'LIGHTSILVER', 'SILVER2', 'DARKSILVER', 'PALEBLUE', 'LIGHTBLUE', 
+    'BLUE1', 'RUSSIAN', 'DARKBLUE'
 ]
 pelt_c_no_bw = [
     'PALEGREY', 'SILVER', 'GREY', 'DARKGREY', 'PALEGINGER', 'GOLDEN', 'GINGER',
@@ -1735,22 +1779,38 @@ pelt_c_no_bw = [
     'DARKGREEN', 'LIGHTPURPLE', 'PURPLE', 'DARKPURPLE', 'SNOW', 'LIGHTGREY2',
     'GREY2', 'DARKGREY2', 'PALEYELLOW', 'YELLOW', 'GOLD',
     'DARKCREAM', 'LIGHTGB2', 'GB2', 'DARKGB2', 'LIGHTBROWN2', 'BROWN2',
-    'DARKBROWN2',
-    'PALEGREY2', 'LIGHTGREY3', 'GREY3', 'DARKGREY3', 'STONE', 'COAL', 'OBSIDIAN', 'PALECREAM', 'CREAM4', 'DARKCREAM2',
-    'FAWN2', 'TAN', 'LIGHTBROWN3', 'BROWN3', 'CHOCOLATE2', 'DARKBROWN3', 'PALEGINGER3', 'LIGHTGINGER3', 'GINGER3', 'FIRE',
-    'DARKGINGER3', 'RUSSET', 'RED', 'AUBURN', 'PALELILAC', 'LIGHTLILAC', 'LILAC2', 'DARKLILAC', 'ROSE', 'LIGHTGOLD', 'GOLDEN2', 'DARKGOLD',
-    'HONEY', 'LIGHTSILVER', 'SILVER2', 'DARKSILVER', 'PALEBLUE', 'LIGHTBLUE', 'BLUE1', 'RUSSIAN', 'DARKBLUE'
+    'DARKBROWN2', 'PALEGREY2', 'LIGHTGREY3', 'GREY3', 'DARKGREY3', 'STONE', 
+    'COAL', 'OBSIDIAN', 'PALECREAM', 'CREAM4', 'DARKCREAM2',
+    'FAWN2', 'TAN', 'LIGHTBROWN3', 'BROWN3', 'CHOCOLATE2', 'DARKBROWN3', 'PALEGINGER3', 
+    'LIGHTGINGER3', 'GINGER3', 'FIRE', 'DARKGINGER3', 'RUSSET', 'RED', 'AUBURN', 'PALELILAC', 
+    'LIGHTLILAC', 'LILAC2', 'DARKLILAC', 'ROSE', 'LIGHTGOLD', 'GOLDEN2', 'DARKGOLD',
+    'HONEY', 'LIGHTSILVER', 'SILVER2', 'DARKSILVER', 'PALEBLUE', 'LIGHTBLUE', 'BLUE1', 
+    'RUSSIAN', 'DARKBLUE'
 ]
-tortiepatterns = ['tortiesolid', 'tortietabby', 'tortiedilutedtabby', 'tortiebengal', 'tortiedilutedbengal', 'tortiemarbled', 'tortiedilutedmarbled', 'tortieticked', 'tortietickeddilute',
-        'tortiesmoke', 'tortiesomali', 'tortierosette', 'tortiedilutedrosette', 'tortiespeckled', 'tortiedilutedspeckled', 'tortiefreckled', 'tortiedilutedfreckled',
-        'tortieclassic', 'tortiedilutedclassic', 'tortiesokoke', 'tortiedilutedsokoke', 'tortiemackerel', 'tortiemackereldilute', 'tortietonkinese', 'tortiedilutedtonkinese',
-        'tortiesnowflake', 'tortieclouded', 'tortiemerle', 'tortieghost', 'tortiepinstripe']
+# Magi, these are for the dilute pelts bc they don't use all the regular colors
+dilute_pelt_c = [
+    'WHITE3', 'PALEGREY2', 'LIGHTGREY3', 'GREY3', 'DARKGREY3', 'STONE', 'COAL', 'OBSIDIAN', 
+    'BLACK4', 'PALECREAM', 'CREAM4', 'DARKCREAM2', 'FAWN2', 'TAN', 'LIGHTBROWN3', 'BROWN3', 
+    'CHOCOLATE2', 'DARKBROWN3', 'EBONY1', 'PALEGINGER3', 'LIGHTGINGER3', 'GINGER3', 'FIRE', 
+    'DARKGINGER3', 'RUSSET', 'RED', 'AUBURN', 'PALELILAC', 'LIGHTLILAC', 'LILAC2', 'DARKLILAC', 
+    'ROSE', 'LIGHTGOLD', 'GOLDEN2', 'DARKGOLD', 'HONEY', 'LIGHTSILVER', 'SILVER2', 'DARKSILVER', 
+    'PALEBLUE', 'LIGHTBLUE', 'BLUE1', 'RUSSIAN', 'DARKBLUE'
+]
+tortiepatterns = ['tortiesolid', 'tortietabby', 'tortiedilutedtabby', 'tortiebengal', 
+    'tortiedilutedbengal', 'tortiemarbled', 'tortiedilutedmarbled', 'tortieticked', 
+    'tortietickeddilute', 'tortiesmoke', 'tortiesomali', 'tortierosette', 'tortiedilutedrosette', 
+    'tortiespeckled', 'tortiedilutedspeckled', 'tortiefreckled', 'tortiedilutedfreckled',
+    'tortieclassic', 'tortiedilutedclassic', 'tortiesokoke', 'tortiedilutedsokoke', 'tortiemackerel', 
+    'tortiemackereldilute', 'tortietonkinese', 'tortiedilutedtonkinese', 'tortiesnowflake', 
+    'tortieclouded', 'tortiemerle', 'tortieghost', 'tortiepinstripe']
 patch_colours = ['PALEONE', 'PALETWO', 'PALETHREE', 'PALEFOUR', 'GOLDONE', 'GOLDTWO',
-    'GOLDTHREE', 'GOLDFOUR', 'GINGERONE', 'GINGERTWO', 'GINGERTHREE', 'GINGERFOUR',
-    'DARKONE', 'DARKTWO', 'DARKTHREE', 'DARKFOUR', 'PALEONE2', 'PALETWO2', 'PALETHREE2',
-    'PALEFOUR2', 'CREAMONE', 'CREAMTWO', 'CREAMTHREE', 'CREAMFOUR', 'APRICOTONE', 'APRICOTTWO'
-    'APRICOTTHREE', 'APRICOTFOUR', 'ORANGEONE', 'ORANGETWO', 'ORANGETHREE', 'ORANGEFOUR',
-    'CREAMONE2', 'CREAMTWO2', 'CREAMTHREE2', 'CREAMFOUR2']
+                'GOLDTHREE', 'GOLDFOUR', 'GINGERONE', 'GINGERTWO', 'GINGERTHREE', 'GINGERFOUR',
+                'DARKONE', 'DARKTWO', 'DARKTHREE', 'DARKFOUR', 'PALEONE2', 'PALETWO2', 'PALETHREE2',
+                'PALEFOUR2', 'CREAMONE', 'CREAMTWO', 'CREAMTHREE', 'CREAMFOUR', 'LIGHTGOLDONE', 
+                'LIGHTGOLDTWO', 'LIGHTGOLDTHREE', 'LIGHTGOLDFOUR', 'HONEYONE', 'HONEYTWO', 
+                'HONEYTHREE', 'HONEYFOUR', 'CREAMONE2', 'CREAMTWO2', 'CREAMTHREE2', 'CREAMFOUR2', 
+                'FIREONE', 'FIRETWO', 'FIRETHREE', 'FIREFOUR', 'REDONE', 'REDTWO', 'REDTHREE', 
+                'REDFOUR', 'COCOAONE', 'COCOATWO', 'COCOATHREE', 'COCOAFOUR']
 tortiebases = ['spotted', 'single', 'tabby', 'bengal', 'marbled', 'ticked', 'smoke', 'rosette',
                'speckled', 'abyssinian', 'snowflake', 'clouded', 'merle', 'ghost', 'pinstripe',
                'doberman', 'cloudy', 'classic', 'mackerel', 'sokoke', 'gradient', 'siamese',
@@ -2062,44 +2122,44 @@ def choose_pelt(gender,colour=None,white=None,pelt=None,length=None,determined=F
             return Shaded(colour, white, length)
     elif pelt == "DarkTabby":
         if colour is None and white is None:
-            return DarkTabby(choice(pelt_colours), choice([False, True]), length)
+            return DarkTabby(choice(dilute_pelt_c), choice([False, True]), length)
         elif colour is None:
-            return DarkTabby(choice(pelt_colours), white, length)
+            return DarkTabby(choice(dilute_pelt_c), white, length)
         else:
             return DarkTabby(colour, white, length)
     elif pelt == "DilutedTabby":
         if colour is None and white is None:
-            return DilutedTabby(choice(pelt_colours), choice([False, True]), length)
+            return DilutedTabby(choice(dilute_pelt_c), choice([False, True]), length)
         elif colour is None:
-            return DilutedTabby(choice(pelt_colours), white, length)
+            return DilutedTabby(choice(dilute_pelt_c), white, length)
         else:
             return DilutedTabby(colour, white, length)
     elif pelt == "DarkMarbled":
         if colour is None and white is None:
-            return DarkMarbled(choice(pelt_colours), choice([False, True]), length)
+            return DarkMarbled(choice(dilute_pelt_c), choice([False, True]), length)
         elif colour is None:
-            return DarkMarbled(choice(pelt_colours), white, length)
+            return DarkMarbled(choice(dilute_pelt_c), white, length)
         else:
             return DarkMarbled(colour, white, length)
     elif pelt == "DilutedMarbled":
         if colour is None and white is None:
-            return DilutedMarbled(choice(pelt_colours), choice([False, True]), length)
+            return DilutedMarbled(choice(dilute_pelt_c), choice([False, True]), length)
         elif colour is None:
-            return DilutedMarbled(choice(pelt_colours), white, length)
+            return DilutedMarbled(choice(dilute_pelt_c), white, length)
         else:
             return DilutedMarbled(colour, white, length)
     elif pelt == "DarkRosette":
         if colour is None and white is None:
-            return DarkRosette(choice(pelt_colours), choice([False, True]), length)
+            return DarkRosette(choice(dilute_pelt_c), choice([False, True]), length)
         elif colour is None:
-            return DarkRosette(choice(pelt_colours), white, length)
+            return DarkRosette(choice(dilute_pelt_c), white, length)
         else:
             return DarkRosette(colour, white, length)
     elif pelt == "DilutedRosette":
         if colour is None and white is None:
-            return DilutedRosette(choice(pelt_colours), choice([False, True]), length)
+            return DilutedRosette(choice(dilute_pelt_c), choice([False, True]), length)
         elif colour is None:
-            return DilutedRosette(choice(pelt_colours), white, length)
+            return DilutedRosette(choice(dilute_pelt_c), white, length)
         else:
             return DilutedRosette(colour, white, length)
     elif pelt == "Somali":
@@ -2109,91 +2169,91 @@ def choose_pelt(gender,colour=None,white=None,pelt=None,length=None,determined=F
             return Somali(choice(pelt_colours), white, length)
         else:
             return Somali(colour, white, length)
-    elif pelt == "Tickeddilute":
+    elif pelt == "TickedDilute":
         if colour is None and white is None:
-            return Tickeddilute(choice(pelt_colours), choice([False, True]), length)
+            return TickedDilute(choice(dilute_pelt_c), choice([False, True]), length)
         elif colour is None:
-            return Tickeddilute(choice(pelt_colours), white, length)
+            return TickedDilute(choice(dilute_pelt_c), white, length)
         else:
-            return Tickeddilute(colour, white, length)
+            return TickedDilute(colour, white, length)
     elif pelt == "DarkSpeckled":
         if colour is None and white is None:
-            return DarkSpeckled(choice(pelt_colours), choice([False, True]),
+            return DarkSpeckled(choice(dilute_pelt_c), choice([False, True]),
                             length)
         elif colour is None:
-            return DarkSpeckled(choice(pelt_colours), white, length)
+            return DarkSpeckled(choice(dilute_pelt_c), white, length)
         else:
             return DarkSpeckled(colour, white, length)
     elif pelt == "DilutedSpeckled":
         if colour is None and white is None:
-            return DilutedSpeckled(choice(pelt_colours), choice([False, True]),
+            return DilutedSpeckled(choice(dilute_pelt_c), choice([False, True]),
                             length)
         elif colour is None:
-            return DilutedSpeckled(choice(pelt_colours), white, length)
+            return DilutedSpeckled(choice(dilute_pelt_c), white, length)
         else:
             return DilutedSpeckled(colour, white, length)
     elif pelt == "DarkBengal":
         if colour is None and white is None:
-            return DarkBengal(choice(pelt_colours), choice([False, True]),
+            return DarkBengal(choice(dilute_pelt_c), choice([False, True]),
                              length)
         elif colour is None:
-            return DarkBengal(choice(pelt_colours), white, length)
+            return DarkBengal(choice(dilute_pelt_c), white, length)
         else:
             return DarkBengal(colour, white, length)
     elif pelt == "DilutedBengal":
         if colour is None and white is None:
-            return DilutedBengal(choice(pelt_colours), choice([False, True]),
+            return DilutedBengal(choice(dilute_pelt_c), choice([False, True]),
                              length)
         elif colour is None:
-            return DilutedBengal(choice(pelt_colours), white, length)
+            return DilutedBengal(choice(dilute_pelt_c), white, length)
         else:
             return DilutedBengal(colour, white, length)
     elif pelt == "DarkClassic":
         if colour is None and white is None:
-            return DarkClassic(choice(pelt_colours), choice([False, True]),
+            return DarkClassic(choice(dilute_pelt_c), choice([False, True]),
                              length)
         elif colour is None:
-            return DarkClassic(choice(pelt_colours), white, length)
+            return DarkClassic(choice(dilute_pelt_c), white, length)
         else:
             return DarkClassic(colour, white, length)
     elif pelt == "DilutedClassic":
         if colour is None and white is None:
-            return DilutedClassic(choice(pelt_colours), choice([False, True]),
+            return DilutedClassic(choice(dilute_pelt_c), choice([False, True]),
                              length)
         elif colour is None:
-            return DilutedClassic(choice(pelt_colours), white, length)
+            return DilutedClassic(choice(dilute_pelt_c), white, length)
         else:
             return DilutedClassic(colour, white, length)
     elif pelt == "DarkMackerel":
         if colour is None and white is None:
-            return DarkMackerel(choice(pelt_colours), choice([False, True]),
+            return DarkMackerel(choice(dilute_pelt_c), choice([False, True]),
                              length)
         elif colour is None:
-            return DarkMackerel(choice(pelt_colours), white, length)
+            return DarkMackerel(choice(dilute_pelt_c), white, length)
         else:
             return DarkMackerel(colour, white, length)
     elif pelt == "MackerelDilute":
         if colour is None and white is None:
-            return MackerelDilute(choice(pelt_colours), choice([False, True]),
+            return MackerelDilute(choice(dilute_pelt_c), choice([False, True]),
                              length)
         elif colour is None:
-            return MackerelDilute(choice(pelt_colours), white, length)
+            return MackerelDilute(choice(dilute_pelt_c), white, length)
         else:
             return MackerelDilute(colour, white, length)
     elif pelt == "DarkSokoke":
         if colour is None and white is None:
-            return DarkSokoke(choice(pelt_colours), choice([False, True]),
+            return DarkSokoke(choice(dilute_pelt_c), choice([False, True]),
                              length)
         elif colour is None:
-            return DarkSokoke(choice(pelt_colours), white, length)
+            return DarkSokoke(choice(dilute_pelt_c), white, length)
         else:
             return DarkSokoke(colour, white, length)
     elif pelt == "DilutedSokoke":
         if colour is None and white is None:
-            return DilutedSokoke(choice(pelt_colours), choice([False, True]),
+            return DilutedSokoke(choice(dilute_pelt_c), choice([False, True]),
                              length)
         elif colour is None:
-            return DilutedSokoke(choice(pelt_colours), white, length)
+            return DilutedSokoke(choice(dilute_pelt_c), white, length)
         else:
             return DilutedSokoke(colour, white, length)
     elif pelt == "Freckled":
@@ -2206,10 +2266,10 @@ def choose_pelt(gender,colour=None,white=None,pelt=None,length=None,determined=F
             return Freckled(colour, white, length)
     elif pelt == "DilutedFreckled":
         if colour is None and white is None:
-            return DilutedFreckled(choice(pelt_colours), choice([False, True]),
+            return DilutedFreckled(choice(dilute_pelt_c), choice([False, True]),
                              length)
         elif colour is None:
-            return DilutedFreckled(choice(pelt_colours), white, length)
+            return DilutedFreckled(choice(dilute_pelt_c), white, length)
         else:
             return DilutedFreckled(colour, white, length)
     elif pelt == "Tonkinese":
@@ -2222,10 +2282,10 @@ def choose_pelt(gender,colour=None,white=None,pelt=None,length=None,determined=F
             return Tonkinese(colour, white, length)
     elif pelt == "DilutedTonkinese":
         if colour is None and white is None:
-            return DilutedTonkinese(choice(pelt_colours), choice([False, True]),
+            return DilutedTonkinese(choice(dilute_pelt_c), choice([False, True]),
                              length)
         elif colour is None:
-            return DilutedTonkinese(choice(pelt_colours), white, length)
+            return DilutedTonkinese(choice(dilute_pelt_c), white, length)
         else:
             return DilutedTonkinese(colour, white, length)
     elif pelt == "Tortie":

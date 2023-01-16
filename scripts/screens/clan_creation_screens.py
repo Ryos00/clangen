@@ -6,7 +6,7 @@ from .base_screens import Screens
 
 from scripts.utility import get_text_box_theme
 from scripts.clan import Clan, map_available
-from scripts.cat.cats import create_example_cats
+from scripts.cat.cats import create_example_cats, Cat
 from scripts.cat.names import names
 from scripts.cat.sprites import tiles
 from re import sub
@@ -520,7 +520,7 @@ class MakeClanScreen(Screens):
         self.elements['game_mode_background'] = pygame_gui.elements.UIImage(pygame.Rect((325, 130), (399, 461)),
                                                                             text_box)
         self.elements['permi_warning'] = pygame_gui.elements.UITextBox(
-            "Your clan's game mode in permanent and cannot be changed after Clan creation.",
+            "Your clan's game mode is permanent and cannot be changed after Clan creation.",
             pygame.Rect((100, 581), (600, 40)),
             object_id=get_text_box_theme()
         )
@@ -859,6 +859,7 @@ class MakeClanScreen(Screens):
                          game.switches['camp_site'], convert_camp[self.selected_camp_tab],
                          self.game_mode, self.members)
         game.clan.create_clan()
+        Cat.sort_cats()
         if map_available:
             territory_claim = str(game.clan.name) + 'Clan Territory'
             otherclan_campsite = {}

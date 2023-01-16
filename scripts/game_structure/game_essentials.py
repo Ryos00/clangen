@@ -1,6 +1,10 @@
 import pygame
 import pygame_gui
-import ujson
+try:
+    import ujson
+except ImportError as e:
+    print(f"{e}\nFailed to import ujson, saving may be slower.")
+    import json as ujson
 import os
 from ast import literal_eval
 
@@ -24,6 +28,8 @@ class Game():
     #max_relation_events_displayed = 10
     #relation_scroll_ct = 0
 
+    ranks_changed_timeskip = False  # Flag for when a cat's status changes occurs during a timeskip.
+
     cur_events_list = []
     ceremony_events_list = []
     birth_death_events_list = []
@@ -31,6 +37,8 @@ class Game():
     health_events_list = []
     other_clans_events_list = []
     misc_events_list = []
+    herb_events_list = []
+
     allegiance_list = []
     language = {}
     game_mode = ''
@@ -46,6 +54,9 @@ class Game():
 
     #down = pygame.image.load("resources/images/buttons/arrow_down.png").convert_alpha()
     #up = pygame.image.load("resources/images/buttons/arrow_up.png").convert_alpha()
+
+    # Sort-type
+    sort_type = "rank"
 
     choose_cats = {}
     '''cat_buttons = {
@@ -157,7 +168,8 @@ class Game():
         'den labels': True,
         'fading': True,
         "save_faded_copy": False,
-        'favorite sub tab': None
+        'favorite sub tab': None,
+        'first_cousin_mates': True
     }  # The current settings
     setting_lists = {
         'no gendered breeding': [False, True],
@@ -181,7 +193,8 @@ class Game():
         'den labels': [False, True],
         'favorite sub tab': sub_tab_list,
         'fading': [True, False],
-        'save_faded_copy': [False, True]
+        'save_faded_copy': [False, True],
+        'first_cousin_mates': [True, False]
     }  # Lists of possible options for each setting
     settings_changed = False
 
@@ -307,6 +320,7 @@ class Game():
         if not os.path.exists(directory):
             os.makedirs(directory)
 
+        self.save_otherclan_cats(clanname) # saves cats from other clans
         self.save_faded_cats(clanname)  # Fades cat and saves them, if needed
 
         clan_cats = []
@@ -320,6 +334,7 @@ class Game():
                 "birth_cooldown": inter_cat.birth_cooldown,
                 "status": inter_cat.status,
                 "backstory": inter_cat.backstory if inter_cat.backstory else None,
+                "clan": inter_cat.clan if inter_cat.clan else None,
                 "age": inter_cat.age,
                 "moons": inter_cat.moons,
                 "trait": inter_cat.trait,
@@ -354,6 +369,7 @@ class Game():
                 "tortie_color": inter_cat.tortiecolour,
                 "tortie_pattern": inter_cat.tortiepattern,
                 "skin": inter_cat.skin,
+                "tint": inter_cat.tint,
                 "skill": inter_cat.skill,
                 "scars": inter_cat.scars if inter_cat.scars else [],
                 "accessory": inter_cat.accessory,
@@ -363,19 +379,20 @@ class Game():
                 "former_apprentices": [appr for appr in inter_cat.former_apprentices],
                 "possible_scar": inter_cat.possible_scar if inter_cat.possible_scar else None,
                 "scar_event": inter_cat.scar_event if inter_cat.scar_event else [],
-                "df": inter_cat.df,
-                "outside": inter_cat.outside,                
+                "df": inter_cat.df,               
                 "corruption": inter_cat.corruption if inter_cat.corruption else 0,
                 "life_givers": inter_cat.life_givers if inter_cat.life_givers else [],
                 "known_life_givers": inter_cat.known_life_givers if inter_cat.known_life_givers else [],
                 "virtues": inter_cat.virtues if inter_cat.virtues else [],
-                "retired": inter_cat.retired if inter_cat.retired else False,
                 "outside": inter_cat.outside,
                 "retired": inter_cat.retired if inter_cat.retired else False,
                 "faded_offspring": inter_cat.faded_offspring,
                 "opacity": inter_cat.opacity,
-                "prevent_fading": inter_cat.prevent_fading
+                "prevent_fading": inter_cat.prevent_fading,
+                "otherclan": inter_cat.otherclan if inter_cat.otherclan else False
             }
+            if cat_data["otherclan"] == True:
+                continue
             clan_cats.append(cat_data)
             inter_cat.save_condition()
             if not inter_cat.dead:
@@ -538,8 +555,56 @@ class Game():
 
         return True
 
+    def save_otherclan_cats(self, clanname):
+        """Deals with otherclan cats"""
+        directory = 'saves/' + clanname
+        if not os.path.exists(directory):
+            os.makedirs(directory)
 
-
+        otherclan_cats = []
+        for inter_cat in self.cat_class.otherclans.values():
+            cat_data = {
+                "ID": inter_cat.ID,
+                "name_prefix": inter_cat.name.prefix,
+                "name_suffix": inter_cat.name.suffix,
+                "gender": inter_cat.gender,
+                "gender_align": inter_cat.genderalign,
+                "status": inter_cat.status,
+                "backstory": inter_cat.backstory if inter_cat.backstory else None,
+                "clan": inter_cat.clan if inter_cat.clan else None,
+                "age": inter_cat.age,
+                "moons": inter_cat.moons,
+                "trait": inter_cat.trait,
+                "parent1": inter_cat.parent1,
+                "parent2": inter_cat.parent2,
+                "dead": inter_cat.dead,
+                "pelt_name": inter_cat.pelt.name,
+                "pelt_color": inter_cat.pelt.colour,
+                "pelt_white": inter_cat.pelt.white,
+                "pelt_length": inter_cat.pelt.length,
+                "eye_colour": inter_cat.eye_colour,
+                "reverse": inter_cat.reverse,
+                "white_patches": inter_cat.white_patches,
+                "pattern": inter_cat.pattern,
+                "tortie_base": inter_cat.tortiebase,
+                "tortie_color": inter_cat.tortiecolour,
+                "tortie_pattern": inter_cat.tortiepattern,
+                "skin": inter_cat.skin,
+                "tint": inter_cat.tint,
+                "skill": inter_cat.skill,
+                "faded_offspring": inter_cat.faded_offspring,
+                "opacity": inter_cat.opacity,
+                "prevent_fading": inter_cat.prevent_fading,
+                "otherclan": inter_cat.otherclan if inter_cat.otherclan else False
+            }
+            otherclan_cats.append(cat_data)
+            print(str(otherclan_cats))
+        try:
+            with open(directory + '/other_clans.json', 'w') as write_file:
+                json_string = ujson.dumps(otherclan_cats, indent=4)
+                write_file.write(json_string)
+        except:
+            print("Saving cats from other clans didn't work.")
 
 # M O U S E
 class Mouse():
@@ -599,7 +664,7 @@ class GameOver(UIWindow):
 
         if event.type == pygame_gui.UI_BUTTON_START_PRESS:
             if event.ui_element == self.begin_anew_button:
-                game.last_screen_forupdate = self.last_screen
+                game.last_screen_forupdate = game.switches['cur_screen']
                 game.switches['cur_screen'] = 'start screen'
                 game.switch_screens = True
                 self.kill()

@@ -1322,7 +1322,7 @@ for a, i in enumerate(['EBONY1', 'PALEGINGER3', 'LIGHTGINGER3', 'GINGER3', 'FIRE
 for a, i in enumerate(['RUSSET', 'RED', 'AUBURN', 'PALELILAC', 'LIGHTLILAC', 'LILAC2']):
     sprites.make_group('somalicolours2', (a, 1), f'somali{i}')
     sprites.make_group('somaliextra2', (a, 1), f'somaliextra{i}', sprites_y=2)
-for a, i in enumerate(['DARKLILAC', 'ROSE', 'LIGHTGOLD', 'GOLDEN', 'DARKGOLD', 'HONEY']):
+for a, i in enumerate(['DARKLILAC', 'ROSE', 'LIGHTGOLD', 'GOLDEN2', 'DARKGOLD', 'HONEY']):
     sprites.make_group('somalicolours2', (a, 2), f'somali{i}')
     sprites.make_group('somaliextra2', (a, 2), f'somaliextra{i}', sprites_y=2)
 for a, i in enumerate(['LIGHTSILVER', 'SILVER2', 'DARKSILVER', 'PALEBLUE', 'LIGHTBLUE', 'BLUE1']):

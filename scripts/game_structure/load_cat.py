@@ -12,10 +12,6 @@ except ImportError:
 def load_cats():
     try:
         json_load()
-        try:
-            otherclan_load()
-        except FileNotFoundError:
-            pass
     except FileNotFoundError:
         try:
             csv_load(Cat.all_cats)
@@ -113,9 +109,7 @@ def json_load():
             new_cat.faded_offspring = cat["faded_offspring"] if "faded_offspring" in cat else []
             new_cat.opacity = cat["opacity"] if "opacity" in cat else 100
             new_cat.prevent_fading = cat["prevent_fading"] if "prevent_fading" in cat else False
-            new_cat.otherclan = cat["otherclan"] if "otherclan" in cat else False
             new_cat.tint = cat["tint"] if "tint" in cat else "none"
-            new_cat.clan = cat["clan"] if "clan" in cat else None
             all_cats.append(new_cat)
         except KeyError as e:
             if "ID" in cat:
@@ -202,74 +196,6 @@ def json_load():
 
         # initialization of thoughts
         cat.thoughts()
-
-def otherclan_load():
-    otherclan_cats = []
-    cat_data = None
-    clanname = game.switches['clan_list'][0]
-    try:
-        with open('saves/' + clanname + '/other_clans.json', 'r') as read_file:
-            cat_data = ujson.loads(read_file.read())
-    except PermissionError:
-        game.switches['error_message'] = f'Can\t open saves/{clanname}/other_clans.json!'
-        raise
-    except JSONDecodeError:
-        game.switches['error_message'] = f'saves/{clanname}/other_clans.json is malformed!'
-        raise
-        
-    # create new cat objects
-    for i, cat in enumerate(cat_data):
-        try:
-            new_pelt = choose_pelt(cat["gender"], cat["pelt_color"],
-                                cat["pelt_white"], cat["pelt_name"],
-                                cat["pelt_length"], True)
-            new_cat = Cat(ID=cat["ID"],
-                        prefix=cat["name_prefix"],
-                        suffix=cat["name_suffix"],
-                        gender=cat["gender"],
-                        status=cat["status"],
-                        parent1=cat["parent1"],
-                        parent2=cat["parent2"],
-                        moons=cat["moons"],
-                        eye_colour=cat["eye_colour"],
-                        pelt=new_pelt)
-            new_cat.age = cat["age"]
-            new_cat.genderalign = cat["gender_align"]
-            new_cat.backstory = cat["backstory"] if "backstory" in cat else None
-            new_cat.moons = cat["moons"]
-            new_cat.trait = cat["trait"]
-            new_cat.eye_colour = cat["eye_colour"]
-            new_cat.reverse = cat["reverse"]
-            new_cat.white_patches = cat["white_patches"]
-            new_cat.pattern = cat["pattern"]
-            new_cat.tortiebase = cat["tortie_base"]
-            new_cat.tortiecolour = cat["tortie_color"]
-            new_cat.tortiepattern = cat["tortie_pattern"]
-            new_cat.skin = cat["skin"]
-            new_cat.faded_offspring = cat["faded_offspring"] if "faded_offspring" in cat else []
-            new_cat.opacity = cat["opacity"] if "opacity" in cat else 100
-            new_cat.prevent_fading = cat["prevent_fading"] if "prevent_fading" in cat else False
-            new_cat.otherclan = cat["otherclan"] if "otherclan" in cat else False
-            new_cat.tint = cat["tint"] if "tint" in cat else "none"
-            new_cat.clan = cat["clan"] if "clan" in cat else None
-            otherclan_cats.append(new_cat)
-        except KeyError as e:
-            if "ID" in cat:
-                key = f" ID #{cat['ID']} "
-            else: 
-                key = f" at index {i} "
-            game.switches['error_message'] = f'Cat{key}in clan_cats.json is missing {e}!'
-            raise
-
-    # replace cat ids with cat objects and add other needed variables
-    for cat in otherclan_cats:
-        # get all the children ids and save them
-        children = list(
-            filter(lambda inter_cat: cat.is_parent(inter_cat), Cat.otherclans))
-        cat.children = [child.ID for child in children]
-
-        # Add faded children
-        cat.children.extend(cat.faded_offspring)
 
 def csv_load(all_cats):
     if game.switches['clan_list'][0].strip() == '':

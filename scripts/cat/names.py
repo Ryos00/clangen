@@ -56,7 +56,7 @@ class Name():
         'thrift', 'thorn', 'thunder', 'thyme', 'tiger', 'timber', 'tip', 'toe', 'torrent', 'tooth', 'trail', 'traipse', 'travel', 'traveler', 'trot', 'trout',
         'tulip', 'tumble', 'turtle', 'tussock', 'twig', 'twirl', 'vine', 'violet', 'vixen', 'vole', 'walk', 'walker', 'wander', 'wanderer', 'wasp',
         'warren', 'water', 'weasel', 'weed', 'wheat', 'whistle', 'whistler', 'wiggle', 'wither', 'wonder', 'wood', 'wort', 'wound',
-        'wounder', 'wren', 'yarrow', 'yew', 'yonder', 'zinnia' 
+        'wounder', 'wren', 'yarrow', 'yew', 'yonder', 'zinnia'
     ]
 
     pelt_suffixes = {
@@ -126,80 +126,56 @@ class Name():
         'tortiepinstripe': ['stripe', 'feather', 'leaf', 'stripe', 'shade'],
         'tortieclassic': ['stripe', 'feather', 'leaf', 'stripe', 'shade', 'fern'],
         'tortiemackerel': ['stripe', 'feather', 'leaf', 'stripe', 'shade', 'fern'],
-        'tortiesokoke': ['stripe', 'feather', 'leaf', 'stripe', 'shade', 'fern']
+        'tortiesokoke': ['stripe', 'feather', 'leaf', 'stripe', 'shade', 'fern'],
+        'tortiedilutedtabby': ['stripe', 'feather', 'leaf', 'stripe', 'shade', 'fern'],
+        'tortiedilutedbengal': ['stripe', 'feather', 'leaf', 'stripe', 'shade', 'fern'],
+        'tortiedilutedmarbled': ['stripe', 'feather', 'leaf', 'stripe', 'shade', 'fern'],
+        'tortietickeddilute': ['stripe', 'feather', 'leaf', 'stripe', 'shade', 'fern'],
+        'tortiesomali': ['stripe', 'feather', 'leaf', 'stripe', 'shade', 'fern'],
+        'tortiedilutedrosette': ['spots', 'leopard', 'cheetah', 'spot', 'speckle', 'speckles', 'splotch'],
+        'tortiedilutedclassic': ['stripe', 'feather', 'leaf', 'stripe', 'shade', 'fern'],
+        'tortiedilutedsokoke': ['stripe', 'feather', 'leaf', 'stripe', 'shade', 'fern'],
+        'tortiemackereldilute': ['stripe', 'feather', 'leaf', 'stripe', 'shade', 'fern'],
+        'tortietonkinese': ['fade', 'dusk', 'dawn', 'smoke', 'stripe'],
+        'tortiedilutedtonkinese': ['fade', 'dusk', 'dawn', 'smoke']
     }
 
     normal_prefixes = [
-        'Acacia', 'Acorn', 'Adder', 'Alder', 'Algae', 'Almond', 'Aloe',
-        'Amber', 'Ant', 'Antler', 'Apple', 'Apricot', 'Arc', 'Arch', 'Arctic',
-        'Ash', 'Ashen', 'Aspen', 'Aster', 'Aster', 'Autumn', 'Badger', 'Bark',
-        'Barley', 'Barley', 'Basil', 'Bass', 'Bat', 'Bay', 'Bayou', 'Beam',
-        'Bear', 'Beaver', 'Bee', 'Beech', 'Beetle', 'Berry', 'Big', 'Birch',
-        'Bird', 'Bite', 'Bitter', 'Bittern', 'Blaze', 'Bleak', 'Blight',
-        'Blink', 'Bliss', 'Bloom', 'Blossom', 'Blotch', 'Bluff', 'Bog', 'Bog',
-        'Bold', 'Borage', 'Bough', 'Boulder', 'Bounce', 'Bracken', 'Bramble',
-        'Branch', 'Brave', 'Breeze', 'Breeze', 'Briar', 'Bright', 'Brindle',
-        'Bristle', 'Broken', 'Brook', 'Brush', 'Bubble', 'Bubbling', 'Buck',
-        'Bug', 'Bumble', 'Burdock', 'Burn', 'Burnt', 'Burr', 'Bush', 'Buzzard',
-        'Carp', 'Cedar', 'Cedar', 'Chaffinch', 'Char', 'Cheetah', 'Cherry',
-        'Chestnut', 'Chive', 'Cicada', 'Cinder', 'Cinnamon', 'Claw', 'Clay',
-        'Cliff', 'Cloud', 'Clover', 'Clover', 'Coast', 'Cobra', 'Cod', 'Cold',
-        'Condor', 'Cone', 'Conifer', 'Copper', 'Cotton', 'Cougar', 'Cow',
-        'Coyote', 'Crab', 'Crag', 'Crane', 'Creek', 'Cress', 'Crested',
-        'Cricket', 'Crooked', 'Crouch', 'Crow', 'Crow', 'Curl', 'Curlew',
-        'Curly', 'Cypress', 'Dahlia', 'Daisy', 'Damp', 'Dapple', 'Dappled',
-        'Dark', 'Dawn', 'Dawn', 'Day', 'Dead', 'Deer', 'Dew', 'Doe', 'Dog',
-        'Dove', 'Down', 'Downy', 'Drake', 'Drift', 'Drizzle', 'Drought', 'Dry',
-        'Duck', 'Dull', 'Dune', 'Dusk', 'Dust', 'Eagle', 'Echo', 'Eel',
-        'Egret', 'Elk', 'Elm', 'Ember', 'Ermine', 'Faded', 'Faded', 'Fading',
-        'Falcon', 'Fallen', 'Fallen', 'Fallow', 'Fawn', 'Feather', 'Fennel',
-        'Fern', 'Ferret', 'Fidget', 'Fierce', 'Fin', 'Finch', 'Fir', 'Fish',
-        'Flail', 'Flame', 'Flash', 'Flax', 'Fleck', 'Fleet', 'Flicker',
-        'Flight', 'Flint', 'Flip', 'Flood', 'Flood', 'Flower', 'Flower',
-        'Flurry', 'Flutter', 'Fly', 'Foam', 'Forest', 'Fox', 'Freckle',
-        'Freeze', 'Fringe', 'Frog', 'Frond', 'Frost', 'Frozen', 'Furled',
-        'Fuzzy', 'Gander', 'Gannet', 'Gem', 'Giant', 'Gill', 'Gleam', 'Glow',
-        'Goose', 'Gorge', 'Gorse', 'Grass', 'Gravel', 'Grouse', 'Gull', 'Gust',
-        'Hail', 'Half', 'Hare', 'Harvest', 'Hatch', 'Hawk', 'Hay', 'Haze',
-        'Heath', 'Heather', 'Heavy', 'Hedge', 'Hen', 'Heron', 'Hickory',
-        'Hill', 'Hoarse', 'Hollow', 'Holly', 'Hoot', 'Hop', 'Hope', 'Hornet',
-        'Hound', 'Ice', 'Icy', 'Iris', 'Ivy', 'Jagged', 'Jasper', 'Jay', 'Jet',
-        'Jump', 'Juniper', 'Kestrel', 'Kink', 'Kite', 'Lake', 'Larch', 'Lark',
-        'Laurel', 'Lavender', 'Leaf', 'Leap', 'Leopard', 'Lichen', 'Light',
-        'Lightning', 'Lilac', 'Lilac', 'Lily', 'Little', 'Lizard', 'Locust',
-        'Log', 'Long', 'Lost', 'Lotus', 'Loud', 'Low', 'Lynx', 'Maggot',
-        'Mallow', 'Mantis', 'Maple', 'Marigold', 'Marsh', 'Marten', 'Meadow',
-        'Mellow', 'Merry', 'Midge', 'Milk', 'Mink', 'Minnow', 'Mint', 'Mist',
-        'Mistle', 'Misty', 'Mite', 'Mock', 'Mole', 'Mole', 'Moon', 'Moor',
-        'Morning', 'Moss', 'Mossy', 'Moth', 'Moth', 'Mottle', 'Mottled',
-        'Mouse', 'Mouse', 'Mud', 'Mumble', 'Murk', 'Nacre', 'Narrow', 'Nectar',
-        'Needle', 'Nettle', 'Newt', 'Night', 'Nut', 'Oak', 'Oat', 'Odd', 'One',
-        'Orange', 'Osprey', 'Otter', 'Owl', 'Pale', 'Pansy', 'Panther',
-        'Parsley', 'Partridge', 'Patch', 'Peak', 'Pear', 'Peat', 'Peat',
-        'Pebble', 'Pepper', 'Perch', 'Petal', 'Pheasant', 'Pigeon', 'Pike',
-        'Pine', 'Piper', 'Plover', 'Pod', 'Pond', 'Pool', 'Poppy', 'Posy',
-        'Pounce', 'Prance', 'Prickle', 'Prim', 'Puddle', 'Python', 'Quail',
-        'Quick', 'Quiet', 'Quill', 'Rabbit', 'Raccoon', 'Ragged', 'Rain',
-        'Rambling', 'Rat', 'Rattle', 'Raven', 'Reed', 'Ridge', 'Rift',
-        'Ripple', 'River', 'Roach', 'Robin', 'Rock', 'Rook', 'Root', 'Rose',
-        'Rosy', 'Rot', 'Rowan', 'Rubble', 'Running', 'Rush', 'Rust', 'Rye',
-        'Sage', 'Sandy', 'Scar', 'Scorch', 'Sea', 'Sedge', 'Seed', 'Shade',
-        'Shard', 'Sharp', 'Shell', 'Shimmer', 'Short', 'Shrew', 'Shy', 'Silk',
-        'Silt', 'Skip', 'Sky', 'Slate', 'Sleek', 'Sleet', 'Slight', 'Sloe',
-        'Slope', 'Small', 'Smoke', 'Smoky', 'Snail', 'Snake', 'Snap', 'Sneeze',
-        'Snip', 'Soft', 'Song', 'Soot', 'Sorrel', 'Spark', 'Sparrow',
-        'Speckle', 'Spider', 'Spike', 'Spire', 'Splash', 'Spotted', 'Spring',
-        'Spruce', 'Squirrel', 'Stag', 'Starling', 'Steam', 'Stoat', 'Stone',
-        'Stork', 'Storm', 'Stream', 'Strike', 'Stump', 'Swallow', 'Swamp',
-        'Swan', 'Sweet', 'Swift', 'Tall', 'Talon', 'Thistle', 'Thorn',
-        'Thrift', 'Thyme', 'Tiger', 'Timber', 'Tip', 'Toad', 'Torn', 'Trout',
-        'Tuft', 'Tulip', 'Tumble', 'Turtle', 'Twig', 'Vine', 'Violet', 'Vixen',
-        'Vole', 'Warm', 'Wasp', 'Weasel', 'Web', 'Weed', 'Wet', 'Wheat', 'Whirl',
-        'Whisker', 'Wild', 'Willow', 'Wind', 'Wisteria', 'Wolf', 'Wood',
-        'Wren', 'Yarrow', 'Yew', 'Aardvark', 'Aardwolf', 'Agaric', 'Albatross',
-        'Alfalfa', 'Algae', 'Almond', 'Aloe', 'Amanita', 'Amber', 'Antler', 'Aphid',
-        'Apricot', 'Arc', 'Arching', 'Arctic', 'Arid', 'Arnica', 'Ashen', 'Asphodel', 'Aster',
-        'Auburn', 'Avocet', 'Azalea', 'Bald', 'Barking', 'Barley', 'Basil', 'Bass', 'Beam', 'Beaming',
+        'Acacia', 'Acorn', 'Adder', 'Alder', 'Algae', 'Almond', 'Aloe', 'Amber', 'Ant', 'Antler', 'Apple', 'Apricot', 'Arc', 'Arch', 'Arctic',
+        'Ash', 'Ashen', 'Aspen', 'Aster', 'Aster', 'Autumn', 'Badger', 'Bark', 'Barley', 'Barley', 'Basil', 'Bass', 'Bat', 'Bay', 'Bayou', 'Beam',
+        'Bear', 'Beaver', 'Bee', 'Beech', 'Beetle', 'Berry', 'Big', 'Birch', 'Bird', 'Bite', 'Bitter', 'Bittern', 'Blaze', 'Bleak', 'Blight',
+        'Blink', 'Bliss', 'Bloom', 'Blossom', 'Blotch', 'Bluff', 'Bog', 'Bog', 'Bold', 'Borage', 'Bough', 'Boulder', 'Bounce', 'Bracken', 'Bramble',
+        'Branch', 'Brave', 'Breeze', 'Breeze', 'Briar', 'Bright', 'Brindle', 'Bristle', 'Broken', 'Brook', 'Brush', 'Bubble', 'Bubbling', 'Buck',
+        'Bug', 'Bumble', 'Burdock', 'Burn', 'Burnt', 'Burr', 'Bush', 'Buzzard', 'Carp', 'Cedar', 'Cedar', 'Chaffinch', 'Char', 'Cheetah', 'Cherry',
+        'Chestnut', 'Chive', 'Cicada', 'Cinder', 'Cinnamon', 'Claw', 'Clay', 'Cliff', 'Cloud', 'Clover', 'Clover', 'Coast', 'Cobra', 'Cod', 'Cold',
+        'Condor', 'Cone', 'Conifer', 'Copper', 'Cotton', 'Cougar', 'Cow', 'Coyote', 'Crab', 'Crag', 'Crane', 'Creek', 'Cress', 'Crested',
+        'Cricket', 'Crooked', 'Crouch', 'Crow', 'Crow', 'Curl', 'Curlew', 'Curly', 'Cypress', 'Dahlia', 'Daisy', 'Damp', 'Dapple', 'Dappled',
+        'Dark', 'Dawn', 'Dawn', 'Day', 'Dead', 'Deer', 'Dew', 'Doe', 'Dog', 'Dove', 'Down', 'Downy', 'Drake', 'Drift', 'Drizzle', 'Drought', 'Dry',
+        'Duck', 'Dull', 'Dune', 'Dusk', 'Dust', 'Eagle', 'Echo', 'Eel', 'Egret', 'Elk', 'Elm', 'Ember', 'Ermine', 'Faded', 'Faded', 'Fading', 'Falcon',
+        'Fallen', 'Fallow', 'Fawn', 'Feather', 'Fennel', 'Fern', 'Ferret', 'Fidget', 'Fierce', 'Fin', 'Finch', 'Fir', 'Fish', 'Flail', 'Flame', 'Flash', 'Flax',
+        'Fleck', 'Fleet', 'Flicker', 'Flight', 'Flint', 'Flip', 'Flood', 'Flood', 'Flower', 'Flower', 'Flurry', 'Flutter', 'Fly', 'Foam', 'Forest', 'Fox', 'Freckle',
+        'Freeze', 'Fringe', 'Frog', 'Frond', 'Frost', 'Frozen', 'Furled', 'Fuzzy', 'Gander', 'Gannet', 'Gem', 'Giant', 'Gill', 'Gleam', 'Glow',
+        'Goose', 'Gorge', 'Gorse', 'Grass', 'Gravel', 'Grouse', 'Gull', 'Gust', 'Hail', 'Half', 'Hare', 'Harvest', 'Hatch', 'Hawk', 'Hay', 'Haze',
+        'Heath', 'Heather', 'Heavy', 'Hedge', 'Hen', 'Heron', 'Hickory', 'Hill', 'Hoarse', 'Hollow', 'Holly', 'Hoot', 'Hop', 'Hope', 'Hornet',
+        'Hound', 'Ice', 'Icy', 'Iris', 'Ivy', 'Jagged', 'Jasper', 'Jay', 'Jet', 'Jump', 'Juniper', 'Kestrel', 'Kink', 'Kite', 'Lake', 'Larch', 'Lark',
+        'Laurel', 'Lavender', 'Leaf', 'Leap', 'Leopard', 'Lichen', 'Light', 'Lightning', 'Lilac', 'Lilac', 'Lily', 'Little', 'Lizard', 'Locust',
+        'Log', 'Long', 'Lost', 'Lotus', 'Loud', 'Low', 'Lynx', 'Maggot', 'Mallow', 'Mantis', 'Maple', 'Marigold', 'Marsh', 'Marten', 'Meadow',
+        'Mellow', 'Merry', 'Midge', 'Milk', 'Mink', 'Minnow', 'Mint', 'Mist', 'Mistle', 'Misty', 'Mite', 'Mock', 'Mole', 'Mole', 'Moon', 'Moor',
+        'Morning', 'Moss', 'Mossy', 'Moth', 'Moth', 'Mottle', 'Mottled', 'Mouse', 'Mouse', 'Mud', 'Mumble', 'Murk', 'Nacre', 'Narrow', 'Nectar',
+        'Needle', 'Nettle', 'Newt', 'Night', 'Nut', 'Oak', 'Oat', 'Odd', 'One', 'Orange', 'Osprey', 'Otter', 'Owl', 'Pale', 'Pansy', 'Panther',
+        'Parsley', 'Partridge', 'Patch', 'Peak', 'Pear', 'Peat', 'Peat', 'Pebble', 'Pepper', 'Perch', 'Petal', 'Pheasant', 'Pigeon', 'Pike',
+        'Pine', 'Piper', 'Plover', 'Pod', 'Pond', 'Pool', 'Poppy', 'Posy', 'Pounce', 'Prance', 'Prickle', 'Prim', 'Puddle', 'Python', 'Quail',
+        'Quick', 'Quiet', 'Quill', 'Rabbit', 'Raccoon', 'Ragged', 'Rain', 'Rambling', 'Rat', 'Rattle', 'Raven', 'Reed', 'Ridge', 'Rift',
+        'Ripple', 'River', 'Roach', 'Robin', 'Rock', 'Rook', 'Root', 'Rose', 'Rosy', 'Rot', 'Rowan', 'Rubble', 'Running', 'Rush', 'Rust', 'Rye',
+        'Sage', 'Sandy', 'Scar', 'Scorch', 'Sea', 'Sedge', 'Seed', 'Shade', 'Shard', 'Sharp', 'Shell', 'Shimmer', 'Short', 'Shrew', 'Shy', 'Silk',
+        'Silt', 'Skip', 'Sky', 'Slate', 'Sleek', 'Sleet', 'Slight', 'Sloe', 'Slope', 'Small', 'Smoke', 'Smoky', 'Snail', 'Snake', 'Snap', 'Sneeze',
+        'Snip', 'Soft', 'Song', 'Soot', 'Sorrel', 'Spark', 'Sparrow', 'Speckle', 'Spider', 'Spike', 'Spire', 'Splash', 'Spotted', 'Spring',
+        'Spruce', 'Squirrel', 'Stag', 'Starling', 'Steam', 'Stoat', 'Stone', 'Stork', 'Storm', 'Stream', 'Strike', 'Stump', 'Swallow', 'Swamp',
+        'Swan', 'Sweet', 'Swift', 'Tall', 'Talon', 'Thistle', 'Thorn', 'Thrift', 'Thyme', 'Tiger', 'Timber', 'Tip', 'Toad', 'Torn', 'Trout',
+        'Tuft', 'Tulip', 'Tumble', 'Turtle', 'Twig', 'Vine', 'Violet', 'Vixen', 'Vole', 'Warm', 'Wasp', 'Weasel', 'Web', 'Weed', 'Wet', 'Wheat', 'Whirl',
+        'Whisker', 'Wild', 'Willow', 'Wind', 'Wisteria', 'Wolf', 'Wood', 'Wren', 'Yarrow', 'Yew', 'Aardvark', 'Aardwolf', 'Agaric', 'Albatross',
+        'Alfalfa', 'Algae', 'Almond', 'Aloe', 'Amanita', 'Amber', 'Antler', 'Aphid', 'Apricot', 'Arc', 'Arching', 'Arctic', 'Arid', 'Arnica', 'Ashen',
+        'Asphodel', 'Aster', 'Auburn', 'Avocet', 'Azalea', 'Bald', 'Barking', 'Barley', 'Basil', 'Bass', 'Beam', 'Beaming',
         'Bear', 'Bearberry', 'Beck', 'Belladonna', 'Bergamot', 'Betony', 'Beyond', 'Bison', 'Bistort',
         'Biting', 'Bitten', 'Bittern', 'Blaze', 'Bleak', 'Blink', 'Blinking', 'Blooming', 'Blossoming', 'Blotch',
         'Blotched', 'Blotchy', 'Bluebell', 'Boar', 'Bog', 'Bold', 'Bolete', 'Bolt', 'Bone', 'Bough', 'Bouncing',
@@ -506,7 +482,8 @@ class Name():
         ],
         'DARKBROWN':
         ['Brown', 'Shade', 'Dark', 'Night', 'Russet', 'Rowan', 'Mud',
-         'Muddy', 'Moose', 'Shadow'],
+         'Muddy', 'Moose', 'Shadow'
+        ],
         'WHITE3': [
             'White', 'White', 'Pale', 'Snow', 'Cloud', 'Milk', 'Hail', 'Frost',
             'Ice', 'Sheep', 'Blizzard', 'Moon', 'Light', 'Bone'
@@ -671,31 +648,44 @@ class Name():
         ['Brown', 'Shade', 'Dark', 'Night', 'Ebony', 'Rowan', 'Mud']}
 
     eye_prefixes = {
-        'YELLOW': ['Yellow', 'Moon', 'Daisy', 'Honey', 'Light', 'Sun', 'Sunny', 'Bright', 'Marigold', 'Bee', 'Bumble', 'Sunflower', 'Dandelion', 'Wasp', 'Hive', 'Petal'],
-        'AMBER': ['Amber', 'Sun', 'Fire', 'Gold', 'Honey', 'Scorch', 'Ember', 'Flame', 'Flaming', 'Orange', 'Butterfly', 'Monarch', 'Pumpkin', 'Carrot', 'Rust', 'Rusty'],
-        'HAZEL': ['Tawny', 'Hazel', 'Gold', 'Daisy', 'Sand', 'Sandy', 'Hazelnut', 'Golden', 'Flower', 'Pale', 'Olive', 'Herb', 'Calm', 'Birch', 'Fawn', 'Spring'],
-        'PALEGREEN': ['Green', 'Pale', 'Mint', 'Fern', 'Holly', 'Clover', 'Lime', 'Thyme', 'Pale', 'Light', 'Grass', 'Parsley', 'Leaf', 'Tansy', 'Herb', 'Thyme'],
-        'GREEN': ['Green', 'Fern', 'Herb', 'Holly', 'Clover', 'Olive', 'Calm', 'Thyme', 'Chervil', 'Tansy', 'Parsley', 'Grass', 'Leaf', 'Forest', 'Turtle', 'Lime'],
-        'BLUE': ['Blue', 'Ice', 'Sky', 'Lake', 'Frost', 'Water', 'Ocean', 'Lake', 'Borage', 'Splash', 'Sapphire', 'Stream', 'Puddle', 'River', 'Sky', 'Mist', 'Misty'],
-        'DARKBLUE': ['Blue', 'Sky', 'Lake', 'Berry', 'Dark', 'Water', 'Deep', 'Ocean', 'Lake', 'Borage', 'Splash', 'Sapphire', 'Stream', 'Blueberry', 'Berry', 'Sea'],
-        'BLUEYELLOW': ['Yellow', 'Moon', 'Daisy', 'Honey', 'Light', 'Sun', 'Blue', 'Ice', 'Sky', 'Lake', 'Frost', 'Water', 'Ocean', 'Lake', 'Bee', 'Blueberry', 'Wasp'],
-        'BLUEGREEN': ['Blue', 'Ice', 'Sky', 'Lake', 'Frost', 'Water', 'Ocean', 'Lake', 'Green', 'Fern', 'Herb', 'Holly', 'Clover', 'Calm', 'Thyme', 'Blueberry', 'Sage'],
-        'PALEYELLOW': ['Yellow', 'Moon', 'Daisy', 'Honey', 'Light', 'Sun', 'Dandelion', 'Marigold', 'Bee', 'Bumble', 'Sunflower', 'Dandelion', 'Wasp', 'Hive', 'Pale'],
+        'YELLOW': ['Yellow', 'Moon', 'Daisy', 'Honey', 'Light'],
+        'AMBER': ['Amber', 'Sun', 'Fire', 'Gold', 'Honey', 'Scorch'],
+        'HAZEL': ['Tawny', 'Hazel', 'Gold', 'Daisy', 'Sand'],
+        'PALEGREEN': ['Green', 'Pale', 'Mint', 'Fern', 'Weed'],
+        'GREEN': ['Green', 'Fern', 'Weed', 'Holly', 'Clover', 'Olive'],
+        'BLUE': ['Blue', 'Blue', 'Ice', 'Sky', 'Lake', 'Frost', 'Water'],
+        'DARKBLUE': ['Blue', 'Sky', 'Lake', 'Berry', 'Dark', 'Water', 'Deep'],
+        'BLUEYELLOW': ['Yellow', 'Blue', 'Odd', 'One', 'Moon'],
+        'BLUEGREEN': ['Green', 'Blue', 'Odd', 'One', 'Clover'],
+        'GREY': ['Grey', 'Stone', 'Silver', 'Ripple', 'Moon', 'Rain', 'Storm'],
+        'CYAN': ['Sky', 'Blue', 'River', 'Rapid', 'Green'],
+        'EMERALD': ['Emerald', 'Green', 'Shine', 'Blue', 'Pine'],
+        'PALEBLUE': ['Sky', 'River', 'Ripple', 'Day', 'Cloud'],
+        'PALEYELLOW': ['Yellow', 'Sun', 'Gold', 'Ray', 'Pale'],
+        'GOLD': ['Gold', 'Sun', 'Amber', 'Sap', 'Honey'],
+        'HEATHERBLUE': ['Heather', 'Lilac', 'Blue', 'Rosemary', 'Lavender'],
+        'COPPER': ['Copper', 'Red', 'Amber', 'Brown', 'Fire'],
+        'SAGE': ['Sage', 'Leaf', 'Olive', 'Bush', 'Clove'],
+        'BLUE2': ['Blue', 'Blue', 'Ice', 'Sky', 'Lake', 'Frost', 'Water'],
+        'SUNLITICE': ['Sun', 'Ice', 'Frost', 'Sunrise', 'Dawn', 'Dusk'],
+        'GREENYELLOW': ['Tawny', 'Hazel', 'Gold', 'Daisy', 'Sand'],
+        'PINK': ['Petal', 'Flower', 'Rose', 'Pale', 'Soft', 'Primrose', 'Bloom', 'Strawberry', 'Blossom', 'Hibiscus', 'Berry', 'Pink', 'Sweet', 'Serene', 'Flower'],
+        'SCARLET': ['Red', 'Crimson', 'Fire', 'Amber', 'Scorch', 'Flame', 'Flaming', 'Rose', 'Ember', 'Burnt', 'Burning', 'Scarlet', 'Bright', 'Hidden', 'Cardinal', 'Light'],
+        'VIOLET': ['Night', 'Purple', 'Magic', 'Magical', 'Moon', 'Violet', 'Lavender', 'Lilac', 'Amethyst', 'Jewel', 'Gem', 'Gemstone', 'Petal', 'Flower', 'Plum'],
+        'PALEYELLOW2': ['Yellow', 'Moon', 'Daisy', 'Honey', 'Light', 'Sun', 'Dandelion', 'Marigold', 'Bee', 'Bumble', 'Sunflower', 'Dandelion', 'Wasp', 'Hive', 'Pale'],
         'RED': ['Red', 'Crimson', 'Fire', 'Blood', 'Scorch', 'Flame', 'Flaming', 'Rose', 'Ember', 'Burnt', 'Burning', 'Poppy', 'Petal', 'Hidden', 'Cardinal', 'Robin'],
         'AQUA': ['Ocean', 'Sea', 'Turtle', 'Blue', 'Splash', 'River', 'Water', 'Stream', 'Aqua', 'River', 'Stream', 'Puddle', 'Turquoise', 'Green', 'Lake', 'Pond'],
         'PALEVIOLET': ['Purple', 'Magic', 'Magical', 'Moon', 'Violet', 'Lavender', 'Lilac', 'Amethyst', 'Jewel', 'Gem', 'Gemstone', 'Petal', 'Flower', 'Blossom'],
-        'SAGE': ['Green', 'Fern', 'Herb', 'Holly', 'Clover', 'Olive', 'Calm', 'Thyme', 'Chervil', 'Tansy', 'Parsley', 'Grass', 'Leaf', 'Forest', 'Sage', 'Serene'],
-        'PALEBLUE': ['Blue', 'Sky', 'Moon', 'Borage', 'Splash', 'Pale', 'Serene', 'Cloud', 'Sapphire', 'Stream', 'River', 'Jay', 'Feather', 'Splash', 'Pale', 'Light'],
-        'PINK': ['Petal', 'Flower', 'Rose', 'Pale', 'Soft', 'Primrose', 'Bloom', 'Strawberry', 'Blossom', 'Hibiscus', 'Berry', 'Pink', 'Sweet', 'Serene', 'Flower'],
-        'VIOLET': ['Night', 'Purple', 'Magic', 'Magical', 'Moon', 'Violet', 'Lavender', 'Lilac', 'Amethyst', 'Jewel', 'Gem', 'Gemstone', 'Petal', 'Flower', 'Plum'],
+        'SAGEGREEN': ['Green', 'Fern', 'Herb', 'Holly', 'Clover', 'Olive', 'Calm', 'Thyme', 'Chervil', 'Tansy', 'Parsley', 'Grass', 'Leaf', 'Forest', 'Sage', 'Serene'],
+        'PALEBLUE2': ['Blue', 'Sky', 'Moon', 'Borage', 'Splash', 'Pale', 'Serene', 'Cloud', 'Sapphire', 'Stream', 'River', 'Jay', 'Feather', 'Splash', 'Pale', 'Light'],
         'BROWN': ['Oak', 'Brown', 'Tree', 'Bark', 'Alder', 'Branch', 'Twig', 'Stem', 'Mud', 'Mouse', 'Dust', 'Acorn', 'Timber', 'Log', 'Brown', 'Dusky', 'Dusk', 'Dust'],
         'SPRINGGREEN': ['Green', 'Fern', 'Herb', 'Holly', 'Clover', 'Olive', 'Calm', 'Thyme', 'Chervil', 'Tansy', 'Parsely', 'Bright', 'Spring', 'Light', 'Stem', 'Leaf'],
         'GOLDEN': ['Bright', 'Gold', 'Golden', 'Amber', 'Yellow', 'Orange', 'Sun', 'Sunny', 'Shine', 'Shining', 'Moon', 'Light', 'Bright', 'Honey', 'Spring', 'Shiny'],
         'HONEY': ['Yellow', 'Moon', 'Daisy', 'Honey', 'Light', 'Bright', 'Sun', 'Sunny', 'Shine', 'Shining', 'Gold', 'Golden', 'Spring', 'Shiny', 'Hive', 'Bee', 'Bumble'],
-        'COPPER': ['Copper', 'Brown', 'Orange', 'Redwood', 'Bright', 'Scorch', 'Flame', 'Fire', 'Adder', 'Fox', 'Rust', 'Rusty', 'Oak', 'Brown', 'Ember', 'Shiny', 'Hare'],
+        'COPPER2': ['Copper', 'Brown', 'Orange', 'Redwood', 'Bright', 'Scorch', 'Flame', 'Fire', 'Adder', 'Fox', 'Rust', 'Rusty', 'Oak', 'Brown', 'Ember', 'Shiny', 'Hare'],
         'MAGENTA': ['Petal', 'Flower', 'Bloom', 'Blossom', 'Hibiscus', 'Violet', 'Lavender', 'Lilac', 'Amethyst', 'Jewel', 'Gem', 'Gemstone', 'Magenta', 'Flower', 'Petal'],
         'MINT': ['Mint', 'Minty', 'Cold', 'Blue', 'Splash', 'River', 'Water', 'Stream', 'Breeze', 'River', 'Stream', 'Puddle', 'Serene', 'Mist', 'Misty', 'Pale', 'Sky'],
-        'EMERALD': ['Green', 'Fern', 'Herb', 'Holly', 'Clover', 'Olive', 'Calm', 'Thyme', 'Chervil', 'Tansy', 'Parsely', 'Bright', 'Spring', 'Emerald', 'Jewel', 'Jade'],
+        'EMERALD2': ['Green', 'Fern', 'Herb', 'Holly', 'Clover', 'Olive', 'Calm', 'Thyme', 'Chervil', 'Tansy', 'Parsely', 'Bright', 'Spring', 'Emerald', 'Jewel', 'Jade'],
         'PUMPKIN': ['Amber', 'Sun', 'Fire', 'Gold', 'Honey', 'Scorch', 'Ember', 'Flame', 'Flaming', 'Orange', 'Butterfly', 'Monarch', 'Pumpkin', 'Carrot', 'Rust', 'Rusty'],
         'ROSEGOLD': ['Rose', 'Pink', 'Coral', 'Gold', 'Golden', 'Bright', 'Shining', 'Sun', 'Light', 'Petal', 'Blooming', 'Flower', 'Spring', 'Shiny', 'Strawberry', 'Berry'],
         'GREENGOLD': ['Gold', 'Golden', 'Sun', 'Sunny', 'Spring', 'Green', 'Bright', 'Dandelion', 'Marigold', 'Herb', 'Clover', 'Emerald', 'Jade', 'Honey', 'Leaf', 'Sapling'],
@@ -705,8 +695,7 @@ class Name():
         'AMARANTH': ['Hibiscus', 'Amaranth', 'Red', 'Pink', 'Bright', 'Light', 'Blossom', 'Strawberry', 'Cherry', 'Apple', 'Rose', 'Crimson', 'Ember', 'Fox', 'Flame', 'Flaming'],
         'CORAL': ['Coral', 'Pink', 'Bright', 'Light', 'Pale', 'Soft', 'Sweet', 'Petal', 'Blossom', 'Strawberry', 'Blooming', 'Primrose', 'Berry', 'Cloud', 'Flower', 'Serene'],
         'DARKGREEN': ['Dark', 'Green', 'Forest', 'Leaf', 'Grass', 'Fern', 'Ivy', 'Vine', 'Thyme', 'Herb', 'Clover', 'Holly', 'Stem', 'Night', 'Sage', 'Branch', 'Twig', 'Stem'],
-        'DARKAMBER': ['Amber', 'Copper', 'Fire', 'Bear', 'Hidden', 'Scorch', 'Ember', 'Flame', 'Flaming', 'Dark', 'Butterfly', 'Monarch', 'Pumpkin', 'Brown', 'Rust', 'Rusty'],
-        'SCARLET': ['Red', 'Crimson', 'Fire', 'Amber', 'Scorch', 'Flame', 'Flaming', 'Rose', 'Ember', 'Burnt', 'Burning', 'Scarlet', 'Bright', 'Hidden', 'Cardinal', 'Light']
+        'DARKAMBER': ['Amber', 'Copper', 'Fire', 'Bear', 'Hidden', 'Scorch', 'Ember', 'Flame', 'Flaming', 'Dark', 'Butterfly', 'Monarch', 'Pumpkin', 'Brown', 'Rust', 'Rusty']
     }
 
     loner_names = [
@@ -775,7 +764,8 @@ class Name():
         "Leo", "Tucker", "Minette", "Milo", "Fork", "Penny", "Zelda", "Jake", 
         "Felix", "Oliver", "Kitty", "Chloe", "Angel", "Samantha", "Muschi", 
         "Chicco", "Caramel", "Charlotte", "Chanel", "Lola", "Ollie", "Boo", 
-        "Frankie", "Hotdog", "Beverly", "Mera", "Tasha", 'Fetber', 'Snip-Snap'
+        "Frankie", "Hotdog", "Beverly", "Mera", "Tasha", "Fetber", "Snip-Snap",
+        "Callisto", "Era", "Noro", "Ryos", "Magi", "Lover", "Chrome"
     ]
 
     if os.path.exists('saves/prefixlist.txt'):
@@ -813,12 +803,14 @@ class Name():
         # Set prefix
         if prefix is None:
             named_after_appearance = not random.getrandbits(3)  # Chance for True is '1/8'.
+            # Add possible prefix categories to list.
             possible_prefix_categories = []
-            if named_after_appearance and (eyes is not None or colour is not None):
-                if eyes in self.eye_prefixes:
-                    possible_prefix_categories.append(self.eye_prefixes[eyes])
-                if colour in self.colour_prefixes:
-                    possible_prefix_categories.append(self.colour_prefixes[colour])
+            if eyes in self.eye_prefixes:
+                possible_prefix_categories.append(self.eye_prefixes[eyes])
+            if colour in self.colour_prefixes:
+                possible_prefix_categories.append(self.colour_prefixes[colour])
+            # Choose appearance-based prefix if possible and named_after_appearance because True.
+            if named_after_appearance and possible_prefix_categories:
                 prefix_category = random.choice(possible_prefix_categories)
                 self.prefix = random.choice(prefix_category)
             else:

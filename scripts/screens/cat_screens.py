@@ -86,15 +86,6 @@ def accessory_display_name(cat):
 def bs_blurb_text(cat):
     backstory = cat.backstory
     bs_blurb = None
-    if cat.status == 'kittypet':
-        bs_blurb = "This cat was born as a kittypet and currently resides with their Twolegs."
-        return bs_blurb
-    elif cat.status == 'loner':
-        bs_blurb = "This cat was born as a loner and currently lives in the territory outside of the Clans."
-        return bs_blurb
-    elif cat.status == 'rogue':
-        bs_blurb = "This cat was born as a rogue and currently lives in the territory outside of the Clans."
-        return bs_blurb
     if backstory is None:
         bs_blurb = "This cat was born into the Clan where they currently reside."
     if backstory == 'clan_founder':
@@ -270,7 +261,6 @@ class ProfileScreen(Screens):
         self.next_cat_button = None
         self.the_cat = None
         self.prevent_fading_text = None
-        self.temp_add_back_button = None
         self.checkboxes = {}
         self.profile_elements = {}
 
@@ -311,13 +301,9 @@ class ProfileScreen(Screens):
                 self.change_screen('ceremony screen')
             elif event.ui_element == self.profile_elements["med_den"]:
                 self.change_screen('med den screen')
-            elif event.ui_element == self.temp_add_back_button:
-                if (self.the_cat.outside and self.the_cat.status not in ["kittypet", "loner", "rogue"]):
-                    self.the_cat.add_to_clan()
-                    self.temp_add_back_button.disable()
             else:
                 self.handle_tab_events(event)
-            
+
             if self.the_cat.dead and game.settings["fading"]:
                 if event.ui_element == self.checkboxes["prevent_fading"]:
                     if self.the_cat.prevent_fading:
@@ -519,9 +505,6 @@ class ProfileScreen(Screens):
         self.placeholder_tab_4 = UIImageButton(pygame.Rect((576, 622), (176, 30)), "",
                                                object_id="#cat_tab_4_blank_button")
         self.placeholder_tab_4.disable()
-        
-        if self.the_cat.outside and self.the_cat.status not in ['kittypet', 'loner', 'rogue']:
-            self.temp_add_back_button = pygame_gui.elements.UIButton(pygame.Rect((300, 50), (176, 30)), "add back to clan")
 
         self.build_profile()
 
@@ -560,7 +543,6 @@ class ProfileScreen(Screens):
         self.conditions_tab_button.kill()
         self.placeholder_tab_3.kill()
         self.placeholder_tab_4.kill()
-        if self.temp_add_back_button: self.temp_add_back_button.kill()
         self.close_current_tab()
 
     def build_profile(self):
@@ -721,7 +703,8 @@ class ProfileScreen(Screens):
 
         previous_cat = 0
         next_cat = 0
-        if self.the_cat.dead and not is_instructor and self.the_cat.df == game.clan.instructor.df:
+        if self.the_cat.dead and not is_instructor and self.the_cat.df == game.clan.instructor.df and \
+                not (self.the_cat.outside or self.the_cat.exiled):
             previous_cat = game.clan.instructor.ID
 
         if is_instructor:
@@ -873,7 +856,7 @@ class ProfileScreen(Screens):
         output = ""
 
         # STATUS
-        if the_cat.outside and not the_cat.exiled and not the_cat.status in ['kittypet', 'loner', 'rogue']:
+        if the_cat.outside and not the_cat.exiled:
             output += "<font color='#FF0000'>lost</font>"
         elif the_cat.exiled:
             output += "<font color='#FF0000'>exiled</font>"
@@ -940,9 +923,7 @@ class ProfileScreen(Screens):
         output += "\n"
 
         # BACKSTORY
-        if the_cat.status in ['kittypet', 'loner', 'rogue']:
-            output += 'backstory: ' + the_cat.status
-        elif the_cat.backstory is not None:
+        if the_cat.backstory is not None:
             bs_text = backstory_text(the_cat)
             output += 'backstory: ' + bs_text
         else:
@@ -1175,8 +1156,7 @@ class ProfileScreen(Screens):
 
     def get_influence_text(self):
         influence_history = None
-        if self.the_cat.status in ['kittypet', 'loner', 'rogue']:
-            return ""
+
         # check if cat has any mentor influence, else assign None
         if len(self.the_cat.mentor_influence) >= 1:
             influenced_skill = str(self.the_cat.mentor_influence[0])

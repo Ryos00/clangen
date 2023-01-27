@@ -3,7 +3,7 @@ import pygame_gui
 try:
     import ujson
 except ImportError as e:
-    print(f"{e}\nFailed to import ujson, saving may be slower.")
+    print(f"ERROR: {e}\nFailed to import ujson, saving may be slower.")
     import json as ujson
 import os
 from ast import literal_eval
@@ -29,6 +29,7 @@ class Game():
     #relation_scroll_ct = 0
 
     ranks_changed_timeskip = False  # Flag for when a cat's status changes occurs during a timeskip.
+    mediated = False  # Flag for when you have mediated this moon
 
     cur_events_list = []
     ceremony_events_list = []
@@ -169,7 +170,8 @@ class Game():
         'fading': True,
         "save_faded_copy": False,
         'favorite sub tab': None,
-        'first_cousin_mates': True
+        'first_cousin_mates': True,
+        'become_mediator': False
     }  # The current settings
     setting_lists = {
         'no gendered breeding': [False, True],
@@ -194,7 +196,8 @@ class Game():
         'favorite sub tab': sub_tab_list,
         'fading': [True, False],
         'save_faded_copy': [False, True],
-        'first_cousin_mates': [True, False]
+        'first_cousin_mates': [True, False],
+        'become_mediator': [False, True]
     }  # Lists of possible options for each setting
     settings_changed = False
 
@@ -360,6 +363,7 @@ class Game():
                 "spirit_elder": inter_cat.age_sprites['elder'],
                 "spirit_dead": inter_cat.age_sprites['dead'],
                 "eye_colour": inter_cat.eye_colour,
+                "eye_colour2": inter_cat.eye_colour2 if inter_cat.eye_colour2 else None,
                 "reverse": inter_cat.reverse,
                 "white_patches": inter_cat.white_patches,
                 "pattern": inter_cat.pattern,
@@ -384,8 +388,6 @@ class Game():
                 "known_life_givers": inter_cat.known_life_givers if inter_cat.known_life_givers else [],
                 "virtues": inter_cat.virtues if inter_cat.virtues else [],
                 "retired": inter_cat.retired if inter_cat.retired else False,
-                "outside": inter_cat.outside,
-                "retired": inter_cat.retired if inter_cat.retired else False,
                 "faded_offspring": inter_cat.faded_offspring,
                 "opacity": inter_cat.opacity,
                 "prevent_fading": inter_cat.prevent_fading
@@ -399,7 +401,7 @@ class Game():
                 json_string = ujson.dumps(clan_cats, indent=4)
                 write_file.write(json_string)
         except:
-            print("Saving cats didn't work.")
+            print("ERROR: Saving cats didn't work.")
 
     def save_faded_cats(self, clanname):
         """Deals with fades cats, if needed, adding them as faded """
@@ -408,7 +410,6 @@ class Game():
             if not os.path.exists(directory):
                 os.makedirs(directory)
 
-        #print(game.cat_to_fade)
         copy_of_info = ""
         for cat in game.cat_to_fade:
 
@@ -429,7 +430,7 @@ class Game():
                 else:
                     parent_faded = self.add_faded_offspring_to_faded_cat(inter_cat.parent1, cat)
                     if not parent_faded:
-                        print("Can't find faded parent1")
+                        print("WARNING: Can't find faded parent1")
 
             if inter_cat.parent2:
                 if inter_cat.parent2 in self.cat_class.all_cats:
@@ -437,7 +438,7 @@ class Game():
                 else:
                     parent_faded = self.add_faded_offspring_to_faded_cat(inter_cat.parent2, cat)
                     if not parent_faded:
-                        print("Can't find faded parent2")
+                        print("WARNING: Can't find faded parent2")
 
             #Get a copy of info
             if game.settings["save_faded_copy"]:
@@ -517,7 +518,7 @@ class Game():
                     json_string = ujson.dumps(cat_data, indent=4)
                     write_file.write(json_string)
             except:
-                print("Something went wrong while saving a faded cat")
+                print("ERROR: Something went wrong while saving a faded cat")
 
             self.clan.remove_cat(cat) # Remove the cat from the active cats lists
 
@@ -541,7 +542,7 @@ class Game():
             with open('saves/' + self.clan.name + '/faded_cats/' + parent + ".json", 'r') as read_file:
                 cat_info = ujson.loads(read_file.read())
         except:
-            print("Error in loading faded cat")
+            print("ERROR: loading faded cat")
             return False
 
         cat_info["faded_offspring"].append(offspring)
@@ -572,7 +573,6 @@ class GameOver(UIWindow):
                          window_display_title='Game Over',
                          object_id='#game_over_window',
                          resizable=False)
-
         self.clan_name = str(game.clan.name + 'Clan')
         self.last_screen = last_screen
         self.game_over_message = UITextBoxTweaked(
@@ -617,10 +617,8 @@ class GameOver(UIWindow):
                 game.switches['cur_screen'] = 'start screen'
                 game.switch_screens = True
                 self.kill()
-                print('begin anew')
             elif event.ui_element == self.not_yet_button:
                 self.kill()
-                print('not yet')
 
 
 

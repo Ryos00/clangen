@@ -36,7 +36,7 @@ def json_load():
     # create new cat objects
     for i, cat in enumerate(cat_data):
         try:
-            new_pelt = choose_pelt(cat["gender"], cat["pelt_color"],
+            new_pelt = choose_pelt(cat["pelt_color"],
                                 cat["pelt_white"], cat["pelt_name"],
                                 cat["pelt_length"], True)
             new_cat = Cat(ID=cat["ID"],
@@ -47,8 +47,10 @@ def json_load():
                         parent1=cat["parent1"],
                         parent2=cat["parent2"],
                         moons=cat["moons"],
-                        eye_colour=cat["eye_colour"],
-                        pelt=new_pelt)
+                        eye_colour=cat["eye_colour"] if cat["eye_colour"] not in ["BLUEYELLOW", "BLUEGREEN"] else "BLUE",
+                        pelt=new_pelt,
+                        loading_cat=True)
+            new_cat.eye_colour2 = cat["eye_colour2"] if "eye_colour2" in cat else None
             new_cat.age = cat["age"]
             new_cat.genderalign = cat["gender_align"]
             new_cat.backstory = cat["backstory"] if "backstory" in cat else None
@@ -179,11 +181,20 @@ def json_load():
             filter(lambda inter_cat: cat.is_sibling(inter_cat), all_cats))
         cat.siblings = [sibling.ID for sibling in siblings]
 
+        # Add faded siblings:
+        for parent in cat.get_parents():
+            cat_ob = Cat.fetch_cat(parent)
+            cat.siblings.extend(cat_ob.faded_offspring)
+        # Remove duplicates
+        cat.siblings = list(set(cat.siblings))
+
         # get all the children ids and save them
         children = list(
             filter(lambda inter_cat: cat.is_parent(inter_cat), all_cats))
         cat.children = [child.ID for child in children]
 
+        # Add faded children
+        cat.children.extend(cat.faded_offspring)
 
         # initialization of thoughts
         cat.thoughts()

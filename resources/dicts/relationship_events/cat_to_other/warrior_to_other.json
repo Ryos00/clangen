@@ -57,7 +57,7 @@
             "is telling (cat) about a hunting technique.",
             "is giving (cat) a task.",
             "wishes (cat) would take things more seriously.",
-            "is jealous that (cat) got to go to the last gathering.",
+            "is jealous that (cat) got to go to the last Gathering.",
             "saw (cat) miss an easy catch today.",
             "is thinking about how much (cat) reminds them of their own apprentice days.",
             "prays that they aren't on patrol with (cat) tomorrow.",
@@ -89,7 +89,7 @@
             "is giving (cat) a task.",
             "is frustrated that (cat) won't take their duties more seriously.",
             "is sparring with (cat).",
-            "is jealous that (cat) got to go to the last gathering.",
+            "is jealous that (cat) got to go to the last Gathering.",
             "has noticed (cat) isn't doing a lot of work lately.",
             "saw (cat) miss an easy catch today.",
             "prays that they aren't on patrol with (cat) tomorrow.",
@@ -99,18 +99,18 @@
             "chats quietly with (cat) while they're both on camp guard duty.",
             "waves to (cat) with their tail as their patrols cross paths on the territory.",
             "calls to (cat) to catch them a fat mouse on their next hunting patrol.",
-            "settles near (cat) to eat their freshkill."
+            "settles near (cat) to eat their fresh-kill."
         ],
         "friendly": [
             "just told (cat) a hilarious joke.",
             "hopes they are assigned to patrol with (cat) tomorrow.",
             "playfully teases (cat) for missing a catch.",
-            "is helping (cat) pick burrs out of their fur after the last patrol.",
+            
             "thanks (cat) for covering for them during a patrol earlier.",
             "is wowed by how bravely (cat) fought the other day.",
             "is faced with a tough decision and wonders what (cat) would do.",
             "is sharing the latest gossip they heard over the border with (cat).",
-            "tells (cat) they'll save them a piece of freshkill.",
+            "tells (cat) they'll save them a piece of fresh-kill.",
             "gives (cat) some feathers from the bird they caught to line their nest."
         ],
         "close": [
@@ -135,7 +135,7 @@
         ],
         "friendly": [
             "asks (cat) if there's any herbs they should look out for while they're out on patrol later.",
-            "brings (cat) some freshkill, hoping that they remembered what (cat)'s favorite was.",
+            "brings (cat) some fresh-kill, hoping that they remembered what (cat)'s favorite was.",
             "is suddenly struck by the thought of how much (cat) does to keep the Clan healthy.",
             "hopes (cat) knows how grateful they are to have them as a medicine cat.",
             "thanks (cat) for keeping the Clan healthy."
@@ -185,6 +185,18 @@
             "feels like they'll never accomplish as much as (cat).",
             "asks (cat) how they're doing."
         ],
+        "friendly": [],
+        "close": []
+    },
+    "mediator": {
+        "unfriendly": [],
+        "neutral": [],
+        "friendly": [],
+        "close": []
+    },
+    "mediator apprentice": {
+        "unfriendly": [],
+        "neutral": [],
         "friendly": [],
         "close": []
     }

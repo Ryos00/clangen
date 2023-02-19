@@ -7,13 +7,15 @@ class Name():
         "kitten": "kit",
         "apprentice": "paw",
         "medicine cat apprentice": "paw",
+        "mediator apprentice": "paw",
         "leader": "star"
     }
     normal_suffixes = [  # common suffixes
         "fur", "fur", "fur", "fur", "fur", "fur", "fur", "fur", "fur", "fur", 'fur', 'fur', 'fur',
+        "tuft", "tuft", "tuft", "tuft", "tuft", "tooth", "tooth", "tooth", "tooth", "tooth",
         'pelt', "pelt", "pelt", "pelt", "pelt", "pelt", "pelt", "pelt", "pelt", "pelt", "pelt", "pelt", "pelt",
         "tail", "tail", "tail", "tail", "tail", "tail", "tail", "tail", "claw", "claw", "claw", "claw", "claw", "claw", "claw",
-        "foot","foot", "foot","foot", "foot", "whisker", "whisker", "whisker", "whisker", "whisker", "whisker",
+        "foot", "foot", "foot", "foot", "foot", "whisker", "whisker", "whisker", "whisker", "whisker", "whisker",
         "heart", "heart", "heart", "heart", "heart", "heart", "heart", "heart", "heart", 'heart',
 
         # regular suffixes
@@ -420,8 +422,9 @@ class Name():
                 self.prefix = random.choice(prefix_category)
             else:
                 self.prefix = random.choice(self.normal_prefixes)
-        # set suffix
-        while self.suffix is None or self.suffix == self.prefix.casefold():
+                    
+        # Set suffix
+        while self.suffix is None or self.suffix == self.prefix.casefold() or str(self.suffix) in self.prefix.casefold() and not str(self.suffix) == '':
             if pelt is None or pelt == 'SingleColour':
                 self.suffix = random.choice(self.normal_suffixes)
             else:
@@ -438,10 +441,11 @@ class Name():
 
 
     def __repr__(self):
-        if self.status in ["deputy", "warrior", "medicine cat", "elder"]:
-            return self.prefix + self.suffix
-        else:
+        if self.status in self.special_suffixes:
             return self.prefix + self.special_suffixes[self.status]
+        else:
+            return self.prefix + self.suffix
+
 
 
 names = Name()

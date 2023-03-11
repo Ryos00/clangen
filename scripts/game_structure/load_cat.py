@@ -31,6 +31,8 @@ def json_load():
     all_cats = []
     cat_data = None
     clanname = game.switches['clan_list'][0]
+    with open(f"resources/dicts/conversion_dict.json", 'r') as read_file:
+        convert = ujson.loads(read_file.read())
     try:
         with open('saves/' + clanname + '/clan_cats.json', 'r') as read_file:
             cat_data = ujson.loads(read_file.read())
@@ -40,39 +42,9 @@ def json_load():
     except JSONDecodeError:
         game.switches['error_message'] = f'saves/{clanname}/clan_cats.json is malformed!'
         raise
-        
-    old_tortie_patches = {
-        "PALEONE": ("PALEGINGER", "ONE"),
-        "PALETWO": ("PALEGINGER", "TWO"),
-        "PALETHREE": ("PALEGINGER", "THREE"),
-        "PALEFOUR": ("PALEGINGER", "FOUR"),
-        "GOLDONE": ("GOLDEN", "ONE"),
-        "GOLDTWO": ("GOLDEN", "TWO"),
-        "GOLDTHREE": ("GOLDEN", "THREE"),
-        "GOLDFOUR": ("GOLDEN", "FOUR"),
-        "GINGERONE": ("GINGER", "ONE"),
-        "GINGERTWO": ("GINGER", "TWO"),
-        "GINGERTHREE": ("GINGER", "THREE"),
-        "GINGERFOUR": ("GINGER", "FOUR"),
-        "DARKONE": ("DARKGINGER", "ONE"),
-        "DARKTWO": ("DARKGINGER", "TWO"),
-        "DARKTHREE": ("DARKGINGER", "THREE"),
-        "DARKFOUR": ("DARKGINGER", "FOUR"),
-        "CREAMONE": ("CREAM", "ONE"),
-        "CREAMTWO": ("CREAM", "TWO"),
-        "CREAMTHREE": ("CREAM", "THREE"),
-        "CREAMFOUR": ("CREAM", "FOUR")
-    }
 
-    old_creamy_patches = {
-        'COLOURPOINTCREAMY': 'COLOURPOINT',
-        'ANYCREAMY': 'ANY',
-        'ANY2CREAMY': 'ANY2',
-        'LITTLECREAMY': 'LITTLE',
-        'VANCREAMY': 'VAN',
-        'TUXEDOCREAMY': 'TUXEDO'
-    }
-
+    old_creamy_patches = convert["old_creamy_patches"]
+    old_tortie_patches = convert["old_tortie_patches"]
     no_tint_patches = ['SEPIAPOINT', 'MINKPOINT', 'SEALPOINT']
 
     # create new cat objects
@@ -93,13 +65,19 @@ def json_load():
                         pelt=new_pelt,
                         loading_cat=True)
             new_cat.eye_colour2 = cat["eye_colour2"] if "eye_colour2" in cat else None
+            if cat["eye_colour"] == "BLUEYELLOW":
+                new_cat.eye_colour2 = "YELLOW"
+            elif cat["eye_colour"] == "BLUEGREEN":
+                new_cat.eye_colour2 = "GREEN"
             new_cat.age = cat["age"]
             new_cat.genderalign = cat["gender_align"]
             new_cat.backstory = cat["backstory"] if "backstory" in cat else None
-            new_cat.birth_cooldown = cat[
-                "birth_cooldown"] if "birth_cooldown" in cat else 0
+            new_cat.birth_cooldown = cat["birth_cooldown"] if "birth_cooldown" in cat else 0
             new_cat.moons = cat["moons"]
-            new_cat.trait = cat["trait"]
+            if cat["trait"] in ["clever", "patient", "empathetic", "altruistic"]:
+                new_cat.trait = "compassionate"
+            else:
+                new_cat.trait = cat["trait"]
             new_cat.mentor = cat["mentor"]
             new_cat.former_mentor = cat["former_mentor"] if "former_mentor" in cat else []
             new_cat.patrol_with_mentor = cat["patrol_with_mentor"] if "patrol_with_mentor" in cat else 0
@@ -138,9 +116,10 @@ def json_load():
                         new_cat.cat_sprites['senior'] = 14
             new_cat.eye_colour = cat["eye_colour"]
             new_cat.reverse = cat["reverse"]
-            
+            if cat["white_patches"] == 'POINTMARK':
+                new_cat["white_patches"] = "SEALPOINT"
             if cat["white_patches"] in old_creamy_patches:
-                new_cat.white_patches = old_creamy_patches[cat['white_patches']]
+                new_cat.white_patches = convert["old_creamy_patches"][str(cat['white_patches'])]
                 new_cat.white_patches_tint = "darkcream"
             else:
                 new_cat.white_patches = cat["white_patches"]
@@ -167,8 +146,8 @@ def json_load():
 
             if cat["pattern"] in old_tortie_patches:
                 # Convert old torties
-                new_cat.pattern = old_tortie_patches[cat["pattern"]][1]
-                new_cat.tortiecolour = old_tortie_patches[cat["pattern"]][0]
+                new_cat.pattern = convert["old_tortie_patches"][cat["pattern"]][1]
+                new_cat.tortiecolour = convert["old_tortie_patches"][cat["pattern"]][0]
                 # If the pattern is old, there is also a change the base color is stored in
                 # tortiecolour, and that may be different from the pelt color (main for torties
                 # generated before the "ginger-on-ginger" update. If it was generated after that update,
@@ -177,7 +156,6 @@ def json_load():
             else:
                 new_cat.pattern = cat["pattern"]
                 new_cat.tortiecolour = cat["tortie_color"]
-
             new_cat.skin = cat["skin"]
             new_cat.skill = cat["skill"]
             new_cat.scars = cat["scars"] if "scars" in cat else []
@@ -271,6 +249,8 @@ def csv_load(all_cats):
     if game.switches['clan_list'][0].strip() == '':
         cat_data = ''
     else:
+        with open(f"resources/dicts/conversion_dict.json", 'r') as read_file:
+            convert = ujson.loads(read_file.read())
         if os.path.exists('saves/' + game.switches['clan_list'][0] +
                           'cats.csv'):
             with open('saves/' + game.switches['clan_list'][0] + 'cats.csv',
@@ -280,6 +260,9 @@ def csv_load(all_cats):
             with open('saves/' + game.switches['clan_list'][0] + 'cats.txt',
                       'r') as read_file:
                 cat_data = read_file.read()
+
+    tortie_map = convert['tortie_map']
+    cali_map = convert['calico_map']
     if len(cat_data) > 0:
         cat_data = cat_data.replace('\t', ',')
         for i in cat_data.split('\n'):
@@ -309,6 +292,7 @@ def csv_load(all_cats):
                 game.switches[
                     'error_message'] = '2There was an error loading cat # ' + str(
                         attr[0])
+                
                 the_cat = Cat(ID=attr[0],
                               prefix=attr[1].split(':')[0],
                               suffix=attr[1].split(':')[1],
@@ -327,43 +311,44 @@ def csv_load(all_cats):
                         attr[0])
                 the_cat.cat_sprites['kitten'], the_cat.cat_sprites[
                     'adolescent'] = int(attr[13]), int(attr[14])
-                game.switches[
-                    'error_message'] = '5There was an error loading cat # ' + str(
+                game.switches['error_message'] = '5There was an error loading cat # ' + str(
                         attr[0])
                 the_cat.cat_sprites['adult'], the_cat.cat_sprites[
                     'elder'] = int(attr[15]), int(attr[16])
-                game.switches[
-                    'error_message'] = '6There was an error loading cat # ' + str(
+                game.switches['error_message'] = '6There was an error loading cat # ' + str(
                         attr[0])
                 the_cat.cat_sprites['young adult'], the_cat.cat_sprites[
                     'senior adult'] = int(attr[15]), int(attr[15])
-                game.switches[
-                    'error_message'] = '7There was an error loading cat # ' + str(
+                game.switches['error_message'] = '7There was an error loading cat # ' + str(
                         attr[0])
                 the_cat.reverse, the_cat.white_patches, the_cat.pattern = attr[
                     18], attr[19], attr[20]
-                game.switches[
-                    'error_message'] = '8There was an error loading cat # ' + str(
+                game.switches['error_message'] = '8There was an error loading cat # ' + str(
                         attr[0])
-                the_cat.tortiebase, the_cat.tortiepattern, the_cat.tortiecolour = attr[
-                    21], attr[22], attr[23]
-                game.switches[
-                    'error_message'] = '9There was an error loading cat # ' + str(
+                # we are converting old torties YEEHAW
+                if the_cat.pattern in tortie_map:
+                    key = the_cat.pattern
+                    the_cat.tortiebase = convert["tortie_map"][key]["tortie_base"]
+                    the_cat.tortiepattern = convert["tortie_map"][key]["tortie_pattern"]
+                    the_cat.tortiecolour = convert["tortie_map"][key]["tortie_colour"]
+                    the_cat.pattern = convert["tortie_map"][key]["pattern"]
+                else:
+                    the_cat.tortiebase, the_cat.tortiepattern, the_cat.tortiecolour = attr[
+                        21], attr[22], attr[23]
+                game.switches['error_message'] = '9There was an error loading cat # ' + str(
                         attr[0])
                 the_cat.trait, the_cat.skin, the_cat.specialty = attr[5], attr[
                     24], attr[27]
-                game.switches[
-                    'error_message'] = '10There was an error loading cat # ' + str(
+                game.switches['error_message'] = '10There was an error loading cat # ' + str(
                         attr[0])
                 the_cat.skill = attr[25]
                 if len(attr) > 28:
-                    the_cat.accessory = attr[28]
+                    the_cat.accessory = attr[28] if attr[28] else None
                 if len(attr) > 29:
-                    the_cat.specialty2 = attr[29]
+                    the_cat.specialty2 = attr[29] if attr[29] else None
                 else:
                     the_cat.specialty2 = None
-                game.switches[
-                    'error_message'] = '11There was an error loading cat # ' + str(
+                game.switches['error_message'] = '11There was an error loading cat # ' + str(
                         attr[0])
                 if len(attr) > 34:
                     the_cat.experience = int(attr[34])
@@ -375,8 +360,7 @@ def csv_load(all_cats):
                         int(the_cat.experience) / 10)]
                 else:
                     the_cat.experience = 0
-                game.switches[
-                    'error_message'] = '12There was an error loading cat # ' + str(
+                game.switches['error_message'] = '12There was an error loading cat # ' + str(
                         attr[0])
                 if len(attr) > 30:
                     # Attributes that are to be added after the update
@@ -388,18 +372,15 @@ def csv_load(all_cats):
                         # Is the cat dead
                         the_cat.dead = attr[32]
                         the_cat.cat_sprites['dead'] = attr[33]
-                game.switches[
-                    'error_message'] = '13There was an error loading cat # ' + str(
+                game.switches['error_message'] = '13There was an error loading cat # ' + str(
                         attr[0])
                 if len(attr) > 35:
                     the_cat.dead_for = int(attr[35])
-                game.switches[
-                    'error_message'] = '14There was an error loading cat # ' + str(
+                game.switches['error_message'] = '14There was an error loading cat # ' + str(
                         attr[0])
                 if len(attr) > 36 and attr[36] is not None:
                     the_cat.apprentice = attr[36].split(';')
-                game.switches[
-                    'error_message'] = '15There was an error loading cat # ' + str(
+                game.switches['error_message'] = '15There was an error loading cat # ' + str(
                         attr[0])
                 if len(attr) > 37:
                     the_cat.paralyzed = bool(attr[37])
@@ -412,12 +393,10 @@ def csv_load(all_cats):
                 if len(attr
                        ) > 41 and attr[41] is not None:  #KEEP THIS AT THE END
                     the_cat.former_apprentices = attr[41].split(';')
-        game.switches[
-            'error_message'] = 'There was an error loading this clan\'s mentors, apprentices, relationships, or sprite info.'
+        game.switches['error_message'] = 'There was an error loading this clan\'s mentors, apprentices, relationships, or sprite info.'
         for inter_cat in all_cats.values():
             # Load the mentors and apprentices after all cats have been loaded
-            game.switches[
-                'error_message'] = 'There was an error loading this clan\'s mentors/apprentices. Last cat read was ' + str(
+            game.switches['error_message'] = 'There was an error loading this clan\'s mentors/apprentices. Last cat read was ' + str(
                     inter_cat)
             inter_cat.mentor = Cat.all_cats.get(inter_cat.mentor)
             apps = []
@@ -435,22 +414,18 @@ def csv_load(all_cats):
             inter_cat.apprentice = [a.ID for a in apps] #Switch back to IDs. I don't want to risk breaking everything.
             inter_cat.former_apprentices = [a.ID for a in former_apps]
             if not inter_cat.dead:
-                game.switches[
-                    'error_message'] = 'There was an error loading this clan\'s relationships. Last cat read was ' + str(
+                game.switches['error_message'] = 'There was an error loading this clan\'s relationships. Last cat read was ' + str(
                         inter_cat)
                 inter_cat.load_relationship_of_cat()
-            game.switches[
-                'error_message'] = 'There was an error loading a cat\'s sprite info. Last cat read was ' + str(
+            game.switches['error_message'] = 'There was an error loading a cat\'s sprite info. Last cat read was ' + str(
                     inter_cat)
             update_sprite(inter_cat)
         # generate the relationship if some is missing
         if not the_cat.dead:
-            game.switches[
-                'error_message'] = 'There was an error when relationships where created.'
+            game.switches['error_message'] = 'There was an error when relationships where created.'
             for id in all_cats.keys():
                 the_cat = all_cats.get(id)
-                game.switches[
-                    'error_message'] = f'There was an error when relationships for cat #{the_cat} are created.'
+                game.switches['error_message'] = f'There was an error when relationships for cat #{the_cat} are created.'
                 if the_cat.relationships is not None and len(the_cat.relationships) < 1:
                     the_cat.create_all_relationships()
         game.switches['error_message'] = ''

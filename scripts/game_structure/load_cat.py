@@ -246,19 +246,17 @@ def json_load():
         cat.thoughts()
 
 def csv_load(all_cats):
+    clan = game.switches['clan_list'][0]
     if game.switches['clan_list'][0].strip() == '':
         cat_data = ''
     else:
         with open(f"resources/dicts/conversion_dict.json", 'r') as read_file:
             convert = ujson.loads(read_file.read())
-        if os.path.exists('saves/' + game.switches['clan_list'][0] +
-                          'cats.csv'):
-            with open('saves/' + game.switches['clan_list'][0] + 'cats.csv',
-                      'r') as read_file:
+        if os.path.exists(f'saves/{clan}/{clan}cats.csv'):
+            with open(f'saves/{clan}/{clan}cats.csv', 'r') as read_file:
                 cat_data = read_file.read()
         else:
-            with open('saves/' + game.switches['clan_list'][0] + 'cats.txt',
-                      'r') as read_file:
+            with open(f'saves/{clan}/{clan}cats.txt', 'r') as read_file:
                 cat_data = read_file.read()
 
     tortie_map = convert['tortie_map']
@@ -284,14 +282,10 @@ def csv_load(all_cats):
                         attr[x] = True
                     elif attr[x].upper() == 'FALSE':
                         attr[x] = False
-                game.switches[
-                    'error_message'] = '1There was an error loading cat # ' + str(
+                game.switches['error_message'] = '1There was an error loading cat # ' + str(
                         attr[0])
-                the_pelt = choose_pelt(attr[2], attr[10], attr[11], attr[9],
-                                       attr[12], True)
-                game.switches[
-                    'error_message'] = '2There was an error loading cat # ' + str(
-                        attr[0])
+                the_pelt = choose_pelt(attr[2], attr[10], attr[11], attr[9], attr[12], True)
+                game.switches['error_message'] = '2There was an error loading cat # ' + str(attr[0])
                 
                 the_cat = Cat(ID=attr[0],
                               prefix=attr[1].split(':')[0],
@@ -302,36 +296,31 @@ def csv_load(all_cats):
                               parent1=attr[6],
                               parent2=attr[7],
                               eye_colour=attr[17])
-                game.switches[
-                    'error_message'] = '3There was an error loading cat # ' + str(
-                        attr[0])
+                game.switches['error_message'] = '3There was an error loading cat # ' + str(attr[0])
                 the_cat.age, the_cat.mentor = attr[4], attr[8]
-                game.switches[
-                    'error_message'] = '4There was an error loading cat # ' + str(
-                        attr[0])
-                the_cat.cat_sprites['kitten'], the_cat.cat_sprites[
-                    'adolescent'] = int(attr[13]), int(attr[14])
-                game.switches['error_message'] = '5There was an error loading cat # ' + str(
-                        attr[0])
-                the_cat.cat_sprites['adult'], the_cat.cat_sprites[
-                    'elder'] = int(attr[15]), int(attr[16])
-                game.switches['error_message'] = '6There was an error loading cat # ' + str(
-                        attr[0])
-                the_cat.cat_sprites['young adult'], the_cat.cat_sprites[
-                    'senior adult'] = int(attr[15]), int(attr[15])
-                game.switches['error_message'] = '7There was an error loading cat # ' + str(
-                        attr[0])
-                the_cat.reverse, the_cat.white_patches, the_cat.pattern = attr[
-                    18], attr[19], attr[20]
-                game.switches['error_message'] = '8There was an error loading cat # ' + str(
-                        attr[0])
+                game.switches['error_message'] = '4There was an error loading cat # ' + str(attr[0])
+                the_cat.cat_sprites['kitten'], the_cat.cat_sprites['adolescent'] = int(attr[13]), int(attr[14])
+                game.switches['error_message'] = '5There was an error loading cat # ' + str(attr[0])
+                the_cat.cat_sprites['adult'], the_cat.cat_sprites['elder'] = int(attr[15]), int(attr[16])
+                game.switches['error_message'] = '6There was an error loading cat # ' + str(attr[0])
+                the_cat.cat_sprites['young adult'], the_cat.cat_sprites['senior adult'] = int(attr[15]), int(attr[15])
+                game.switches['error_message'] = '7There was an error loading cat # ' + str(attr[0])
+                the_cat.reverse, the_cat.white_patches, the_cat.pattern = attr[18], attr[19], attr[20]
+                game.switches['error_message'] = '8There was an error loading cat # ' + str(attr[0])
+
                 # we are converting old torties YEEHAW
-                if the_cat.pattern in tortie_map:
+                if the_cat.pelt == "Tortie" and the_cat.pattern in tortie_map:
                     key = the_cat.pattern
                     the_cat.tortiebase = convert["tortie_map"][key]["tortie_base"]
                     the_cat.tortiepattern = convert["tortie_map"][key]["tortie_pattern"]
                     the_cat.tortiecolour = convert["tortie_map"][key]["tortie_colour"]
                     the_cat.pattern = convert["tortie_map"][key]["pattern"]
+                elif the_cat.pelt == "Calico" and the_cat.pattern in cali_map:
+                    key = the_cat.pattern
+                    the_cat.tortiebase = convert["calico_map"][key]["tortie_base"]
+                    the_cat.tortiepattern = convert["calico_map"][key]["tortie_pattern"]
+                    the_cat.tortiecolour = convert["calico_map"][key]["tortie_colour"]
+                    the_cat.pattern = convert["calico_map"][key]["pattern"]
                 else:
                     the_cat.tortiebase, the_cat.tortiepattern, the_cat.tortiecolour = attr[
                         21], attr[22], attr[23]

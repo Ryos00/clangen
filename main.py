@@ -118,8 +118,7 @@ if clan_list:
     except Exception as e:
         logging.exception("File failed to load")
         if not game.switches['error_message']:
-            game.switches[
-                'error_message'] = 'There was an error loading the cats file!'
+            game.switches['error_message'] = 'There was an error loading the cats file!'
 
     # try:
     #     game.map_info = load_map('saves/' + game.clan.name)

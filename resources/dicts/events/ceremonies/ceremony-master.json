@@ -860,7 +860,7 @@
     ],
     "Wanting to stand out among their Clanmates more, m_c decides to become a medicine cat, and is apprenticed to (mentor)."
   ],
-   "med_app_6": [
+  "med_app_6": [
     [
       "medicine cat apprentice",
       "yes_mentor",
@@ -1013,7 +1013,7 @@
       "general_backstory",
       "all_traits"
     ],
-    "m_c decides to become a medicine cat apprentice in hopes that they will be able to see dead_par1 and dead_par2 in StarClan"
+    "m_c decides to become a medicine cat apprentice in hopes that they will be able to see dead_par1 and dead_par2 in StarClan."
   ],
   "med_app_20": [
     [
@@ -1038,11 +1038,11 @@
   ],
   "med_app_22": [
     [
-     "medicine cat apprentice",
-     "general_mentor",
-     "general_leader",
-     "general_backstory",
-     "wise"
+      "medicine cat apprentice",
+      "general_mentor",
+      "general_leader",
+      "general_backstory",
+      "wise"
     ],
     "m_c sees no reason to sully their claws with blood, they are far more interested in the knowledge and wisdom that can be gained with being an medicine cat apprentice. (mentor) promises to teach them all they know and they go into the medicine den together immediately after the ceremony."
   ],
@@ -1153,7 +1153,7 @@
   "mediator_app_4": [
     [
       "mediator apprentice",
-      "no_mentor",
+      "yes_mentor",
       "general_parents",
       "general_leader",
       "general_backstory",
@@ -1196,7 +1196,7 @@
       "general_backstory",
       "all_traits"
     ],
-    "Despite the odd choice, m_c is firm that they'll be (mentor)'s apprentice: they want to help the Clan through words and influence, not through claw or fang."
+    "Despite the odd choice, m_c is firm that they'll be (mentor)'s apprentice: they want to help the Clan through words and influence, not through claw nor fang."
   ],
   "mediator_app_8": [
     [
@@ -1286,10 +1286,21 @@
     ],
     "(prefix)kit always dreamed of becoming a mediator: Now that they're m_c, an apprentice being mentored by (mentor), it feels like a wish come true."
   ],
+  "mediator_app_16": [
+    [
+      "mediator apprentice",
+      "yes_mentor",
+      "general_parents",
+      "general_leader",
+      "general_backstory",
+      "all_traits"
+    ],
+    "m_c beams proudly at their new mentor, (mentor), and are excited to begin their journey as the Clan's new mediator apprentice."
+  ],
   "med_0": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1299,33 +1310,33 @@
     "(prefix)paw is given their full name of m_c and welcomed as a full medicine cat. "
   ],
   "med_0_a": [
-  [
-    "medicine cat",
-    "unprepared",
-    "general_mentor",
-    "general_parents",
-    "general_leader",
-    "general_backstory",
-    "all_traits"
+    [
+      "medicine cat",
+      "unprepared",
+      "general_mentor",
+      "general_parents",
+      "general_leader",
+      "general_backstory",
+      "all_traits"
+    ],
+    "(prefix)paw has struggled to learn the skills of a medicine cat, but they refuse to train as a warrior. They are too old to remain an apprentice, and as the other medicine cats look with pity, they are hesitantly given the name m_c."
   ],
-  "(prefix)paw has struggled to learn the skills of a medicine cat, but they refuse to train as a warrior. They are too old to remain an apprentice, and as the other medicine cats look with pity, they are hesitantly given the name m_c."
-],
   "med_0_b": [
-  [
-    "medicine cat",
-    "early",
-    "general_mentor",
-    "general_parents",
-    "general_leader",
-    "general_backstory",
-    "all_traits"
+    [
+      "medicine cat",
+      "early",
+      "general_mentor",
+      "general_parents",
+      "general_leader",
+      "general_backstory",
+      "all_traits"
+    ],
+    "(prefix)paw's has shown exceptional aptitude and skill during their short apprenticeship. Although it's rare for an medicine cat apprentice to be given their name so young, m_c more than deserves the honor. "
   ],
-  "(prefix)paw's has shown exceptional aptitude and skill during their short apprenticeship. Although it's rare for an medicine cat apprentice to be given their name so young, m_c more than deserves the honor. "
-],
   "med_1": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "dead_mentor",
       "general_parents",
       "general_leader",
@@ -1337,7 +1348,7 @@
   "med_2": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "dead_mentor",
       "general_parents",
       "general_leader",
@@ -1349,7 +1360,7 @@
   "med_3": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "alive_mentor",
       "general_parents",
       "general_leader",
@@ -1361,7 +1372,7 @@
   "med_4": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "alive_mentor",
       "general_parents",
       "general_leader",
@@ -1373,7 +1384,7 @@
   "med_5": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "alive_mentor",
       "general_parents",
       "general_leader",
@@ -1385,7 +1396,7 @@
   "med_6": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "alive_mentor",
       "general_parents",
       "general_leader",
@@ -1397,7 +1408,7 @@
   "med_7": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "alive_mentor",
       "general_parents",
       "general_leader",
@@ -1409,7 +1420,7 @@
   "med_8": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1421,7 +1432,7 @@
   "med_9": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "no_valid_previous_mentor",
       "general_parents",
       "general_leader",
@@ -1433,7 +1444,7 @@
   "med_10": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "no_valid_previous_mentor",
       "general_parents",
       "general_leader",
@@ -1445,7 +1456,7 @@
   "med_11": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1457,7 +1468,7 @@
   "med_12": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1469,7 +1480,7 @@
   "med_13": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1481,7 +1492,7 @@
   "med_14": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1493,7 +1504,7 @@
   "med_15": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1505,7 +1516,7 @@
   "med_16": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1517,7 +1528,7 @@
   "med_17": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1529,7 +1540,7 @@
   "med_18": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1541,7 +1552,7 @@
   "med_19": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1553,7 +1564,7 @@
   "med_20": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1565,7 +1576,7 @@
   "med_21": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1577,7 +1588,7 @@
   "med_22": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1589,7 +1600,7 @@
   "med_23": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1601,7 +1612,7 @@
   "med_24": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1613,7 +1624,7 @@
   "med_25": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1625,7 +1636,7 @@
   "med_26": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1637,7 +1648,7 @@
   "med_27": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1649,7 +1660,7 @@
   "med_28": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1661,7 +1672,7 @@
   "med_29": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1673,7 +1684,7 @@
   "med_30": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1685,7 +1696,7 @@
   "med_31": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1697,7 +1708,7 @@
   "med_32": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1709,7 +1720,7 @@
   "med_33": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1721,7 +1732,7 @@
   "med_34": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1733,7 +1744,7 @@
   "med_35": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1745,7 +1756,7 @@
   "med_36": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1757,7 +1768,7 @@
   "med_37": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1769,7 +1780,7 @@
   "med_38": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1781,7 +1792,7 @@
   "med_39": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1793,7 +1804,7 @@
   "med_40": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1805,7 +1816,7 @@
   "med_41": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1817,7 +1828,7 @@
   "med_42": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1829,7 +1840,7 @@
   "med_43": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1841,7 +1852,7 @@
   "med_44": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1853,7 +1864,7 @@
   "med_45": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "dead1_parents",
       "general_leader",
@@ -1865,7 +1876,7 @@
   "med_46": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "dead1_parents",
       "general_leader",
@@ -1877,7 +1888,7 @@
   "med_47": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "dead2_parents",
       "general_leader",
@@ -1889,7 +1900,7 @@
   "med_48": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "dead2_parents",
       "general_leader",
@@ -1901,7 +1912,7 @@
   "med_50": [
     [
       "medicine cat",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "dead2_parents",
       "general_leader",
@@ -1910,10 +1921,34 @@
     ],
     "As a StarClan cat steps forward to give (prefix)paw their new name of m_c, they spot dead_par1 and dead_par2 watching them proudly with the other StarClan cats."
   ],
+  "med_51": [
+    [
+      "medicine cat",
+      "prepared",
+      "alive_mentor",
+      "general_parents",
+      "general_leader",
+      "general_backstory",
+      "all_traits"
+    ],
+    "(prefix)paw has waited a long time for this day! Heart pounding, they listen intently as (previous_mentor) names them m_c after their r_h."
+  ],
+  "med_52": [
+    [
+      "medicine cat",
+      "prepared",
+      "alive_mentor",
+      "general_parents",
+      "general_leader",
+      "general_backstory",
+      "all_traits"
+    ],
+    "Inspired by (prefix)paw's r_h, (previous_mentor) names them m_c, and welcomes them as a full medicine cat."
+  ],
   "warrior_0": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1925,7 +1960,7 @@
   "warrior_0_a": [
     [
       "warrior",
-	  "unprepared",
+      "unprepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1937,7 +1972,7 @@
   "warrior_0_b": [
     [
       "warrior",
-	  "early",
+      "early",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -1949,7 +1984,7 @@
   "warrior_1": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -1961,7 +1996,7 @@
   "warrior_2": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -1973,7 +2008,7 @@
   "warrior_3": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -1985,7 +2020,7 @@
   "warrior_4": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -1997,7 +2032,7 @@
   "warrior_5": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "dead_mentor",
       "general_parents",
       "yes_leader",
@@ -2009,7 +2044,7 @@
   "warrior_6": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "alive_mentor",
       "general_parents",
       "general_leader",
@@ -2021,7 +2056,7 @@
   "warrior_7": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "alive_mentor",
       "general_parents",
       "yes_leader",
@@ -2033,7 +2068,7 @@
   "warrior_8": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -2045,7 +2080,7 @@
   "warrior_9": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -2057,7 +2092,7 @@
   "warrior_10": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2069,7 +2104,7 @@
   "warrior_11": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2081,7 +2116,7 @@
   "warrior_12": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2093,7 +2128,7 @@
   "warrior_13": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2105,19 +2140,19 @@
   "warrior_14": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
       "general_backstory",
       "careful"
     ],
-    "(prefix)paw sits neatly in front l_n as they talk about how well (prefix)paw did in their assessment. They are named m_c after their r_h."
+    "(prefix)paw sits neatly in front of l_n as they talk about how well (prefix)paw did in their assessment. They are named m_c after their r_h."
   ],
   "warrior_15": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2129,7 +2164,7 @@
   "warrior_16": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2141,7 +2176,7 @@
   "warrior_17": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2153,7 +2188,7 @@
   "warrior_18": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2165,7 +2200,7 @@
   "warrior_19": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2177,7 +2212,7 @@
   "warrior_20": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2189,7 +2224,7 @@
   "warrior_21": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2203,7 +2238,7 @@
   "warrior_22": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2215,7 +2250,7 @@
   "warrior_23": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2227,7 +2262,7 @@
   "warrior_24": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2239,7 +2274,7 @@
   "warrior_25": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2251,7 +2286,7 @@
   "warrior_26": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2263,7 +2298,7 @@
   "warrior_27": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2275,7 +2310,7 @@
   "warrior_28": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2287,7 +2322,7 @@
   "warrior_29": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2299,7 +2334,7 @@
   "warrior_30": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2311,7 +2346,7 @@
   "warrior_31": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2323,7 +2358,7 @@
   "warrior_32": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2335,19 +2370,19 @@
   "warrior_33": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
       "general_backstory",
       "nervous"
     ],
-    "(prefix)paw fidgets nervously as they step forward in front of the Clan. This is an important moment, so they try not to hide their face from everyone as l_n gives them the name m_c in honor of their r_h They quickly scurry back into the crowd once the ceremony is done, silently hoping that will be the last ceremony they ever have."
+    "(prefix)paw fidgets nervously as they step forward in front of the Clan. This is an important moment, so they try not to hide their face from everyone as l_n gives them the name m_c in honor of their r_h. They quickly scurry back into the crowd once the ceremony is done, silently hoping that will be the last ceremony they ever have."
   ],
   "warrior_34": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2359,7 +2394,7 @@
   "warrior_35": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2371,7 +2406,7 @@
   "warrior_36": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2383,7 +2418,7 @@
   "warrior_37": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2395,7 +2430,7 @@
   "warrior_38": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2407,7 +2442,7 @@
   "warrior_39": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2419,7 +2454,7 @@
   "warrior_40": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2431,7 +2466,7 @@
   "warrior_41": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2443,7 +2478,7 @@
   "warrior_42": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2455,7 +2490,7 @@
   "warrior_43": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2467,7 +2502,7 @@
   "warrior_44": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2480,7 +2515,7 @@
   "warrior_45": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2492,7 +2527,7 @@
   "warrior_46": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2504,7 +2539,7 @@
   "warrior_47": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "yes_leader",
@@ -2516,7 +2551,7 @@
   "warrior_48": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "no_leader",
@@ -2528,7 +2563,7 @@
   "warrior_49": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "no_leader",
@@ -2540,7 +2575,7 @@
   "warrior_50": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "dead_mentor",
       "general_parents",
       "no_leader",
@@ -2552,7 +2587,7 @@
   "warrior_51": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "dead_mentor",
       "general_parents",
       "no_leader",
@@ -2564,7 +2599,7 @@
   "warrior_52": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "yes_mentor",
       "general_parents",
       "no_leader",
@@ -2576,7 +2611,7 @@
   "warrior_53": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "yes_mentor",
       "general_parents",
       "no_leader",
@@ -2588,7 +2623,7 @@
   "warrior_54": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "alive1_parents",
       "general_leader",
@@ -2600,7 +2635,7 @@
   "warrior_55": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "alive1_parents",
       "general_leader",
@@ -2612,7 +2647,7 @@
   "warrior_56": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "alive2_parents",
       "general_leader",
@@ -2624,7 +2659,7 @@
   "warrior_57": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "dead2_parents",
       "general_leader",
@@ -2636,7 +2671,7 @@
   "warrior_58": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "dead2_parents",
       "general_leader",
@@ -2648,7 +2683,7 @@
   "warrior_59": [
     [
       "warrior",
-	  "prepared",
+      "prepared",
       "alive_leader_mentor",
       "general_parents",
       "yes_leader",
@@ -2660,7 +2695,7 @@
   "mediator_0": [
     [
       "mediator",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -2672,7 +2707,7 @@
   "mediator_0_a": [
     [
       "mediator",
-	  "unprepared",
+      "unprepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -2684,7 +2719,7 @@
   "mediator_0_b": [
     [
       "mediator",
-	  "early",
+      "early",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -2696,7 +2731,7 @@
   "mediator_1": [
     [
       "mediator",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -2708,7 +2743,7 @@
   "mediator_2": [
     [
       "mediator",
-	  "prepared",
+      "prepared",
       "general_mentor",
       "general_parents",
       "general_leader",
@@ -2716,6 +2751,29 @@
       "all_traits"
     ],
     "Although some Clan members have doubts of (prefix)paw's abilities, l_n gives them the name m_c and welcomes them as the Clan's new mediator."
+  ],
+  "mediator_3": [
+    [
+      "mediator",
+      "prepared",
+      "general_mentor",
+      "general_parents",
+      "general_leader",
+      "general_backstory",
+      "all_traits"
+    ],
+    "As (prefix)paw has finished their mediator training, l_n gives them the name m_c after their r_h, welcoming them as the Clan's new mediator."
+  ],
+  "mediator_4": [
+    [
+      "mediator",
+      "alive_mentor",
+      "general_parents",
+      "general_leader",
+      "general_backstory",
+      "all_traits"
+    ],
+    "(previous_mentor) tells l_n that (prefix)paw has completed their mediator training, and l_n gives them the name m_c after their r_h, welcoming them as the Clan's new mediator."
   ],
   "elder_0": [
     [

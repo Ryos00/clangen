@@ -33,17 +33,18 @@ def json_load():
     all_cats = []
     cat_data = None
     clanname = game.switches['clan_list'][0]
+    clan_cats_json_path = f'{get_save_dir()}/{clanname}/clan_cats.json'
     with open(f"resources/dicts/conversion_dict.json", 'r') as read_file:
         convert = ujson.loads(read_file.read())
     try:
-        with open('saves/' + clanname + '/clan_cats.json', 'r') as read_file:
+        with open(clan_cats_json_path, 'r') as read_file:
             cat_data = ujson.loads(read_file.read())
     except PermissionError as e:
-        game.switches['error_message'] = f'Can\t open saves/{clanname}/clan_cats.json!'
+        game.switches['error_message'] = f'Can\t open {clan_cats_json_path}!'
         game.switches['traceback'] = e
         raise
     except JSONDecodeError as e:
-        game.switches['error_message'] = get_save_dir() + f'/{clanname}/clan_cats.json is malformed!'
+        game.switches['error_message'] = f'{clan_cats_json_path} is malformed!'
         game.switches['traceback'] = e
         raise
 
@@ -59,25 +60,30 @@ def json_load():
                                 cat["pelt_length"], True)
             if cat["eye_colour"] == "BLUE2":
                 cat["eye_colour"] = "COBALT"
+            if cat["eye_colour"] in ["BLUEYELLOW", "BLUEGREEN"]:
+                if cat["eye_colour"] == "BLUEYELLOW":
+                    cat["eye_colour2"] = "YELLOW"
+                elif cat["eye_colour"] == "BLUEGREEN":
+                    cat["eye_colour2"] = "GREEN"
+                cat["eye_colour"] = "BLUE"
+            if cat["eye_colour2"] == "BLUE2":
+                new_cat.eye_colour2 = "COBALT"
             new_cat = Cat(ID=cat["ID"],
                         prefix=cat["name_prefix"],
                         suffix=cat["name_suffix"],
+                        specsuffix_hidden=(cat["specsuffix_hidden"] if 'specsuffix_hidden' in cat else False),
                         gender=cat["gender"],
                         status=cat["status"],
                         parent1=cat["parent1"],
                         parent2=cat["parent2"],
                         moons=cat["moons"],
-                        eye_colour=cat["eye_colour"] if cat["eye_colour"] not in ["BLUEYELLOW", "BLUEGREEN"] else "BLUE",
+                        eye_colour=cat["eye_colour"],
                         pelt=new_pelt,
                         loading_cat=True)
-            if cat["eye_colour2"] == "BLUE2":
-                new_cat.eye_colour2 = "COBALT"
             new_cat.eye_colour2 = cat["eye_colour2"] if "eye_colour2" in cat else None
-            if cat["eye_colour"] == "BLUEYELLOW":
-                new_cat.eye_colour2 = "YELLOW"
-            elif cat["eye_colour"] == "BLUEGREEN":
-                new_cat.eye_colour2 = "GREEN"
             new_cat.age = cat["age"]
+            if new_cat.age == 'elder':
+                new_cat.age = 'senior'
             new_cat.genderalign = cat["gender_align"]
             new_cat.backstory = cat["backstory"] if "backstory" in cat else None
             new_cat.birth_cooldown = cat["birth_cooldown"] if "birth_cooldown" in cat else 0
@@ -91,8 +97,6 @@ def json_load():
             new_cat.patrol_with_mentor = cat["patrol_with_mentor"] if "patrol_with_mentor" in cat else 0
             new_cat.mentor_influence = cat["mentor_influence"] if "mentor_influence" in cat else []
             new_cat.paralyzed = cat["paralyzed"]
-            if new_cat.paralyzed:
-                new_cat.get_permanent_condition("paralyzed")
             new_cat.no_kits = cat["no_kits"]
             new_cat.exiled = cat["exiled"]
             new_cat.cat_sprites['kitten'] = cat["sprite_kitten"] if "sprite_kitten" in cat else cat["spirit_kitten"]
@@ -144,13 +148,15 @@ def json_load():
                 new_cat.white_patches = 'PANTSTWO'
             if cat["white_patches"] == 'ANY2':
                 new_cat.white_patches = 'ANYTWO'
+            if cat["white_patches"] == "VITILIGO2":
+                cat["white_patches"] = "VITILIGOTWO"
             new_cat.vitiligo = cat["vitiligo"] if "vitiligo" in cat else None
             new_cat.points = cat["points"] if "points" in cat else None
             if cat["white_patches"] in vit:
                 new_cat.vitiligo = cat["white_patches"]
                 new_cat.white_patches = None
             if "vitiligo" in cat and cat["vitiligo"] == "VITILIGO2":
-                new_cat["vitiligo"] = "VITILIGOTWO"
+                new_cat.vitiligo = "VITILIGOTWO"
             elif cat["white_patches"] in point_markings:
                 new_cat.points = cat["white_patches"]
                 new_cat.white_patches = None
@@ -174,6 +180,14 @@ def json_load():
             else:
                 new_cat.pattern = cat["pattern"]
                 new_cat.tortiecolour = cat["tortie_color"]
+            if cat["pattern"] == "MINIMAL1":
+                new_cat.pattern = "MINIMALONE"
+            elif cat["pattern"] == "MINIMAL2":
+                new_cat.pattern = "MINIMALTWO"
+            elif cat["pattern"] == "MINIMAL3":
+                new_cat.pattern = "MINIMALTHREE"
+            elif cat["pattern"] == "MINIMAL4":
+                new_cat.pattern = "MINIMALFOUR"
             new_cat.skin = cat["skin"]
             new_cat.skill = cat["skill"]
             new_cat.scars = cat["scars"] if "scars" in cat else []
@@ -187,6 +201,7 @@ def json_load():
 
             new_cat.accessory = cat["accessory"]
             new_cat.mate = cat["mate"]
+            new_cat.previous_mates = cat["previous_mates"] if "previous_mates" in cat else []
             new_cat.dead = cat["dead"]
             new_cat.died_by = cat["died_by"] if "died_by" in cat else []
             new_cat.experience = cat["experience"]
@@ -221,6 +236,13 @@ def json_load():
     # replace cat ids with cat objects and add other needed variables
     for cat in all_cats:
         cat.load_conditions()
+
+        # this is here to handle paralyzed cats in old saves
+        if cat.paralyzed and "paralyzed" not in cat.permanent_condition:
+            cat.get_permanent_condition("paralyzed")
+        elif "paralyzed" in cat.permanent_condition and not cat.paralyzed:
+            cat.paralyzed = True
+
         # load the relationships
         if not cat.dead:
             game.switches[
@@ -230,7 +252,7 @@ def json_load():
             game.switches[
                 'error_message'] = f'There was an error when relationships for cat #{cat} are created.'
             if cat.relationships is not None and len(cat.relationships) < 1:
-                cat.create_all_relationships()
+                cat.init_all_relationships()
         else:
             cat.relationships = {}
 
@@ -263,6 +285,11 @@ def json_load():
 
         # initialization of thoughts
         cat.thoughts()
+        
+        # Save integrety checks
+        if game.config["save_load"]["load_integrity_checks"]:
+            save_check()
+    
 
 def csv_load(all_cats):
     if game.switches['clan_list'][0].strip() == '':
@@ -451,3 +478,20 @@ def csv_load(all_cats):
                 if the_cat.relationships is not None and len(the_cat.relationships) < 1:
                     the_cat.create_all_relationships()
         game.switches['error_message'] = ''
+
+def save_check():
+    """Checks through loaded cats, checks and attempts to fix issues """
+    
+    for cat in Cat.all_cats:
+        cat_ob = Cat.all_cats[cat]
+        
+        # Not-mutural mate relations
+        if cat_ob.mate:
+            _temp_ob = Cat.all_cats.get(cat_ob.mate)
+            if _temp_ob:
+                # Check if the mate's mate feild is set to none
+                if not _temp_ob.mate:
+                    _temp_ob.mate = cat_ob.ID 
+            else:
+                # Invalid mate
+                cat_ob.mate = None

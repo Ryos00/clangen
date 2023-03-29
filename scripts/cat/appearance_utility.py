@@ -438,7 +438,6 @@ def init_pattern(cat):
             # and always get wildcard torties.
             if not wildcard_chance or random.getrandbits(wildcard_chance) == 1:
                 # This is the "wildcard" chance, where you can get funky combinations.
-                print("WILDCARD TORTIE")
 
                 # Allow any pattern:
                 cat.tortiepattern = choice(tortiebases)
@@ -487,35 +486,28 @@ def white_patches_inheritance(cat, parents: tuple):
 
     par_whitepatches = set()
     par_points = []
-    par_vit = []
     for p in parents:
         if p:
             if p.white_patches:
                 par_whitepatches.add(p.white_patches)
             if p.points:
                 par_points.append(p.points)
-            if p.vitiligo:
-                par_vit.append(p.vitiligo)
 
     if not parents:
         print("Error - no parents. Randomizing white patches.")
         randomize_white_patches(cat)
         return
 
-    vit_chance = max(game.config["cat_generation"]["vit_chance"] - len(par_vit), 0)
-    if not random.getrandbits(vit_chance):
-        cat.vitiligo = choice(vit)
-
     # Direct inheritance. Will only work if at least one parent has white patches, otherwise continue on.
     if par_whitepatches and not randint(0, game.config["cat_generation"]["direct_inheritance"]):
         # This ensures Torties and Calicos won't get direct inheritance of incorrect white patch types
         _temp = par_whitepatches.copy()
         if cat.pelt.name == "Tortie":
-            for p in _temp:
+            for p in _temp.copy():
                 if p in high_white + mostly_white + ["FULLWHITE"]:
                     _temp.remove(p)
         elif cat.pelt.name == "Calico":
-            for p in _temp:
+            for p in _temp.copy():
                 if p in little_white + mid_white:
                     _temp.remove(p)
 
@@ -597,56 +589,60 @@ def white_patches_inheritance(cat, parents: tuple):
 
 def randomize_white_patches(cat):
 
-    # Vet determination
-    if not random.getrandbits(game.config["cat_generation"]["vit_chance"]):
-        cat.vitiligo = choice(vit)
-    else:
-        cat.vitiligo = None
-
     # Points determination. Tortie can't be pointed
     if cat.pelt.name != "Tortie" and not random.getrandbits(game.config["cat_generation"]["random_point_chance"]):
         # Cat has colorpoint!
         cat.points = choice(point_markings)
-
-        # Determination if they will have another white patch
-        if not int(random.random() * 20):
-            # The cat will also have white patches!
-            cat.white_patches = choice(little_white + mid_white)
-        else:
-            cat.white_patches = None
     else:
-        # No colorpoint, normal
+        cat.points = None
 
-        # Adjust weights for torties, since they can't have anything greater than mid_white:
-        if cat.pelt.name == "Tortie":
-            weights = (2, 1, 0, 0, 0)
-        else:
-            weights = (10, 10, 10, 10, 1)
+    # Adjust weights for torties, since they can't have anything greater than mid_white:
+    if cat.pelt.name == "Tortie":
+        weights = (2, 1, 0, 0, 0)
+    elif cat.pelt.name == "Calico":
+        weights = (0, 0, 20, 15, 1)
+    else:
+        weights = (10, 10, 10, 10, 1)
 
-        white_list = [little_white, mid_white, high_white, mostly_white, ['FULLWHITE']]
-        chosen_white_patches = choice(
-            random.choices(white_list, weights=weights, k=1)[0]
-        )
+    white_list = [little_white, mid_white, high_white, mostly_white, ['FULLWHITE']]
+    chosen_white_patches = choice(
+        random.choices(white_list, weights=weights, k=1)[0]
+    )
 
-        cat.white_patches = chosen_white_patches
+    cat.white_patches = chosen_white_patches
+    if cat.points and cat.white_patches in [high_white, mostly_white, 'FULLWHITE']:
+        cat.points = None
 
 def init_white_patches(cat):
 
     if cat.pelt is None:
         init_pelt(cat)
 
-    if cat.white_patches:
+    #Gather parents
+    par1 = None
+    par2 = None
+    if cat.parent1 in cat.all_cats:
+        par1 = cat.all_cats[cat.parent1]
+    if cat.parent2 in cat.all_cats:
+        par2 = cat.all_cats[cat.parent2]
+
+    # Vit can rool for anyone, not just cats who rolled to have white in their pelt. 
+    par_vit = []
+    for p in (par1, par2):
+        if p:
+            if p.vitiligo:
+                par_vit.append(p.vitiligo)
+    
+    vit_chance = max(game.config["cat_generation"]["vit_chance"] - len(par_vit), 0)
+    if not random.getrandbits(vit_chance):
+        cat.vitiligo = choice(vit)
+
+    if cat.white_patches or cat.points:
         return
 
+    # If the cat was rolled previously to have white patches, then determine the patch they will have
+    # these functions also handle points. 
     if cat.pelt.white:
-
-        par1 = None
-        par2 = None
-        if cat.parent1 in cat.all_cats:
-            par1 = cat.all_cats[cat.parent1]
-        if cat.parent2 in cat.all_cats:
-            par2 = cat.all_cats[cat.parent2]
-
         if par1 or par2:
             white_patches_inheritance(cat, (par1, par2))
         else:

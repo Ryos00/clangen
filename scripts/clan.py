@@ -1356,11 +1356,10 @@ class Clan():
             self._reputation = 100
         elif self._reputation < 0:
             self._reputation = 0
-    
 
 class OtherClan():
     """
-    TODO: DOCS
+    this handles the generation of the other clans
     """
 
     def __init__(self, name='', relations=0, temperament=''):

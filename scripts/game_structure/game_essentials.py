@@ -369,6 +369,8 @@ class Game():
                 "birth_cooldown": inter_cat.birth_cooldown,
                 "status": inter_cat.status,
                 "backstory": inter_cat.backstory if inter_cat.backstory else None,
+                "clan": inter_cat.clan if inter_cat.clan else None,
+                "former_clans": [clan for clan in inter_cat.former_clans] if inter_cat.former_clans else [],
                 "age": inter_cat.age,
                 "moons": inter_cat.moons,
                 "trait": inter_cat.trait,

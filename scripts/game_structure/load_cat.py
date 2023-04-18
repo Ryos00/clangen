@@ -84,6 +84,8 @@ def json_load():
                 new_cat.age = 'senior'
             new_cat.genderalign = cat["gender_align"]
             new_cat.backstory = cat["backstory"] if "backstory" in cat else None
+            new_cat.clan = cat["clan"] if "clan" in cat else None
+            new_cat.former_clans = cat["former_clans"] if "former_clans" in cat else []
             new_cat.birth_cooldown = cat["birth_cooldown"] if "birth_cooldown" in cat else 0
             new_cat.moons = cat["moons"]
             if cat["trait"] in ["clever", "patient", "empathetic", "altruistic"]:

@@ -261,6 +261,8 @@ class Cat():
         self.gender = gender
         self.status = status
         self.backstory = backstory
+        self.clan = None
+        self.former_clans = []
         self.age = None
         self.skill = None
         self.trait = None
@@ -419,6 +421,11 @@ class Cat():
                 self.backstory = 'clanborn'
         else:
             self.backstory = self.backstory
+
+        # clan
+        if self.clan == None:
+            if game.clan.name != None and not self.outside:
+                self.clan = game.clan.name
 
         # sex!?!??!?!?!??!?!?!?!??
         if self.gender is None:

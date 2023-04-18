@@ -1373,6 +1373,9 @@ class OtherClan():
         if self.temperament not in temperament_list:
             self.temperament = choice(temperament_list)
 
+        while self.name == game.clan.name or game.clan.all_clans.count(self.name) > 1:
+            choice(names.names_dict["normal_prefixes"])
+
     def __repr__(self):
         return f"{self.name}Clan"
 

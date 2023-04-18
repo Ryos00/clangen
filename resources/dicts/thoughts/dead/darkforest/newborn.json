@@ -1,25 +1,26 @@
 [
     {
-        "id": "gen_newborn",
+        "id": "gen_dead_newborn",
         "thoughts": [
             "Mewls pitifully for milk",
-            "Tries to figure out all of the smells around them",
-            "Snoozes peacefully",
-            "Tries to open their eyes, but it's all blurry"
-        ],
-        "main_age_constraint": [
-            "newborn"
+            "Wobbles around the Dark Forest",
+            "Is crying for milk to no avail",
+            "Attempts to snarl but can only manage a tiny mewl",
+            "Is crying for {PRONOUN/m_c/poss} parents, but no one comforts {PRONOUN/m_c/object}",
+            "Doesn't know why it's suddenly so cold",
+            "Wishes to feel warmth at least once",
+            "Hears menacing whispers around {PRONOUN/m_c/object}",
+            "Is clouded in confusion and fear",
+            "Feels trapped in the sticky mud",
+            "Is feeling incredibly lonely"
         ]
     },
     {
-        "id": "gen_newborn_to_parent",
+        "id": "gen_dead_newborn_to_alive_parent",
         "thoughts":[
-            "Snuggles closer to r_c",
-            "Smells r_c and immediately perks up",
-            "Mews at r_c as they shift in the nest"
-        ],
-        "main_age_constraint": [
-            "newborn"
+            "Desperately misses r_c",
+            "Misses the fleeting feeling of warmth at r_c's belly",
+            "Wishes that r_c could bathe {PRONOUN/m_c/object} again"
         ],
         "relationship_constraint": [
             "child/parent"

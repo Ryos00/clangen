@@ -424,8 +424,9 @@ class Cat():
 
         # clan
         if self.clan == None:
-            if game.clan.name != None and not self.outside:
-                self.clan = game.clan.name
+            if game.clan:
+                if game.clan.name != None and not self.outside:
+                    self.clan = game.clan.name
 
         # sex!?!??!?!?!??!?!?!?!??
         if self.gender is None:

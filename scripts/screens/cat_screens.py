@@ -291,15 +291,21 @@ class ProfileScreen(Screens):
                 self.close_current_tab()
                 self.change_screen(game.last_screen_forProfile)
             elif event.ui_element == self.previous_cat_button:
-                self.clear_profile()
-                game.switches['cat'] = self.previous_cat
-                self.build_profile()
-                self.update_disabled_buttons_and_text()
+                if Cat.fetch_cat(self.previous_cat) is not None:
+                    self.clear_profile()
+                    game.switches['cat'] = self.previous_cat
+                    self.build_profile()
+                    self.update_disabled_buttons_and_text()
+                else:
+                    print("invalid previous cat", self.previous_cat)
             elif event.ui_element == self.next_cat_button:
-                self.clear_profile()
-                game.switches['cat'] = self.next_cat
-                self.build_profile()
-                self.update_disabled_buttons_and_text()
+                if Cat.fetch_cat(self.next_cat) is not None:
+                    self.clear_profile()
+                    game.switches['cat'] = self.next_cat
+                    self.build_profile()
+                    self.update_disabled_buttons_and_text()
+                else:
+                    print("invalid next cat", self.previous_cat)
             elif event.ui_element == self.relations_tab_button:
                 self.toggle_relations_tab()
             elif event.ui_element == self.roles_tab_button:
@@ -924,7 +930,6 @@ class ProfileScreen(Screens):
                     else:
                         output += 'former mate: ' + prev_mates[0]
 
-
         if not the_cat.dead:
             # NEWLINE ----------
             output += "\n"
@@ -1157,14 +1162,8 @@ class ProfileScreen(Screens):
 
         new_notes = {str(self.the_cat.ID): notes}
 
-        try:
-            with open(notes_file_path, 'w') as rel_file:
-                json_string = ujson.dumps(new_notes, indent=2)
-                rel_file.write(json_string)
-
-        except:
-            print(f"WARNING: Saving notes of cat #{self.the_cat.ID} didn't work.")
-
+        game.safe_save(notes_file_path, new_notes)
+    
     def load_user_notes(self):
         """Loads user-entered notes. """
         clanname = game.clan.name
@@ -1270,7 +1269,7 @@ class ProfileScreen(Screens):
                 new_text = (event_text_adjust(Cat,
                                               scar["text"],
                                               self.the_cat,
-                                              scar["involved"]))
+                                              Cat.fetch_cat(scar["involved"])))
                 if moons:
                     new_text += f" (Moon {scar['moon']})"
 
@@ -1365,7 +1364,7 @@ class ProfileScreen(Screens):
                 else:
                     influence_history = f"This cat's mentor was {mentor}."
             elif influenced_trait and influenced_skill:
-                influence_history = "The influence of {PRONOUN/m_c/poss} mentor, " + mentor +", caused this cat to become more " + influenced_trait.lower() + "as well as " + influenced_skill + "."
+                influence_history = "The influence of {PRONOUN/m_c/poss} mentor, " + mentor +", caused this cat to become more " + influenced_trait.lower() + " as well as " + influenced_skill + "."
             else:
                 influence_history = f"This cat's mentor was {mentor}."
 
@@ -1443,18 +1442,18 @@ class ProfileScreen(Screens):
             if self.the_cat.status == 'leader' or death_number > 1:
 
                 if death_number > 2:
-                    deaths = f"{','.join(all_deaths[0:-1])}, and {all_deaths[-1]}"
+                    deaths = f"{', '.join(all_deaths[0:-1])}, and {all_deaths[-1]}"
                 elif death_number == 2:
                     deaths = " and ".join(all_deaths)
                 else:
                     deaths = all_deaths[0]
 
                 if self.the_cat.dead:
-                    insert = 'lost all {PRONOUN/m_c/poss} lives'
+                    insert = ' lost all {PRONOUN/m_c/poss} lives'
                 elif game.clan.leader_lives == 8:
-                    insert = 'lost a life'
+                    insert = ' lost a life'
                 else:
-                    insert = 'lost {PRONOUN/m_c/poss} lives'
+                    insert = ' lost {PRONOUN/m_c/poss} lives'
 
                 text = str(self.the_cat.name) + insert + " when {PRONOUN/m_c/subject} " + deaths + "."
             else:
@@ -1995,7 +1994,7 @@ class ProfileScreen(Screens):
                     starting_height=2, manager=MANAGER)
                 self.exile_cat_button.disable()
 
-            if not self.the_cat.dead and not self.the_cat.exiled and not self.the_cat.outside:
+            if not self.the_cat.dead:
                 self.kill_cat_button.enable()
             else:
                 self.kill_cat_button.disable()
@@ -2286,11 +2285,15 @@ class RoleScreen(Screens):
             if event.ui_element == self.back_button:
                 self.change_screen("profile screen")
             elif event.ui_element == self.next_cat_button:
+                
                 game.switches["cat"] = self.next_cat
                 self.update_selected_cat()
             elif event.ui_element == self.previous_cat_button:
-                game.switches["cat"] = self.previous_cat
-                self.update_selected_cat()
+                if Cat.fetch_cat(self.previous_cat) is not None:
+                    game.switches["cat"] = self.previous_cat
+                    self.update_selected_cat()
+                else:
+                    print("invalid previous cat", self.previous_cat)
             elif event.ui_element == self.promote_leader:
                 if self.the_cat == game.clan.deputy:
                     game.clan.deputy = None

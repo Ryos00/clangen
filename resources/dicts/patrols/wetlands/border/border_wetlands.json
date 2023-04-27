@@ -56,9 +56,9 @@
         "max_cats": 1,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            "r_c got injured patrolling on the border."
-        ]
+        "history_text": {
+        "scar": "r_c got injured patrolling on the border."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_soloneutral2",
@@ -119,10 +119,10 @@
         "max_cats": 1,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            "r_c got injured patrolling on the border.",
-            "r_c lost their life in an ambush on the border."
-        ]
+        "history_text": {
+        "scar": "r_c got injured patrolling on the border.",
+        "reg_death": "r_c lost their life in an ambush on the border."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_soloneutral3",
@@ -183,10 +183,10 @@
         "max_cats": 1,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            "r_c got injured patrolling on the border.",
-            "r_c lost a life in an ambush on the border."
-        ]
+        "history_text": {
+        "scar": "r_c got injured patrolling on the border.",
+        "reg_death": "r_c lost a life in an ambush on the border."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_soloneutral4",
@@ -236,9 +236,9 @@
         "max_cats": 1,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            "r_c got injured patrolling on the border."
-        ]
+        "history_text": {
+        "scar": "r_c got injured patrolling on the border."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_soloneutral5",
@@ -288,9 +288,9 @@
         "max_cats": 1,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            "r_c got injured patrolling on the border."
-        ]
+        "history_text": {
+        "scar": "r_c got injured patrolling on the border."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_soloally1",
@@ -405,9 +405,9 @@
         "max_cats": 1,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            "r_c got injured patrolling on the border."
-        ]
+        "history_text": {
+        "scar": "r_c got injured patrolling on the border."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_soloally3",
@@ -467,9 +467,9 @@
         "max_cats": 1,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            "r_c got injured patrolling on the border."
-        ]
+        "history_text": {
+        "scar": "r_c got injured patrolling on the border."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_soloally4",
@@ -620,10 +620,10 @@
         "max_cats": 1,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            "r_c got injured patrolling on the border.",
-            "r_c was killed by a hostile Clan."
-        ]
+        "history_text": {
+        "scar": "r_c got injured patrolling on the border.",
+        "reg_death": "r_c was killed by a hostile Clan."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_solohostile2",
@@ -686,10 +686,10 @@
         "max_cats": 1,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            "r_c got injured patrolling on the border.",
-            "r_c was killed by a hostile Clan."
-        ]
+        "history_text": {
+        "scar": "r_c got injured patrolling on the border.",
+        "reg_death": "r_c was killed by a hostile Clan."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_solohostile3",
@@ -752,10 +752,10 @@
         "max_cats": 1,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            "r_c got injured patrolling on the border.",
-            "r_c lost a life against a hostile Clan."
-        ]
+        "history_text": {
+        "scar": "r_c got injured patrolling on the border.",
+        "reg_death": "r_c lost a life against a hostile Clan."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_solohostile4",
@@ -808,10 +808,10 @@
         "max_cats": 1,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            "r_c got injured patrolling on the border.",
-            "r_c was killed by a hostile Clan."
-        ]
+        "history_text": {
+        "scar": "r_c got injured patrolling on the border.",
+        "reg_death": "r_c was killed by a hostile Clan."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_solohostile5",
@@ -864,10 +864,10 @@
         "max_cats": 1,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            "r_c got injured patrolling on the border.",
-            "r_c was killed by a hostile Clan."
-        ]
+        "history_text": {
+        "scar": "r_c got injured patrolling on the border.",
+        "reg_death": "r_c was killed by a hostile Clan."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_abandontwoleg1",
@@ -884,8 +884,8 @@
         "chance_of_success": 40,
         "exp": 30,
         "success_text": [
-            "It's just an odd loner singing to themselves. The patrol greets them, and as the loner isn't inside c_n territory, it's a polite interaction without any hostility.",
-            "It's just an odd loner singing to themselves. When they see the patrol they invite them to sing too, but instead, p_l offers the somewhat battered looking and strange cat an introduction to c_n. It's got to be far less lonely than their current life.",
+            "It's just an odd loner singing to themself. The patrol greets them, and as the loner isn't inside c_n territory, it's a polite interaction without any hostility.",
+            "It's just an odd loner singing to themself. When they see the patrol they invite them to sing too, but instead, p_l offers the somewhat battered looking and strange cat an introduction to c_n. It's got to be far less lonely than their current life.",
             "Your patrol walks into an ambush by a group of rogues. It's only by the grace of StarClan that s_c is there, fighting with the ferocity of LionClan, the strength of TigerClan, and the flexibility of LeopardClan. Shaken, but no more than bruised, the patrol manages to retreat to safety.",
             "s_c signals for the patrol to stop. Carefully, quietly, they explain their concerns about the unknown situation. And maybe they're being too cautious - but then p_l picks up on the scent of strange cats around the Twoleg den. Forewarned, the patrol retreats to safety."
         ],
@@ -907,10 +907,9 @@
         "max_cats": 6,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            null,
-            "This cat died from being ambushed by rogues."
-        ]
+        "history_text": {
+        "reg_death": "This cat died from being ambushed by rogues."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_abandontwoleg2",
@@ -927,8 +926,8 @@
         "chance_of_success": 10,
         "exp": 30,
         "success_text": [
-            "It's just an odd loner singing to themselves. r_c greets them, and as the loner isn't inside c_n territory, it's a polite interaction without any hostility.",
-            "It's just an odd loner singing to themselves. When they see the patrol they invite them to sing too, but instead, p_l offers the somewhat battered looking and strange cat an introduction to c_n. It's got to be far less lonely than their current life.",
+            "It's just an odd loner singing to themself. r_c greets them, and as the loner isn't inside c_n territory, it's a polite interaction without any hostility.",
+            "It's just an odd loner singing to themself. When they see the patrol they invite them to sing too, but instead, p_l offers the somewhat battered looking and strange cat an introduction to c_n. It's got to be far less lonely than their current life.",
             "s_c walks into an ambush by a group of rogues. It's only by the grace of StarClan that s_c has the fighting skill and confidence to escape, running for their life.",
             "s_c has a bad feeling about this. And maybe they're being too cautious - but then they pick up on the scent of strange cats around the Twoleg den. Forewarned, s_c retreats to safety."
         ],
@@ -950,10 +949,9 @@
         "max_cats": 1,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            null,
-            "This cat died from being ambushed by rogues."
-        ]
+        "history_text": {
+        "reg_death": "This cat died from being ambushed by rogues."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_flashflood1",
@@ -995,10 +993,9 @@
         "max_cats": 6,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            null,
-            "This cat was drowned by floodwaters."
-        ]
+        "history_text": {
+        "reg_death": "This cat was drowned by floodwaters."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_flashflood2",
@@ -1040,10 +1037,9 @@
         "max_cats": 6,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            null,
-            "r_c was drowned by floodwaters."
-        ]
+        "history_text": {
+        "reg_death": "r_c was drowned by floodwaters."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_flashflood3",
@@ -1083,10 +1079,9 @@
         "max_cats": 1,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            null,
-            "r_c was drowned by floodwaters."
-        ]
+        "history_text": {
+        "reg_death": "r_c was drowned by floodwaters."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_flashflood4",
@@ -1125,10 +1120,9 @@
         "max_cats": 1,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            null,
-            "r_c was drowned by floodwaters."
-        ]
+        "history_text": {
+        "reg_death": "r_c was drowned by floodwaters."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_flashflood5",
@@ -1167,10 +1161,9 @@
         "max_cats": 1,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            null,
-            "r_c was killed by a flood."
-        ]
+        "history_text": {
+        "reg_death": "r_c was killed by a flood."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_trackrogue1",
@@ -1230,10 +1223,10 @@
         "max_cats": 1,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            "r_c was scarred by an invading rogue.",
-            "r_c was killed by an invading rogue."
-        ]
+        "history_text": {
+        "scar": "r_c was scarred by an invading rogue.",
+        "reg_death": "r_c was killed by an invading rogue."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_trackrogue2",
@@ -1293,10 +1286,10 @@
         "max_cats": 1,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            "r_c was scarred by an invading rogue.",
-            "r_c was killed by an invading rogue."
-        ]
+        "history_text": {
+        "scar": "r_c was scarred by an invading rogue.",
+        "reg_death": "r_c was killed by an invading rogue."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_trackrogue3",
@@ -1350,10 +1343,10 @@
         "max_cats": 1,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            "r_c was scarred by an invading rogue.",
-            "r_c was killed by an invading rogue."
-        ]
+        "history_text": {
+        "scar": "r_c was scarred by an invading rogue.",
+        "reg_death": "r_c was killed by an invading rogue."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_trackrogue4",
@@ -1412,10 +1405,9 @@
         "max_cats": 2,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            "r_c was scarred by an invading rogue.",
-            null
-        ]
+        "history_text": {
+        "scar": "r_c was scarred by an invading rogue."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_trackrogue5",
@@ -1474,10 +1466,9 @@
         "max_cats": 2,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            "r_c was scarred by an invading rogue.",
-            null
-        ]
+        "history_text": {
+        "scar": "r_c was scarred by an invading rogue."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_trackrogue6",
@@ -1530,10 +1521,9 @@
         "max_cats": 2,
         "antagonize_text": null,
         "antagonize_fail_text": null,
-        "history_text": [
-            "r_c was scarred by an invading rogue.",
-            null
-        ]
+        "history_text": {
+        "scar": "r_c was scarred by an invading rogue."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_trackrogue7",
@@ -1545,7 +1535,7 @@
         ],
         "intro_text": "While on patrol, r_c notices some suspicious pawprints in the swamp mud.",
         "decline_text": "They decide not to investigate.",
-        "chance_of_success": 70,
+        "chance_of_success": 10,
         "exp": 10,
         "success_text": [
             "The pawprints lead to a trespassing rogue. The patrol slips into the swamp and sets up an ambush, sending the rogue fleeing off c_n territory.",
@@ -1586,13 +1576,7 @@
             "smart"
         ],
         "min_cats": 3,
-        "max_cats": 6,
-        "antagonize_text": null,
-        "antagonize_fail_text": null,
-        "history_text": [
-            null,
-            null
-        ]
+        "max_cats": 6
     },
     {
         "patrol_id": "wtlnd_bord_trackrogue8",
@@ -1604,7 +1588,7 @@
         ],
         "intro_text": "While on patrol, r_c notices some suspicious pawprints in the swamp mud.",
         "decline_text": "They decide not to investigate.",
-        "chance_of_success": 70,
+        "chance_of_success": 10,
         "exp": 10,
         "success_text": [
             "The pawprints lead to a trespassing rogue. The patrol slips into the swamp and sets up an ambush, sending the rogue fleeing off c_n territory.",
@@ -1646,12 +1630,9 @@
         ],
         "min_cats": 3,
         "max_cats": 6,
-        "antagonize_text": null,
-        "antagonize_fail_text": null,
-        "history_text": [
-            "r_c was scarred by an invading rogue.",
-            null
-        ]
+        "history_text": {
+        "scar": "r_c was scarred by an invading rogue."
+    }
     },
     {
         "patrol_id": "wtlnd_bord_trackrogue9",
@@ -1665,7 +1646,7 @@
         ],
         "intro_text": "While on patrol, app1 notices some suspicious pawprints in the swamp mud.",
         "decline_text": "They decide not to investigate.",
-        "chance_of_success": 70,
+        "chance_of_success": 10,
         "exp": 10,
         "success_text": [
             "The pawprints lead to a trespassing rogue. The patrol slips into the swamp and sets up an ambush, sending the rogue fleeing off c_n territory.",
@@ -1698,13 +1679,7 @@
             "righteous"
         ],
         "min_cats": 3,
-        "max_cats": 6,
-        "antagonize_text": null,
-        "antagonize_fail_text": null,
-        "history_text": [
-            null,
-            null
-        ]
+        "max_cats": 6
     },
     {
         "patrol_id": "wtlnd_bord_story1",
@@ -1720,7 +1695,7 @@
         ],
         "intro_text": "On their way to mark the far corners of their swamps, r_c starts telling a story of their ancestors to keep every cat entertained.",
         "decline_text": "The patrol seems uninterested, so r_c drops the idea. ",
-        "chance_of_success": 60,
+        "chance_of_success": 10,
         "exp": 20,
         "success_text": [
             "It keeps the cats' minds off their damp paws and muddy path. The patrol goes quickly and easily.",
@@ -1754,8 +1729,6 @@
             "wise"
         ],
         "min_cats": 3,
-        "max_cats": 6,
-        "antagonize_text": null,
-        "antagonize_fail_text": null
+        "max_cats": 6
     }
 ]

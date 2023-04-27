@@ -6,7 +6,7 @@
     "tags": ["border", "death", "no_body", "scar", "THREE", "comfort", "trust", "battle_injury"],
     "intro_text": "The patrol finds an opening to what seems to be a new set of tunnels.",
     "decline_text": "The patrol decides not to check the tunnels. After all, who knows what might be hiding inside?",
-    "chance_of_success": 60,
+    "chance_of_success": 10,
     "exp": 20,
     "success_text": [
         "The tunnels must have been an abandoned badger sett! No one has been here in a while, this could be a good location to return to.",
@@ -27,11 +27,11 @@
     "max_cats": 6,
     "antagonize_text": null,
     "antagonize_fail_text": null,
-    "history_text": [
-    "r_c was injured after disturbing a badger in its sett.",
-    "This cat was killed after an unfortunate meeting with a wolverine.",
-        "were killed by a predator hiding in it's burrow"
-    ]
+    "history_text": {
+        "scar": "r_c was injured after disturbing a badger in its sett.",
+        "reg_death": "This cat was killed after an unfortunate meeting with a wolverine.",
+        "lead_death": "were killed by a predator hiding in it's burrow"
+    }
 },
 {    
     "patrol_id": "pln_bord_tunnel2",
@@ -61,11 +61,11 @@
     "max_cats": 2,
     "antagonize_text": null,
     "antagonize_fail_text": null,
-    "history_text": [
-        "r_c was injured after disturbing a badger in its sett.",
-        "This cat was killed after an unfortunate meeting with a wolverine.",
-        "were killed by a predator hiding in it's burrow"
-    ]
+    "history_text": {
+        "scar": "r_c was injured after disturbing a badger in its sett.",
+        "reg_death": "This cat was killed after an unfortunate meeting with a wolverine.",
+        "lead_death": "were killed by a predator hiding in it's burrow"
+    }
 },
 {
     "patrol_id": "pln_bord_rogue1",
@@ -74,7 +74,7 @@
     "tags": ["border", "fighting", "scar", "RIGHTBLIND", "battle_injury", "multi_deaths",  "comfort", "trust", "reputation"],
     "intro_text": "As the patrol is marking the border lines, a gang of rogues bursts from the long grass! An ambush!",
     "decline_text": "The patrol turns tail and races away! The borders left open for the rogues to muddy.",
-    "chance_of_success": 70,
+    "chance_of_success": 10,
     "exp": 30,
     "success_text": [
         "The patrol descends into battle without a second thought, eventually driving the rogues away.",
@@ -94,11 +94,11 @@
     "max_cats": 6,
     "antagonize_text": null,
     "antagonize_fail_text": null,
-    "history_text": [
-        "r_c was badly scarred when rogues ambushed their patrol.",
-        "This cat was killed when rogues ambushed their patrol.",
-        "were killed in a rogue ambush"
-    ]
+    "history_text": {
+        "scar": "r_c was badly scarred when rogues ambushed their patrol.",
+        "reg_death": "This cat was killed when rogues ambushed their patrol.",
+        "lead_death": "were killed in a rogue ambush"
+    }
 },
 {    
     "patrol_id": "pln_bord_rogue2",
@@ -125,11 +125,10 @@
     "max_cats": 1,
     "antagonize_text": null,
     "antagonize_fail_text": null,
-    "history_text": [
-    null,
-        "This cat was killed when rogues ambushed them while on a solo patrol.",
-        "were killed in a rogue ambush"
-    ]
+    "history_text": {
+        "reg_death": "This cat was killed when rogues ambushed them while on a solo patrol.",
+        "lead_death": "were killed in a rogue ambush"
+    }
 },
 {    "patrol_id": "pln_bord_rogue3",
     "biome": "plains",
@@ -137,7 +136,7 @@
     "tags": ["border", "fighting", "scar", "THROAT", "battle_injury", "multi_deaths", "reputation", "respect", "trust", "no_change_fail"],
     "intro_text": "As the patrol is marking the border lines, a gang of rogues stride out of the long grass to confront the Clan cats!",
     "decline_text": "The patrol turns tail and races away! The borders left open for the rogues to muddy.",
-    "chance_of_success": 70,
+    "chance_of_success": 10,
     "exp": 30,
     "success_text": [
         "The rogues posture and jeer, eventually provoking a battle. The Clan cats are strong, however, and the rogues seem to be weakened by hunger. The patrol easily drives the intruders away.",
@@ -157,11 +156,11 @@
     "max_cats": 6,
     "antagonize_text": "The patrol descends into battle without a second thought, eventually driving the rogues away.",
     "antagonize_fail_text": "The patrol descends into battle without a second thought, but the rogues are stronger than expected and eventually the patrol is forced to retreat.",
-    "history_text": [
-        "r_c was badly scarred when rogues attacked their patrol.",
-        "This cat was killed when rogues attacked their patrol.",
-        "were killed in a rogue attack"
-    ]
+    "history_text": {
+        "scar": "r_c was badly scarred when rogues attacked their patrol.",
+        "reg_death": "This cat was killed when rogues attacked their patrol.",
+        "lead_death": "were killed in a rogue attack"
+    }
 },
 {
     "patrol_id": "pln_bord_trackrogue1",
@@ -191,11 +190,11 @@
     "max_cats": 1,
     "antagonize_text": null,
     "antagonize_fail_text": null,
-    "history_text": [
-            "r_c was scarred by an invading rogue.",
-            "r_c was killed by an invading rogue.",
-        "were killed by an invading rogue"
-    ]
+    "history_text": {
+        "scar": "r_c was scarred by an invading rogue.",
+        "reg_death": "r_c was killed by an invading rogue.",
+        "lead_death": "were killed by an invading rogue"
+    }
 },
 {
     "patrol_id": "pln_bord_trackrogue2",
@@ -225,11 +224,11 @@
     "max_cats": 1,
     "antagonize_text": null,
     "antagonize_fail_text": null,
-    "history_text": [
-            "r_c was scarred by an invading rogue.",
-            "r_c was killed by an invading rogue.",
-        "were killed by an invading rogue"
-    ]
+    "history_text": {
+        "scar": "r_c was scarred by an invading rogue.",
+        "reg_death": "r_c was killed by an invading rogue.",
+        "lead_death": "were killed by an invading rogue"
+    }
 },
 {
     "patrol_id": "pln_bord_trackrogue3",
@@ -258,11 +257,11 @@
     "max_cats": 1,
     "antagonize_text": null,
     "antagonize_fail_text": null,
-    "history_text": [
-            "r_c was scarred by an invading rogue.",
-            "r_c was killed by an invading rogue.",
-        "were killed by an invading rogue"
-    ]
+    "history_text": {
+        "scar": "r_c was scarred by an invading rogue.",
+        "reg_death": "r_c was killed by an invading rogue.",
+        "lead_death": "were killed by an invading rogue"
+    }
 },
 {
     "patrol_id": "pln_bord_trackrogue4",
@@ -271,7 +270,7 @@
     "tags": ["fighting", "battle_injury", "scar", "BRIDGE", "comfort", "trust", "no_app", "border"],
     "intro_text": "While on patrol, r_c notices some suspicious pawprints in the mud by the short grass.",
     "decline_text": "They decide not to investigate.",
-    "chance_of_success": 50,
+    "chance_of_success": 40,
     "exp": 10,
     "success_text": [
             "The pawprints lead to a trespassing rogue. The patrol quickly hides themselves in the long grass and sets up an ambush, sending the rogue fleeing off c_n territory.",
@@ -292,10 +291,9 @@
     "max_cats": 2,
     "antagonize_text": null,
     "antagonize_fail_text": null,
-    "history_text": [
-            "r_c was scarred by an invading rogue.",
-            null
-    ]
+    "history_text": {
+        "scar": "r_c was scarred by an invading rogue."
+    }
 },
 {
     "patrol_id": "pln_bord_trackrogue5",
@@ -304,7 +302,7 @@
     "tags": ["fighting", "battle_injury", "scar", "BRIDGE", "comfort", "trust", "no_app", "border"],
     "intro_text": "While on patrol, r_c notices some suspicious pawprints in the mud by the short grass.",
     "decline_text": "They decide not to investigate.",
-    "chance_of_success": 50,
+    "chance_of_success": 40,
     "exp": 10,
     "success_text": [
             "The pawprints lead to a trespassing rogue. The patrol quickly hides themselves in the long grass and sets up an ambush, sending the rogue fleeing off c_n territory.",
@@ -326,9 +324,9 @@
     "max_cats": 2,
     "antagonize_text": null,
     "antagonize_fail_text": null,
-    "history_text": [
-            "r_c was scarred by an invading rogue."
-    ]
+    "history_text": {
+        "scar": "r_c was scarred by an invading rogue."
+    }
 },
 {
     "patrol_id": "pln_bord_trackrogue6",
@@ -338,7 +336,7 @@
     "intro_text": "While on patrol, app1 notices some suspicious pawprints in the mud by the short grass.",
 
     "decline_text": "They decide not to investigate.",
-    "chance_of_success": 50,
+    "chance_of_success": 40,
     "exp": 10,
     "success_text": [
             "The pawprints lead to a trespassing rogue. The patrol quickly hides themselves in the long grass and sets up an ambush, sending the rogue fleeing off c_n territory.",
@@ -358,10 +356,9 @@
     "max_cats": 2,
     "antagonize_text": null,
     "antagonize_fail_text": null,
-    "history_text": [
-            "r_c was scarred by an invading rogue.",
-            null
-    ]
+    "history_text": {
+        "scar": "r_c was scarred by an invading rogue."
+    }
 },
 {
     "patrol_id": "pln_bord_trackrogue7",
@@ -370,7 +367,7 @@
     "tags": ["fighting", "comfort", "trust", "border"],
     "intro_text": "While on patrol, r_c notices some suspicious pawprints in the mud by the short grass.",
     "decline_text": "They decide not to investigate.",
-    "chance_of_success": 70,
+    "chance_of_success": 10,
     "exp": 10,
     "success_text": [
             "The pawprints lead to a trespassing rogue. The patrol quickly hides themselves in the long grass and sets up an ambush, sending the rogue fleeing off c_n territory.",
@@ -399,7 +396,7 @@
     "tags": ["fighting", "scar", "BRIDGE", "comfort", "trust", "border"],
     "intro_text": "While on patrol, r_c notices some suspicious pawprints in the mud by the short grass.",
     "decline_text": "They decide not to investigate.",
-    "chance_of_success": 70,
+    "chance_of_success": 10,
     "exp": 10,
     "success_text": [
             "The pawprints lead to a trespassing rogue. The patrol quickly hides themselves in the long grass and sets up an ambush, sending the rogue fleeing off c_n territory.",
@@ -420,10 +417,9 @@
     "max_cats": 6,
     "antagonize_text": null,
     "antagonize_fail_text": null,
-    "history_text": [
-            "r_c was scarred by an invading rogue.",
-            null
-    ]
+    "history_text": {
+        "scar": "r_c was scarred by an invading rogue."
+    }
 },
 {
     "patrol_id": "pln_bord_trackrogue9",
@@ -432,7 +428,7 @@
     "tags": ["app_stat", "fighting", "comfort", "trust", "border", "apprentice"],
     "intro_text": "While on patrol, app1 notices some suspicious pawprints in the mud by the short grass.",
     "decline_text": "They decide not to investigate.",
-    "chance_of_success": 70,
+    "chance_of_success": 10,
     "exp": 10,
     "success_text": [
             "The pawprints lead to a trespassing rogue. The patrol quickly hides themselves in the long grass and sets up an ambush, sending the rogue fleeing off c_n territory.",
@@ -460,7 +456,7 @@
     "tags": ["border", "platonic", "comfort", "respect", "big_change", "rel_patrol", "patrol_to_r_c"],
     "intro_text": "On their way to mark the far corners of their plains, r_c starts telling a story of their ancestors to keep every cat entertained.",
     "decline_text": "r_c nearly trips into a rabbit burrow, and decides to watch where their paws are going instead.",
-    "chance_of_success": 60,
+    "chance_of_success": 10,
     "exp": 20,
     "success_text": [
         "It keeps the cats' minds off the distance they have to cover. The patrol goes quickly and easily.",

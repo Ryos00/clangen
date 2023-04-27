@@ -9,13 +9,14 @@
 
 This file is the main file for the game.
 It also contains the main pygame loop
-It first sets up logging, then loads the version hash from commit.txt (if it exists), then loads the cats and clan.
+It first sets up logging, then loads the version hash from version.ini (if it exists), then loads the cats and clan.
 It then loads the settings, and then loads the start screen.
 
 
 
 
 """ # pylint: enable=line-too-long
+import shutil
 import sys
 import time
 import os
@@ -23,11 +24,19 @@ import os
 from scripts.housekeeping.log_cleanup import prune_logs
 from scripts.stream_duplexer import UnbufferedStreamDuplexer
 from scripts.datadir import get_log_dir, setup_data_dir
-from scripts.version import get_version_info
+from scripts.version import get_version_info, VERSION_NAME
 
 directory = os.path.dirname(__file__)
 if directory:
     os.chdir(directory)
+
+
+if os.path.exists("auto-updated"):
+    print("Clangen starting, deleting auto-updated file")
+    os.remove("auto-updated")
+    shutil.rmtree("Downloads", ignore_errors=True)
+    print("Update Complete!")
+    print("New version: " + get_version_info().version_number)
 
 
 setup_data_dir()
@@ -48,6 +57,7 @@ formatter = logging.Formatter(
 
 
 # Logging for file
+timestr = time.strftime("%Y%m%d_%H%M%S")
 log_file_name = get_log_dir() + f"/clangen_{timestr}.log"
 file_handler = logging.FileHandler(log_file_name)
 file_handler.setFormatter(formatter)
@@ -60,7 +70,7 @@ logging.root.addHandler(file_handler)
 logging.root.addHandler(stream_handler)
 
 
-prune_logs(logs_to_keep=5, retain_empty_logs=False)
+prune_logs(logs_to_keep=10, retain_empty_logs=False)
 
 
 def log_crash(logtype, value, tb):
@@ -89,17 +99,18 @@ if os.environ.get('CODESPACES'):
 
 if get_version_info().is_source_build:
     print("Running on source code")
-    if get_version_info().version_number == "":
+    if get_version_info().version_number == VERSION_NAME:
         print("Failed to get git commit hash, using hardcoded version number instead.")
         print("Hey testers! We recommend you use git to clone the repository, as it makes things easier for everyone.")  # pylint: disable=line-too-long
         print("There are instructions at https://discord.com/channels/1003759225522110524/1054942461178421289/1078170877117616169")  # pylint: disable=line-too-long
 else:
     print("Running on PyInstaller build")
 
+print("Version Name: ", VERSION_NAME)
 print("Running on commit " + get_version_info().version_number)
 
 # Load game
-from scripts.game_structure.load_cat import load_cats
+from scripts.game_structure.load_cat import load_cats, version_convert
 from scripts.game_structure.windows import SaveCheck
 from scripts.game_structure.game_essentials import game, MANAGER, screen
 from scripts.game_structure.discord_rpc import _DiscordRPC
@@ -125,7 +136,8 @@ if clan_list:
     game.switches['clan_list'] = clan_list
     try:
         load_cats()
-        clan_class.load_clan()
+        version_info = clan_class.load_clan()
+        version_convert(version_info)
     except Exception as e:
         logging.exception("File failed to load")
         if not game.switches['error_message']:
@@ -140,12 +152,6 @@ sprites.load_scars()
 
 start_screen.screen_switches()
 
-
-
-
-
-
-#Version Number
 if game.settings['fullscreen']:
     version_number = pygame_gui.elements.UILabel(
         pygame.Rect((1500, 1350), (-1, -1)), get_version_info().version_number[0:8],
@@ -163,7 +169,7 @@ else:
         (800 - version_number.get_relative_rect()[2] - 8,
         700 - version_number.get_relative_rect()[3]))
 
-if get_version_info().is_source_build:
+if get_version_info().is_source_build or get_version_info().is_dev():
     dev_watermark = pygame_gui.elements.UILabel(
         scale(pygame.Rect((1050, 1321), (600, 100))),
         "Dev Build:",
@@ -178,6 +184,18 @@ game.rpc.start_rpc.set()
 cursor_img = pygame.image.load('resources/images/cursor.png').convert_alpha()
 cursor = pygame.cursors.Cursor((9,0), cursor_img)
 disabled_cursor = pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_ARROW)
+
+
+debug_coords = pygame_gui.elements.UILabel(
+    pygame.Rect((0, 0), (-1, -1)),
+    "(0, 0)",
+    object_id=get_text_box_theme()
+)
+
+debug_coords.text_colour = (255, 0, 0)
+debug_coords.disable()
+debug_coords.rebuild()
+debug_coords.hide()
 
 
 while True:
@@ -218,6 +236,14 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             game.clicked = True
 
+            if MANAGER.visual_debug_active:
+                _ = pygame.mouse.get_pos()
+                if game.settings['fullscreen']:
+                    print(f"(x: {_[0]}, y: {_[1]})")
+                else:
+                    print(f"(x: {_[0]*2}, y: {_[1]*2})")
+                del _
+
         # F2 turns toggles visual debug mode for pygame_gui, allowed for easier bug fixes.
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_F2:
@@ -227,6 +253,23 @@ while True:
                     MANAGER.set_visual_debug_mode(False)
 
         MANAGER.process_events(event)
+    
+    if MANAGER.visual_debug_active:
+        if debug_coords.visible == 0:
+            debug_coords.show()
+        
+        _ = pygame.mouse.get_pos()
+        if game.settings['fullscreen']:
+            debug_coords.set_text(f"({_[0]}, {_[1]})")
+        else:
+            debug_coords.set_text(f"({_[0]*2}, {_[1]*2})")
+        debug_coords.set_position(_)
+        del _
+    else:
+        if debug_coords.visible == 1:
+            debug_coords.hide()
+            debug_coords.set_text("(0, 0)")
+            debug_coords.set_position((0, 0))
 
     MANAGER.update(time_delta)
 
@@ -240,5 +283,16 @@ while True:
 
     # END FRAME
     MANAGER.draw_ui(screen)
+
+    if MANAGER.visual_debug_active:
+        elements = MANAGER.ui_group.visible
+        for surface in elements:
+            rect = surface[1]
+            if rect == debug_coords.rect:
+                continue
+            if rect.collidepoint(pygame.mouse.get_pos()):
+                pygame.draw.rect(screen, (0, 255, 0), rect, 1)
+            else:
+                pygame.draw.rect(screen, (255, 0, 0), rect, 1)
 
     pygame.display.update()

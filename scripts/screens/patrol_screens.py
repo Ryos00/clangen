@@ -668,7 +668,7 @@ class PatrolScreen(Screens):
                     break
         if event.win_trait and not patrol.patrol_win_stat_cat:
             for kitty in possible_stat_cats:
-                if kitty.trait in event.win_trait:
+                if kitty.personality.trait in event.win_trait:
                     patrol.patrol_win_stat_cat = kitty
                     break
         if event.fail_skills:
@@ -678,7 +678,7 @@ class PatrolScreen(Screens):
                     break
         if event.fail_trait and not patrol.patrol_fail_stat_cat:
             for kitty in possible_stat_cats:
-                if kitty.trait in event.fail_trait:
+                if kitty.personality.trait in event.fail_trait:
                     patrol.patrol_fail_stat_cat = kitty
                     break
 

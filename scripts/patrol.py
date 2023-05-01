@@ -290,7 +290,7 @@ class Patrol():
         else:
             keep = True
         if "trait" in patrol.constraints:
-            if self.patrol_leader.trait in patrol.constraints["skill"]:
+            if self.patrol_leader.personality.trait in patrol.constraints["skill"]:
                 keep = True
         else:
             keep = True
@@ -1869,6 +1869,9 @@ class Patrol():
         for cat in self.patrol_cats:
             if Cat.fetch_cat(cat.mentor) in self.patrol_cats:
                 cat.patrol_with_mentor += 1
+                affect = cat.personality.mentor_inflence(Cat.fetch_cat(cat.mentor))
+                History.add_facet_mentor_inflence(cat, affect[0], affect[1], affect[2])
+                print(affect)
 
     def handle_reputation(self, difference):
         """

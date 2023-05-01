@@ -201,7 +201,7 @@ class Cat():
                  ):
 
         # This must be at the top. It's a smaller list of things to init, which is only for faded cats
-        self.history_class = History()
+        self.history = None
         if faded:
             self.ID = ID
             self.name = Name(status, prefix=prefix, suffix=suffix)
@@ -241,6 +241,8 @@ class Cat():
         self.backstory = backstory
         self.age = None
         self.skill = None
+        self.personality = Personality(trait="troublesome", lawful=0, aggress=0,
+                                       stable=0, social=0)
         self.parent1 = parent1
         self.parent2 = parent2
         self.adoptive_parents = []
@@ -882,36 +884,18 @@ class Cat():
 
     
     def update_traits(self):
-        """Updates the trait to grab from the correct list, and wobbles the facets """  
+        """Updates the trait to grab from the correct list, and wobbles the facets
+            Also handles mentor inflence """  
         self.personality.set_kit(self.is_baby()) #Update kit trait stuff
-        if self.status in ["apprentice", "medicine cat apprentice", "mediator apprentice"]:
-            self.personality.facet_wobble() #Slighly change the facet values
-        elif self.status in ["warrior", "medicine cat", "mediator"]:
-            mentor = None
-            if self.mentor:
-                mentor = Cat.fetch_cat(self.mentor)
-            elif not self.mentor and len(self.former_mentor) != 0:
-                if len(self.former_mentor) > 1:
-                    mentor = Cat.fetch_cat(self.former_mentor[-1])
-                else:
-                    mentor = Cat.fetch_cat(self.former_mentor[0])
-
-            number_patrols = int(self.patrol_with_mentor)
-            facets = Personality.facet_types
-            # affecting facet based on mentor influence
-            for n in range(0, number_patrols):
-                facet_choice = choice(facets)
-                facet_change = Personality.mentor_facet_influence(self, mentor, facet_choice)
-                self.personality[facet_choice] = self.personality[facet_choice] + facet_change
-                if facet_change == 1:
-                    raised = True
-                else:
-                    raised = False
-                self.history_class.add_mentor_influence(self, mentor, skill=None, facet=facet_choice, raised=raised)
-
-            if not Personality.is_trait_valid(self):
-                Personality.choose_trait(self)
-
+        if self.status in ["warrior", "medicine cat", "mediator"]:
+            History.add_mentor_influence_strings(self)
+            # Smaller facet wobble if there was mentor inflenece
+            if History.get_mentor_influence(self).get("trait"):
+                self.personality.facet_wobble(max = 2)
+            else:
+                self.personality.facet_wobble()
+        else:
+            self.personality.facet_wobble()
         return
 
     def describe_cat(self, short=False):
@@ -1067,7 +1051,7 @@ class Cat():
         if not os.path.exists(history_dir):
             os.makedirs(history_dir)
 
-        history_dict = self.history_class.make_dict(self)
+        history_dict = History.make_dict(self)
         try:
             with open(history_dir + '/' + self.ID + '_history.json', 'w') as history_file:
                 json_string = ujson.dumps(history_dict, indent=4)
@@ -1532,10 +1516,8 @@ class Cat():
                                 possible_skill = self.skill_groups.get(x)
                                 self.skill = choice(possible_skill)
                                 skill_influence = self.skill
-                                self.history_class.add_old_mentor_influence(self, mentor, skill_influence, trait=None)
+                                History.add_skill_mentor_influence(self, skill_influence)
                                 return
-
-                    self.history_class.add_old_mentor_influence(self, mentor, skill_influence, trait=None)
 
                 # Will only be reached if a mentor skill was not applied.
                 self.skill = choice(self.med_skills)
@@ -1558,10 +1540,8 @@ class Cat():
                                 possible_skill = self.skill_groups.get(x)
                                 self.skill = choice(possible_skill)
                                 skill_influence = self.skill
-                                self.history_class.add_old_mentor_influence(self, mentor, skill_influence, trait=None)
+                                History.add_skill_mentor_influence(self, skill_influence)
                                 return
-
-                    self.history_class.add_old_mentor_influence(self, mentor, skill_influence, trait=None)
 
                 self.skill = choice(self.skills)
 
@@ -1580,7 +1560,7 @@ class Cat():
                                 possible_skill = self.skill_groups.get(x)
                                 self.skill = choice(possible_skill)
                                 skill_influence = self.skill
-                                self.history_class.add_old_mentor_influence(self, mentor, skill_influence, trait=None)
+                                History.add_mentor_influence(self, mentor, skill_influence, trait=None)
                                 return
 
                     all_skills = []
@@ -1588,7 +1568,7 @@ class Cat():
                         all_skills.extend(self.skill_groups[x])
                     self.skill = choice(all_skills)
 
-                    self.history_class.add_old_mentor_influence(self, mentor, skill_influence, trait=None)
+                    History.add_mentor_influence(self, mentor, skill_influence, trait=None)
 
 
             # assign new skill to elder
@@ -3201,6 +3181,14 @@ class Personality():
     def get_facet_string(self):
         """For saving the facets to file."""
         return f"{self.lawfulness},{self.sociability},{self.aggression},{self.stability}"
+    
+    def __getitem__(self, key):
+        """Alongside __setitem__, Allows you to treat this like a dictionary if you want. """
+        return getattr(self, key)
+    
+    def __setitem__(self, key, newval):
+        """Alongside __getitem__, Allows you to treat this like a dictionary if you want. """
+        setattr(self, key, newval)
 
     # ---------------------------------------------------------------------------- #
     #                               PROPERTIES                                     #
@@ -3241,7 +3229,7 @@ class Personality():
             
     @property
     def stability(self):
-        return self._stable
+        return self._aggress
     
     @stability.setter
     def stability(self, new_val):
@@ -3334,22 +3322,27 @@ class Personality():
         self.stability += randint(-max, max)
         self.aggression += randint(-max, max)
         self.sociability += randint(-max, max)
-
-    def mentor_facet_influence(Cat, mentor, facet):
-        difference = None
-        mentor_value = int(mentor.personality[facet])
-        app_value = int(Cat.personality[facet])
-
-        difference = mentor_value - app_value
-
-        if difference > 0:
-            change = 1
-        elif difference < 0:
-            change = -1
-        else:
-            change = 0
         
-        return change
+    def mentor_inflence(self, mentor:Cat):
+        """applies mentor inflence after the pair go on a patrol together 
+            returns history information in the form (mentor_id, facet_affected, amount_affected)"""
+        mentor_personality = mentor.personality
+        
+        #Get possible facet values
+        possible_facets = {i: mentor_personality[i] - self[i] for i in 
+                           Personality.facet_types if mentor_personality[i] - self[i] != 0}
+        
+        
+        if possible_facets:
+            # Choice trait to effect, weighted by the abs of the difference (higher difference = more likely to effect)
+            facet_affected = random.choices([i for i in possible_facets], weights=[abs(i) for i in possible_facets.values()], k=1)[0]
+            # stupid python with no sign() function by default. 
+            amount_affected = int(possible_facets[facet_affected]/abs(possible_facets[facet_affected]) * random.randint(1, 2))
+            self[facet_affected] += amount_affected
+            return (mentor.ID, facet_affected, amount_affected)
+        else:
+            #This will only trigger if they have the same personality. 
+            return None    
         
 
 # Twelve example cats

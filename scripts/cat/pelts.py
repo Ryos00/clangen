@@ -11,19 +11,19 @@ class Pelt():
     
     sprites_names = {
         "Solid": 'solid',
-        'BrokenMackerel': 'broken mackerel tabby',
-        'BrokenClassic': 'broken classic tabby',
-        'Marbled': 'marbled tabby',
-        'Rosette': 'rosetted',
+        'BrokenMackerel': 'brokenmackerel',
+        'BrokenClassic': 'brokenclassic',
+        'Marbled': 'marbled',
+        'Rosette': 'rosette',
         'Smoke': 'smoke',
-        'TickedMackerel': 'ticked',
-        'TickedClassic': 'ticked',
-        'Spotted': 'spotted tabby',
-        'Mackerel': 'mackerel tabby',
-        'Classic': 'classic tabby',
-        'Sokoke': 'sokoke tabby',
+        'TickedMackerel': 'tickedmackerel',
+        'TickedClassic': 'tickedclassic',
+        'Spotted': 'spotted',
+        'Mackerel': 'mackerel',
+        'Classic': 'classic',
+        'Sokoke': 'sokoke',
         'Agouti': 'agouti',
-        'Pinstripe': 'pinstripe tabby',
+        'Pinstripe': 'pinstripe',
         'Tortie': None,
         'Calico': None,
     }
@@ -79,30 +79,34 @@ class Pelt():
         "REDNYLON", "LIMENYLON", "GREENNYLON", "RAINBOWNYLON",
         "BLACKNYLON", "SPIKESNYLON", "WHITENYLON", "PINKNYLON", "PURPLENYLON", "MULTINYLON", "INDIGONYLON",
     ]
+    phenotypes = {
+        'color': ['BLACK', 'CHOCOLATE', 'CINNAMON'],
+        'dilution': ['NON-DILUTE', 'DILUTE', 'CARAMELIZED'],
+        'agouti': ['SOLID', 'TABBY'],
+        'tabby_type': ['MACKEREL', 'CLASSIC'],
+        'ticking': [True, False],
+        'spotting': [True, False]
+    }
 
-    tabbies = ["Tabby", "Ticked", "Mackerel", "Classic", "Sokoke", "Agouti"]
-    spotted = ["Speckled", "Rosette"]
-    plain = ["SingleColour", "TwoColour", "Smoke", "Singlestripe"]
-    exotic = ["Bengal", "Marbled"]
-    torties = ["Tortie", "Calico"]
-    pelt_categories = [tabbies, spotted, plain, exotic, torties]
+    phenotype_to_genotype = {
+        'BLACK': ['BB', 'Bb', 'Bbr'],
+        'CHOCOLATE': ['bb', 'bbr'],
+        'CINNAMON': ['brbr'],
+        'RED': ['OO', 'O-'],
+        'TORTIE': ['Oo'],
+        'NO_RED': ['oo', 'o-'],
+        'NON-DILUTE': ['DD', 'Dd', 'Ddc'],
+        'DILUTE': ['dd', 'ddc'],
+        'CARAMELIZED': ['dcdc'],
+        'SOLID': ['aa'],
+        'TABBY': ['AA', 'Aa'],
+        'MACKEREL': ['McMc', 'Mcmc'],
+        'CLASSIC': ['mcmc'],
+        'TICKED': ['Titi'],
+        'PATTERNLESS': ['TiTi'],
+        'SPOTTED': ['SpSp', 'Spsp']
+    }
 
-    # SPRITE NAMES
-    single_colours = [
-        'WHITE', 'PALEGREY', 'SILVER', 'GREY', 'DARKGREY', 'GHOST', 'BLACK', 'CREAM', 'PALEGINGER',
-        'GOLDEN', 'GINGER', 'DARKGINGER', 'SIENNA', 'LIGHTBROWN', 'LILAC', 'BROWN', 'GOLDEN-BROWN', 'DARKBROWN',
-        'CHOCOLATE'
-    ]
-    ginger_colours = ['CREAM', 'PALEGINGER', 'GOLDEN', 'GINGER', 'DARKGINGER', 'SIENNA']
-    black_colours = ['GREY', 'DARKGREY', 'GHOST', 'BLACK']
-    white_colours = ['WHITE', 'PALEGREY', 'SILVER']
-    brown_colours = ['LIGHTBROWN', 'LILAC', 'BROWN', 'GOLDEN-BROWN', 'DARKBROWN', 'CHOCOLATE']
-    colour_categories = [ginger_colours, black_colours, white_colours, brown_colours]
-    eye_sprites = [
-        'YELLOW', 'AMBER', 'HAZEL', 'PALEGREEN', 'GREEN', 'BLUE', 'DARKBLUE', 'BLUEYELLOW', 'BLUEGREEN',
-        'GREY', 'CYAN', 'EMERALD', 'PALEBLUE', 'PALEYELLOW', 'GOLD', 'HEATHERBLUE', 'COPPER', 'SAGE', 'COBALT',
-        'SUNLITICE', 'GREENYELLOW', 'BRONZE', 'SILVER'
-    ]
     little_white = ['LITTLE', 'LIGHTTUXEDO', 'BUZZARDFANG', 'TIP', 'BLAZE', 'BIB', 'VEE', 'PAWS',
                     'BELLY', 'TAILTIP', 'TOES', 'BROKENBLAZE', 'LILTWO', 'SCOURGE', 'TOESTAIL', 'RAVENPAW', 'HONEY', 'LUNA',
                     'EXTRA']

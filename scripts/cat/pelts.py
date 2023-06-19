@@ -10,20 +10,20 @@ from scripts.game_structure.game_essentials import game
 class Pelt():
     
     sprites_names = {
-        "SingleColour": 'single',
-        'TwoColour': 'single',
-        'Tabby': 'tabby',
-        'Marbled': 'marbled',
-        'Rosette': 'rosette',
+        "Solid": 'solid',
+        'BrokenMackerel': 'broken mackerel tabby',
+        'BrokenClassic': 'broken classic tabby',
+        'Marbled': 'marbled tabby',
+        'Rosette': 'rosetted',
         'Smoke': 'smoke',
-        'Ticked': 'ticked',
-        'Speckled': 'speckled',
-        'Bengal': 'bengal',
-        'Mackerel': 'mackerel',
-        'Classic': 'classic',
-        'Sokoke': 'sokoke',
+        'TickedMackerel': 'ticked',
+        'TickedClassic': 'ticked',
+        'Spotted': 'spotted tabby',
+        'Mackerel': 'mackerel tabby',
+        'Classic': 'classic tabby',
+        'Sokoke': 'sokoke tabby',
         'Agouti': 'agouti',
-        'Singlestripe': 'singlestripe',
+        'Pinstripe': 'pinstripe tabby',
         'Tortie': None,
         'Calico': None,
     }
@@ -31,16 +31,6 @@ class Pelt():
     # ATTRIBUTES, including non-pelt related
     pelt_colours = [
         'WHITE', 'PALEGREY', 'SILVER', 'GREY', 'DARKGREY', 'GHOST', 'BLACK', 'CREAM', 'PALEGINGER',
-        'GOLDEN', 'GINGER', 'DARKGINGER', 'SIENNA', 'LIGHTBROWN', 'LILAC', 'BROWN', 'GOLDEN-BROWN', 'DARKBROWN',
-        'CHOCOLATE'
-    ]
-    pelt_c_no_white = [
-        'PALEGREY', 'SILVER', 'GREY', 'DARKGREY', 'GHOST', 'BLACK', 'CREAM', 'PALEGINGER',
-        'GOLDEN', 'GINGER', 'DARKGINGER', 'SIENNA', 'LIGHTBROWN', 'LILAC', 'BROWN', 'GOLDEN-BROWN', 'DARKBROWN',
-        'CHOCOLATE'
-    ]
-    pelt_c_no_bw = [
-        'PALEGREY', 'SILVER', 'GREY', 'DARKGREY', 'CREAM', 'PALEGINGER',
         'GOLDEN', 'GINGER', 'DARKGINGER', 'SIENNA', 'LIGHTBROWN', 'LILAC', 'BROWN', 'GOLDEN-BROWN', 'DARKBROWN',
         'CHOCOLATE'
     ]

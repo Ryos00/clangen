@@ -43,8 +43,11 @@ class Pelt():
                 'classic', 'sokoke', 'agouti', 'singlestripe']
 
     pelt_length = ["short", "medium", "long"]
-    eye_colours = ['YELLOW', 'AMBER', 'HAZEL', 'PALEGREEN', 'GREEN', 'BLUE', 'DARKBLUE', 'GREY', 'CYAN', 'EMERALD', 'PALEBLUE', 
-        'PALEYELLOW', 'GOLD', 'HEATHERBLUE', 'COPPER', 'SAGE', 'COBALT', 'SUNLITICE', 'GREENYELLOW', 'BRONZE', 'SILVER']
+    eye_colours = [
+        'COPPER', 'ORANGE', 'SAFFRON', 'GOLD', 'YELLOW', 'CHIFFON', 'SILVER', 'ICE',
+        'UMBER', 'BRONZE', 'AMBER', 'PEAR', 'LIME', 'CELADON', 'STORM', 'SKY',
+        'EARTHEN', 'SERPENTINE', 'FERN', 'CLOVER', 'JADE', 'TURQUOISE', 'SLATE', 'LAPIS',
+        'OLIVE', 'MOSS', 'FOREST', 'EMERALD', 'TEAL', 'CERULEAN', 'CADET', 'COBALT']
     yellow_eyes = ['YELLOW', 'AMBER', 'PALEYELLOW', 'GOLD', 'COPPER', 'GREENYELLOW', 'BRONZE', 'SILVER']
     blue_eyes = ['BLUE', 'DARKBLUE', 'CYAN', 'PALEBLUE', 'HEATHERBLUE', 'COBALT', 'SUNLITICE', 'GREY']
     green_eyes = ['PALEGREEN', 'GREEN', 'EMERALD', 'SAGE', 'HAZEL']

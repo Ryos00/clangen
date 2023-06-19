@@ -129,7 +129,7 @@ class Pelt():
     def __init__(self,
                  name:str="SingleColour",
                  length:str="short",
-                 colour:str="WHITE",
+                 colour:str="BLACK",
                  white_patches:str=None,
                  eye_color:str="BLUE",
                  eye_colour2:str=None,
@@ -300,9 +300,9 @@ class Pelt():
         
         #White patches must be initalized before eye color. 
         num = game.config["cat_generation"]["base_heterochromia"]
-        if self.white_patches in [Pelt.high_white, Pelt.mostly_white, 'FULLWHITE'] or self.colour == 'WHITE':
+        if self.white_patches in [Pelt.high_white, Pelt.mostly_white, 'FULLWHITE']:
             num = num - 90
-        if self.white_patches == 'FULLWHITE' or self.colour == 'WHITE':
+        if self.white_patches == 'FULLWHITE':
             num -= 10
         for _par in parents:
             if _par.pelt.eye_colour2:

@@ -138,82 +138,387 @@
     ]
   },
   "chervil": {
-    "uses":{},
-    "longevity": 0,
-    "seasons":[]
+    "uses":{
+      "strong":[
+        "a festering wound",
+        "an infected wound",
+        "fleas",
+        "stomacheache",
+        "tick bites"
+      ]
+    },
+    "longevity": 6,
+    "seasons":[
+      "Newleaf", "Greenleaf"
+    ]
   },
   "cobwebs": {
-    "uses":{},
-    "longevity": 0,
-    "seasons":[]
+    "uses":{
+      "strong":[
+        "blood loss",
+        "broken back",
+        "broken jaw",
+        "burn",
+        "damaged eyes",
+        "quilled by a porcupine",
+        "scrapes",
+        "severe burn",
+        "torn ear",
+        "torn pelt"
+      ],
+      "helpful":[
+        "beak bite",
+        "bite-wound",
+        "cat-bite",
+        "claw-wound",
+        "cracked pads",
+        "rat bite"
+      ],
+      "weak":[
+        "broken bone"
+      ]
+    },
+    "longevity": 3,
+    "seasons":["All"]
   },
   "coltsfoot": {
-    "uses":{},
+    "uses":{
+      "strong":[
+        "cracked pads",
+        "kittencough"
+      ],
+      "helpful":[
+        "scrapes",
+        "small cut",
+        "smoke inhalation",
+        "sore",
+        "whitecough"
+      ],
+      "weak":[
+        "yellowcough"
+      ]
+    },
     "longevity": 0,
     "seasons":[]
   },
   "comfrey": {
-    "uses":{},
+    "uses":{
+      "strong":[
+        "broken back",
+        "broken bone",
+        "broken jaw",
+        "wrenched claw"
+      ],
+      "helpful":[
+        "bite-wound",
+        "born without a leg",
+        "burn",
+        "cat-bite",
+        "claw-wound",
+        "dislocated joint",
+        "fleas",
+        "mangled leg",
+        "mangled tail",
+        "scrapes"
+      ]
+    },
     "longevity": 0,
     "seasons":[]
   },
   "daisy": {
-    "uses":{},
+    "uses":{
+      "strong":[
+        "cracked pads",
+        "joint pain",
+        "dislocated joint",
+        "lost a leg",
+        "weak leg"
+      ],
+      "helpful":[
+        "born without a leg",
+        "constant joint pain",
+        "phantom pain",
+        "sore",
+        "twisted leg"
+      ],
+      "weak":[
+        "stomacheache"
+      ]
+    },
     "longevity": 0,
     "seasons":[]
   },
   "dandelion": {
-    "uses":{},
+    "uses":{
+      "strong":[
+        "bee sting",
+        "poisoned",
+        "sprain"
+      ],
+      "helpful":[
+        "sore"
+      ]
+    },
     "longevity": 0,
     "seasons":[]
   },
   "elder_leaves": {
-    "uses":{},
+    "uses":{
+      "strong":[
+        "sprain"
+      ],
+      "helpful":[
+        "bruises",
+        "sore"
+      ]
+    },
     "longevity": 0,
     "seasons":[]
   },
   "fennel": {
-    "uses":{},
+    "uses":{
+      "strong":[
+        "labor"
+      ],
+      "helpful":[
+        "joint pain",
+        "lost a leg"
+      ],
+      "weak":[
+        "bite-wound",
+        "cat bite",
+        "claw-wound",
+        "mangled leg",
+        "mangled tail"
+      ]
+    },
     "longevity": 0,
     "seasons":[]
   },
   "feverfew": {
-    "uses":{},
+    "uses":{
+      "strong":[
+        "fever",
+        "head damage",
+        "headache",
+        "persistent headaches",
+        "severe headache"
+      ],
+      "helpful":[
+        "born without a leg",
+        "joint pain",
+        "lost a leg",
+        "phantom pain",
+        "sore",
+        "wrenched claw"
+      ],
+      "weak":[
+        "bite-wound",
+        "cat bite",
+        "claw-wound",
+        "mangled leg",
+        "mangled tail",
+        "scrapes"
+      ]
+    },
     "longevity": 0,
     "seasons":[]
   },
   "goldenrod": {
-    "uses":{},
+    "uses":{
+      "strong":[
+        "beak bite",
+        "bite-wound",
+        "broken back",
+        "broken bone",
+        "broken jaw",
+        "cat bite",
+        "claw-wound",
+        "mangled leg",
+        "mangled tail",
+        "quilled by a porcupine",
+        "small cut",
+        "snake bite",
+        "torn ear",
+        "torn pelt"
+      ],
+      "helpful":[
+        "burn",
+        "damaged eyes",
+        "rat bite",
+        "scrapes",
+        "severe burn",
+        "wasting disease"
+      ]
+    },
     "longevity": 0,
     "seasons":[]
   },
   "honey": {
-    "uses":{},
+    "uses":{
+      "strong":[
+        "smoke inhalation",
+        "sore throat"
+      ],
+      "helpful":[
+        "malnourished",
+        "starving"
+      ],
+      "weak":[
+        "dehydrated",
+        "heat exhaustion",
+        "heat stroke",
+        "lingering shock"
+      ]
+    },
     "longevity": 0,
     "seasons":[]
   },
   "horsetail": {
-    "uses":{},
+    "uses":{
+      "strong":[
+        "blood loss",
+        "twisted leg",
+        "weak leg"
+      ],
+      "helpful":[
+        "constant joint pain",
+        "joint pain"
+      ]
+    },
     "longevity": 0,
     "seasons":[]
   },
   "juniper": {
-    "uses":{},
+    "uses":{
+      "strong":[
+        "burn",
+        "damaged eyes",
+        "head damage",
+        "headache",
+        "persistent headaches",
+        "recovering from birth",
+        "recurring shock",
+        "running nose",
+        "severe burn",
+        "severe headache",
+        "shivering",
+        "shock",
+        "stomacheache",
+        "twisted leg",
+        "water in their lungs",
+        "weak leg"
+      ],
+      "helpful":[
+        "blood loss",
+        "broken back",
+        "broken bone",
+        "broken jaw",
+        "constant joint pain",
+        "dehydrated",
+        "diarrhea",
+        "frostbite",
+        "grief stricken",
+        "heat exhaustion",
+        "heat stroke",
+        "kittencough",
+        "lasting grief",
+        "lingering shock",
+        "lost their tail",
+        "malnourished",
+        "paralyzed",
+        "poisoned",
+        "quilled by a porcupine",
+        "seizure",
+        "seizure prone",
+        "starving",
+        "wasting disease",
+        "whitecough"
+      ],
+      "weak":[
+        "a festering wound",
+        "an infected wound",
+        "bite-wound",
+        "cat bite",
+        "claw-wound",
+        "fever",
+        "joint pain",
+        "lost a leg",
+        "mangled leg",
+        "mangled tail",
+        "phantom pain",
+        "rat bite",
+        "redcough",
+        "snake bite",
+        "toothache",
+        "torn ear",
+        "yellowcough"
+      ]
+    },
     "longevity": 0,
     "seasons":[]
   },
   "lungwort": {
-    "uses":{},
+    "uses":{
+      "strong":[
+        "redcough",
+        "yellowcough"
+      ]
+    },
     "longevity": 0,
     "seasons":[]
   },
   "mallow": {
-    "uses":{},
+    "uses":{
+      "strong":[
+        "stomacheache",
+        "toothache"
+      ],
+      "helpful":[
+        "diarrhea"
+      ]
+    },
     "longevity": 0,
     "seasons":[]
   },
   "marigold": {
-    "uses":{},
+    "uses":{
+      "strong":[
+        "a festering wound",
+        "an infected wound",
+        "beak bite",
+        "bite-wound",
+        "blood loss",
+        "burn",
+        "cat bite",
+        "claw-wound",
+        "cracked pads",
+        "dislocated joint",
+        "joint pain",
+        "lost a leg",
+        "mangled leg",
+        "mangled tail",
+        "quilled by a porcupine",
+        "rat bite",
+        "scrapes",
+        "severe burn",
+        "torn ear",
+        "torn pelt",
+        "twisted leg",
+        "weak leg"
+      ],
+      "helpful":[
+        "born without a leg",
+        "broken back",
+        "broken bone",
+        "broken jaw",
+        "damaged eyes",
+        "paralyzed",
+        "small cut",
+        "snake bite",
+        "sore"
+      ]
+    },
     "longevity": 0,
     "seasons":[]
   },
@@ -276,7 +581,8 @@
   "wild_garlic": {
     "uses":{},
     "longevity": 0,
-    "seasons":[]
+    "seasons":[],
+    "side_effects":[]
   },
   "yarrow": {
     "uses":{},

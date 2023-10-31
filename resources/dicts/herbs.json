@@ -1,27 +1,228 @@
-[
-  "elder_leaves",
-  "cobwebs",
-  "daisy",
-  "horsetail",
-  "juniper",
-  "lungwort",
-  "mallow",
-  "marigold",
-  "moss",
-  "oak_leaves",
-  "ragwort",
-  "raspberry",
-  "tansy",
-  "thyme",
-  "wild_garlic",
-  "dandelion",
-  "mullein",
-  "rosemary",
-  "burdock",
-  "blackberry",
-  "betony",
-  "goldenrod",
-  "poppy",
-  "plantain",
-  "catmint"
-]
+{
+  "alder_bark": {
+    "uses": {
+      "strong": [
+        "toothache",
+        "wasting disease"
+      ]
+    },
+    "longevity": 12,
+    "seasons": [
+      "All"
+    ]
+  },
+  "betony": {
+    "uses": {
+      "strong":[
+        "diarrhea",
+        "raspy lungs",
+        "seizure",
+        "seizure prone",
+        "smoke inhalation"
+      ],
+      "helpful":[
+        "headache",
+        "head damage",
+        "persistent headaches",
+        "severe headache",
+        "shock"
+      ]
+    },
+    "longevity": 6,
+    "seasons":[
+      "Greenleaf"
+    ]
+  },
+  "bindweed": {
+    "uses":{
+      "strong":[
+        "broken bone"
+      ],
+      "helpful":[
+        "broken back",
+        "broken jaw"
+      ]
+    },
+    "longevity": 9,
+    "seasons":[
+      "All"
+    ]
+  },
+  "blackberry": {
+    "uses":{
+      "strong":[
+        "bee sting",
+        "pregnant",
+        "toothache"
+      ]
+    },
+    "longevity": 3,
+    "seasons":[
+      "Greenleaf", "Leaf-fall", "Leaf-bare"
+    ]
+  },
+  "borage": {
+    "uses":{
+      "strong":[
+        "pregnant"
+      ],
+      "helpful":[
+        "fever",
+        "vomiting",
+        "diarrhea"
+      ]
+    },
+    "longevity": 6,
+    "seasons":[
+      "Greenleaf",
+      "Leaf-fall"
+    ]
+  },
+  "burdock": {
+    "uses":{
+      "strong":[
+        "a festering wound",
+        "an infected wound",
+        "rat bite"
+      ]
+    },
+    "longevity": 12,
+    "seasons":[
+      "All"
+    ]
+  },
+  "catmint": {
+    "uses":{
+      "strong":[
+        "greencough",
+        "kittencough",
+        "whitecough"
+      ]
+    },
+    "longevity": 4,
+    "seasons":[
+      "Newleaf",
+      "Greenleaf",
+      "Leaf-fall"
+    ]
+  },
+  "chamomile": {
+    "uses":{
+      "strong":[
+        "grief stricken",
+        "lasting grief"
+      ],
+      "helpful":[
+        "constant nightmares",
+        "lingering shock",
+        "malnourished",
+        "seizure",
+        "seizure prone",
+        "starving"
+      ],
+      "weak":[
+        "bite-wound",
+        "cat bite",
+        "claw-wound",
+        "joint pain",
+        "lost a leg",
+        "mangled leg",
+        "mangled tail",
+        "phantom pain"
+      ]
+    },
+    "longevity": 6,
+    "seasons":[
+      "Newleaf",
+      "Leaf-fall"
+    ]
+  },
+  "chervil": {
+
+  },
+  "cobwebs": {
+
+  },
+  "coltsfoot": {
+
+  },
+  "comfrey": {
+
+  },
+  "daisy": {
+
+  },
+  "dandelion": {
+
+  },
+  "elder_leaves": {
+
+  },
+  "fennel": {
+
+  },
+  "feverfew": {
+
+  },
+  "goldenrod": {
+
+  },
+  "honey": {
+
+  },
+  "horsetail": {
+
+  },
+  "juniper": {
+
+  },
+  "lungwort": {
+
+  },
+  "mallow": {
+
+  },
+  "marigold": {
+
+  },
+  "moss": {
+
+  },
+  "mullein": {
+
+  },
+  "oak_leaves": {
+
+  },
+  "plantain": {
+
+  },
+  "poppy": {
+
+  },
+  "ragwort": {
+
+  },
+  "raspberry": {
+
+  },
+  "rosemary": {
+
+  },
+  "tansy": {
+
+  },
+  "thyme": {
+
+  },
+  "tormentil": {
+
+  },
+  "wild_garlic": {
+
+  },
+  "yarrow": {
+
+  }
+}
+

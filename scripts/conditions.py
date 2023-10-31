@@ -276,3 +276,25 @@ class PermanentCondition:
         TODO: DOCS
         """
         self._current_mortality = value
+
+
+class Herbs:
+    """
+    handles herbs and their uses
+    """
+
+    def __init__(self,
+                 name,
+                 uses,
+                 longevity=0,
+                 seasons=[],
+                 side_effects='None'):
+        self.name = name
+        self.uses = uses if uses else {}
+        self.longevity = longevity
+        self.seasons = seasons if seasons else []
+        self.side_effects = side_effects
+
+
+
+        

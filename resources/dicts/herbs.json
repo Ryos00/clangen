@@ -138,91 +138,150 @@
     ]
   },
   "chervil": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "cobwebs": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "coltsfoot": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "comfrey": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "daisy": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "dandelion": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "elder_leaves": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "fennel": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "feverfew": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "goldenrod": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "honey": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "horsetail": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "juniper": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "lungwort": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "mallow": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "marigold": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "moss": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "mullein": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "oak_leaves": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "plantain": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "poppy": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "ragwort": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "raspberry": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "rosemary": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "tansy": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[],
+    "side_effects": []
   },
   "thyme": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "tormentil": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "wild_garlic": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   },
   "yarrow": {
-
+    "uses":{},
+    "longevity": 0,
+    "seasons":[]
   }
 }
 

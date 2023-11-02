@@ -198,8 +198,10 @@
         "yellowcough"
       ]
     },
-    "longevity": 0,
-    "seasons":[]
+    "longevity": 6,
+    "seasons":[
+      "All"
+    ]
   },
   "comfrey": {
     "uses":{
@@ -222,8 +224,10 @@
         "scrapes"
       ]
     },
-    "longevity": 0,
-    "seasons":[]
+    "longevity": 6,
+    "seasons":[
+      "All"
+    ]
   },
   "daisy": {
     "uses":{
@@ -245,8 +249,10 @@
         "stomacheache"
       ]
     },
-    "longevity": 0,
-    "seasons":[]
+    "longevity": 6,
+    "seasons":[
+      "All"
+    ]
   },
   "dandelion": {
     "uses":{
@@ -259,8 +265,10 @@
         "sore"
       ]
     },
-    "longevity": 0,
-    "seasons":[]
+    "longevity": 6,
+    "seasons":[
+      "All"
+    ]
   },
   "elder_leaves": {
     "uses":{
@@ -272,8 +280,10 @@
         "sore"
       ]
     },
-    "longevity": 0,
-    "seasons":[]
+    "longevity": 6,
+    "seasons":[
+      "All"
+    ]
   },
   "fennel": {
     "uses":{
@@ -292,8 +302,11 @@
         "mangled tail"
       ]
     },
-    "longevity": 0,
-    "seasons":[]
+    "longevity": 6,
+    "seasons":[
+      "Greenleaf",
+      "Leaf-fall"
+    ]
   },
   "feverfew": {
     "uses":{
@@ -321,8 +334,11 @@
         "scrapes"
       ]
     },
-    "longevity": 0,
-    "seasons":[]
+    "longevity": 6,
+    "seasons":[
+      "Greenleaf",
+      "Leaf-fall"
+    ]
   },
   "goldenrod": {
     "uses":{
@@ -351,8 +367,11 @@
         "wasting disease"
       ]
     },
-    "longevity": 0,
-    "seasons":[]
+    "longevity": 4,
+    "seasons":[
+      "Greenleaf",
+      "Leaf-fall"
+    ]
   },
   "honey": {
     "uses":{
@@ -371,8 +390,10 @@
         "lingering shock"
       ]
     },
-    "longevity": 0,
-    "seasons":[]
+    "longevity": 3,
+    "seasons":[
+      "All"
+    ]
   },
   "horsetail": {
     "uses":{
@@ -386,8 +407,11 @@
         "joint pain"
       ]
     },
-    "longevity": 0,
-    "seasons":[]
+    "longevity": 6,
+    "seasons":[
+      "Newleaf",
+      "Greenleaf"
+    ]
   },
   "juniper": {
     "uses":{
@@ -455,8 +479,11 @@
         "yellowcough"
       ]
     },
-    "longevity": 0,
-    "seasons":[]
+    "longevity": 6,
+    "seasons":[
+      "Leaf-fall",
+      "Leaf-bare"
+    ]
   },
   "lungwort": {
     "uses":{
@@ -465,8 +492,12 @@
         "yellowcough"
       ]
     },
-    "longevity": 0,
-    "seasons":[]
+    "longevity": 6,
+    "seasons":[
+      "Newleaf",
+      "Greenleaf",
+      "Leaf-fall"
+    ]
   },
   "mallow": {
     "uses":{
@@ -478,8 +509,10 @@
         "diarrhea"
       ]
     },
-    "longevity": 0,
-    "seasons":[]
+    "longevity": 6,
+    "seasons":[
+      "All"
+    ]
   },
   "marigold": {
     "uses":{
@@ -519,8 +552,12 @@
         "sore"
       ]
     },
-    "longevity": 0,
-    "seasons":[]
+    "longevity": 4,
+    "seasons":[
+      "Newleaf",
+      "Greenleaf",
+      "Leaf-fall"
+    ]
   },
   "moss": {
     "uses":{
@@ -552,7 +589,7 @@
         "whitecough"
       ]
     },
-    "longevity": 0,
+    "longevity": 3,
     "seasons":[
       "All"
     ]
@@ -577,8 +614,10 @@
         "vomiting"
       ]
     },
-    "longevity": 0,
-    "seasons":[]
+    "longevity": 6,
+    "seasons":[
+      "Greenleaf"
+    ]
   },
   "oak_leaves": {
     "uses":{
@@ -612,7 +651,9 @@
       ]
     },
     "longevity": 6,
-    "seasons":[]
+    "seasons":[
+      "All"
+    ]
   },
   "plantain": {
     "uses":{
@@ -697,7 +738,10 @@
       ]
     },
     "longevity": 12,
-    "seasons":[]
+    "seasons":[
+      "Newleaf",
+      "Greenleaf"
+    ]
   },
   "ragwort": {
     "uses":{
@@ -815,7 +859,9 @@
       ]
     },
     "longevity": 6,
-    "seasons":[]
+    "seasons":[
+      "All"
+    ]
   },
   "tansy": {
     "uses":{
@@ -843,9 +889,15 @@
         "yellowcough"
       ]
     },
-    "longevity": 0,
-    "seasons":[],
-    "side_effects": []
+    "longevity": 6,
+    "seasons":[
+      "Newleaf",
+      "Greenleaf",
+      "Leaf-fall"
+    ],
+    "side_effects": [
+      "poisoned"
+    ]
   },
   "thyme": {
     "uses":{
@@ -870,8 +922,10 @@
         "dislocated joint"
       ]
     },
-    "longevity": 0,
-    "seasons":[]
+    "longevity": 6,
+    "seasons":[
+      "All"
+    ]
   },
   "tormentil": {
     "uses":{
@@ -895,8 +949,10 @@
         "torn pelt"
       ]
     },
-    "longevity": 0,
-    "seasons":[]
+    "longevity": 12,
+    "seasons":[
+      "All"
+    ]
   },
   "wild_garlic": {
     "uses":{
@@ -924,8 +980,11 @@
         "torn pelt"
       ]
     },
-    "longevity": 0,
-    "seasons":[],
+    "longevity": 3,
+    "seasons":[
+      "Greenleaf",
+      "Leaf-fall"
+    ],
     "side_effects":[
       "poisoned"
     ]
@@ -951,8 +1010,12 @@
         "scrapes"
       ]
     },
-    "longevity": 0,
-    "seasons":[]
+    "longevity": 4,
+    "seasons":[
+      "Newleaf",
+      "Greenleaf",
+      "Leaf-fall"
+    ]
   }
 }
 

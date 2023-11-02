@@ -5,7 +5,7 @@ from copy import deepcopy
 from scripts.cat.cats import Cat
 from scripts.cat.history import History
 from scripts.cat.pelts import Pelt
-from scripts.conditions import medical_cats_condition_fulfilled, get_amount_cat_for_one_medic
+from scripts.conditions import medical_cats_condition_fulfilled, get_amount_cat_for_one_medic, Herbs
 from scripts.utility import event_text_adjust, get_med_cats, change_relationship_values, change_clan_relations, \
     history_text_adjust
 from scripts.game_structure.game_essentials import game
@@ -907,7 +907,14 @@ class Condition_Events():
         clan_herbs = set()
         needed_herbs = set()
         clan_herbs.update(game.clan.herbs.keys())
+        strong_herbs = []
+        helpful_herbs = []
+        weak_herbs = []
+
         try:
+            # ugh I hate it here
+                
+
             needed_herbs.update(source[condition]["herbs"])
         except KeyError:
             print(f"WARNING: {condition} does not exist in it's condition dict! if the condition is 'thorn in paw' or "

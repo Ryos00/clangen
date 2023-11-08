@@ -11,6 +11,7 @@ TODO: Docs
 from scripts.game_structure.game_essentials import game
 from scripts.cat.skills import SkillPath
 import ujson
+import os
 
 
 def medical_cats_condition_fulfilled(all_cats,
@@ -284,6 +285,10 @@ class Herbs:
     handles herbs and their uses
     """
 
+    if os.path.exists('resources/dicts/herbs.json'):
+        with open('resources/dicts/herbs.json') as read_file:
+            herbs_dict = ujson.loads(read_file.read())
+
     def __init__(self,
                  name,
                  uses,
@@ -296,9 +301,7 @@ class Herbs:
         self.seasons = seasons if seasons else []
         self.side_effects = side_effects
 
-        HERBS = None
-        with open(f"resources/dicts/herbs.json", 'r') as read_file:
-            HERBS = ujson.loads(read_file.read())
+    
 
         
 

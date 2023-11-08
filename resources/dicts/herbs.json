@@ -1,4 +1,4 @@
-{
+{"herbs": {
   "alder_bark": {
     "uses": {
       "strong": [
@@ -1017,5 +1017,5 @@
       "Leaf-fall"
     ]
   }
-}
+}}
 

@@ -1,6 +1,6 @@
 import threading
 import time
-from random import randint, choice
+from random import randint
 from threading import Thread
 from typing import Optional, Tuple
 
@@ -9,17 +9,16 @@ import pygame
 import pygame_gui
 
 import scripts.game_structure.screen_settings
+from pygame_gui.elements import UITextBox
 from scripts.game_structure import image_cache, constants
 from scripts.game_structure.game.settings import game_setting_get
 from scripts.game_structure import game
 from scripts.game_structure.screen_settings import MANAGER
-from scripts.game_structure.ui_elements import (
-    UIDropDown,
-    UIModifiedImage,
-)
+from scripts.ui.elements.dropdown import UIDropDown
+from scripts.ui.elements.modified_image import UIModifiedImage
 from scripts.ui.elements.image_button import UIImageButton
 from scripts.ui.elements.surface_image_button import UISurfaceImageButton
-from scripts.housekeeping.version import get_version_info
+from scripts.housekeeping.game_version import get_version_info
 from scripts.ui.generate_box import get_box, BoxStyles
 from scripts.ui.generate_button import get_button_dict, ButtonStyles
 from scripts.ui.icon import Icon
@@ -62,22 +61,20 @@ def rebuild_core(*, should_rebuild_bgs=True):
     rebuild_mute("default")
 
     version_number = pygame_gui.elements.UILabel(
-        ui_scale(pygame.Rect((50, 50), (-1, -1))),
+        ui_scale(pygame.Rect((0, 0), (-1, -1))),
         get_version_info().version_number[0:8],
-        object_id=get_text_box_theme(),
+        object_id="#dev_watermark",
         anchors={"bottom": "bottom", "right": "right"},
     )
     # Adjust position
     version_number.set_relative_position(
-        ui_scale_offset(
-            (
-                800 - version_number.get_relative_rect()[2],
-                700 - version_number.get_relative_rect()[3],
-            )
+        (
+            -version_number.relative_rect[2] - ui_scale_value(10),
+            -version_number.relative_rect[3],
         )
     )
 
-    if get_version_info().is_source_build or get_version_info().is_dev():
+    if get_version_info().is_source_build:
         dev_watermark = pygame_gui.elements.UILabel(
             ui_scale(pygame.Rect((525, 660), (300, 50))),
             "screens.core.dev_watermark",
@@ -184,14 +181,14 @@ def rebuild_top_menu_buttons():
     # menu_buttons["events"].change_layer(menu_buttons["dens"].get_starting_height() + 5)
 
     menu_buttons["patrols"] = UISurfaceImageButton(
-        ui_scale(pygame.Rect((-46, 60), (86, 30))),
+        ui_scale(pygame.Rect((0, 60), (86, 30))),
         "screens.core.patrol",
         get_button_dict(ButtonStyles.MENU_RIGHT, (86, 30)),
         visible=False,
         manager=MANAGER,
         object_id="#patrol_button",
         starting_height=6,
-        anchors={"left": "left", "left_target": menu_buttons["dens"]},
+        anchors={"left": "left", "left_target": menu_buttons["dens"].parent_button},
     )
     menu_buttons["main_menu"] = UISurfaceImageButton(
         ui_scale(pygame.Rect((25, 25), (153, 30))),
@@ -284,14 +281,33 @@ def rebuild_moon_n_season_indicator(change_moon: bool = False, visible: bool = F
     if "season_indicator" in menu_buttons:
         menu_buttons["season_indicator"].kill()
 
-    if "moon_indicator" not in menu_buttons:
+    if "moon_indicator_frame" not in menu_buttons:
         global chosen_moon_phase
+
         chosen_moon_phase = randint(0, 7)
 
-        menu_buttons["moon_indicator"] = pygame_gui.elements.UIImage(
+        moon_icon = getattr(Icon, f"MOON_PHASE{chosen_moon_phase}")
+
+        menu_buttons["moon_indicator"] = UITextBox(
+            moon_icon,
+            ui_scale(pygame.Rect((-23, -26), (30, 30))),
+            visible=visible,
+            manager=MANAGER,
+            starting_height=5,
+            anchors={
+                "right_target": menu_buttons["heading"],
+                "right": "right",
+                "bottom_target": menu_buttons["events"],
+                "bottom": "bottom",
+            },
+            object_id="@clangen_16",
+        )
+        menu_buttons["moon_indicator_frame"] = pygame_gui.elements.UIImage(
             scale_rect,
             pygame.transform.scale(
-                moon_phases[chosen_moon_phase],
+                image_cache.load_image(
+                    "resources/images/moon_container.png"
+                ).convert_alpha(),
                 (22, 26),
             ),
             visible=visible,
@@ -313,6 +329,7 @@ def rebuild_moon_n_season_indicator(change_moon: bool = False, visible: bool = F
         i18n.t("general.moon_date", moon=clan_age)
     )
     menu_buttons["moon_indicator"].tool_tip_delay = 0
+    menu_buttons["moon_indicator"].disable()
 
     menu_buttons["season_indicator"] = UIModifiedImage(
         ui_scale(pygame.Rect((404, 3), (144, 67))),
@@ -334,9 +351,7 @@ def load_moon_phases():
     global moon_phases
 
     for i in range(0, 8):
-        moon_phases.append(
-            pygame.image.load(f"resources/images/moon_phase{i}.png").convert_alpha()
-        )
+        moon_phases.append(getattr(Icon, f"MOON_PHASE{i}"))
 
 
 def start_moon_animation():
@@ -371,11 +386,8 @@ def run_moon_animation():
         frames.append(i)
 
     for frame in frames:
-        menu_buttons["moon_indicator"].set_image(
-            pygame.transform.scale(
-                moon_phases[frame],
-                (22, 26),
-            )
+        menu_buttons["moon_indicator"].set_text(
+            moon_phases[frame],
         )
         time.sleep(0.125)
 

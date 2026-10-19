@@ -1,4 +1,7 @@
-from typing import Union, Type, TYPE_CHECKING, Tuple, List
+from random import choice
+from typing import Union, Type, TYPE_CHECKING, Tuple, List, Optional
+
+from scripts.cat_relations.relationship import create_one_relationship
 
 if TYPE_CHECKING:
     from scripts.cat.cats import Cat
@@ -66,7 +69,7 @@ def find_alive_cats_with_rank(
     ]
 
     if working:
-        alive_cats = [i for i in alive_cats if not i.not_working()]
+        alive_cats = [i for i in alive_cats if i.can_work()]
 
     if sort:
         alive_cats = sorted(alive_cats, key=lambda cat: cat.moons, reverse=True)
@@ -87,29 +90,30 @@ def get_living_clan_cat_count(Cat):
     return count
 
 
-def get_cats_same_age(Cat, cat, age_range=10):
+def get_cats_same_age(Cat, cat_to_match, age_range=10):
     """
     Look for all cats in the Clan and returns a list of cats which are in the same age range as the given cat.
     :param Cat: Cat class
-    :param cat: the given cat
+    :param cat_to_match: the given cat
     :param int age_range: The allowed age difference between the two cats, default 10
     """
     cats = []
     for inter_cat in Cat.all_cats.values():
         if not inter_cat.status.alive_in_player_clan:
             continue
-        if inter_cat.ID == cat.ID:
+        if inter_cat.ID == cat_to_match.ID:
             continue
 
-        if inter_cat.ID not in cat.relationships:
-            cat.create_one_relationship(inter_cat)
-            if cat.ID not in inter_cat.relationships:
-                inter_cat.create_one_relationship(cat)
+        if inter_cat.ID not in cat_to_match.relationships:
+            create_one_relationship(cat_to_match, inter_cat)
+            if cat_to_match.ID not in inter_cat.relationships:
+                create_one_relationship(inter_cat, cat_to_match)
             continue
 
         if (
-            inter_cat.moons <= cat.moons + age_range
-            and inter_cat.moons <= cat.moons - age_range
+            cat_to_match.moons + age_range
+            >= inter_cat.moons
+            >= cat_to_match.moons - age_range
         ):
             cats.append(inter_cat)
 
@@ -132,9 +136,9 @@ def get_possible_mates(cat) -> Tuple[List["Cat"], List["Cat"]]:
             continue
 
         if inter_cat.ID not in cat.relationships:
-            cat.create_one_relationship(inter_cat)
+            create_one_relationship(cat, inter_cat)
             if cat.ID not in inter_cat.relationships:
-                inter_cat.create_one_relationship(cat)
+                create_one_relationship(inter_cat, cat)
             continue
 
         if inter_cat.is_potential_mate(cat, for_love_interest=True):
@@ -142,3 +146,15 @@ def get_possible_mates(cat) -> Tuple[List["Cat"], List["Cat"]]:
                 existing_romance_mates.append(inter_cat)
             possible_mates.append(inter_cat)
     return possible_mates, existing_romance_mates
+
+
+def get_random_player_clan_cat(cat, not_allowed: list["Cat"] = None) -> Optional["Cat"]:
+    cat_list = [
+        c
+        for c in cat.all_cats.values()
+        if c.status.alive_in_player_clan and c not in not_allowed
+    ]
+    if not cat_list:
+        return None
+
+    return choice(cat_list)

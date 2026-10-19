@@ -8,7 +8,7 @@
             "leaf-fall",
             "leaf-bare"
         ],
-        "frequency": 2,
+        "frequency": 1,
         "event_text": "m_c thought {PRONOUN/m_c/subject} {VERB/m_c/were/was} walking on a snowdrift until it gave way and {PRONOUN/m_c/subject} fell down the mountain, breaking {PRONOUN/m_c/poss} leg.",
         "m_c": {
             "age": [
@@ -25,7 +25,7 @@
                     "m_c"
                 ],
                 "injuries": [
-                    "broken bone"
+                    "broken_bone"
                 ]
             }
         ],
@@ -64,7 +64,7 @@
                     "m_c"
                 ],
                 "injuries": [
-                    "mangled tail"
+                    "mangled_tail"
                 ]
             }
         ],
@@ -86,7 +86,7 @@
         "season": [
             "any"
         ],
-        "frequency": 3,
+        "frequency": 1,
         "event_text": "m_c couldn't help but try to show off by scaling the tallest cliff {PRONOUN/m_c/subject} could find. {PRONOUN/m_c/poss/CAP} plan backfired when {PRONOUN/m_c/subject} slipped and plummeted to the ground.",
         "m_c": {
             "status": [
@@ -109,7 +109,7 @@
                     "m_c"
                 ],
                 "injuries": [
-                    "broken bone"
+                    "broken_bone"
                 ]
             }
         ],
@@ -122,5 +122,45 @@
                 "death": "m_c died from {PRONOUN/m_c/poss} wounds after falling from a tall cliff."
             }
         ]
+    },
+    {
+        "event_id": "mtn_injury_brokenback",
+        "location": [
+            "mountainous:camp4"
+        ],
+        "season": [
+            "any"
+        ],
+        "frequency": 1,
+        "event_text": "m_c was exploring {PRONOUN/m_c/poss} territory when the ruins {PRONOUN/m_c/subject} {VERB/m_c/were/was} walking under collapsed and broke {PRONOUN/m_c/poss} back.",
+        "m_c": {
+            "age": [
+                "adolescent",
+                "young adult",
+                "adult",
+                "senior adult",
+                "senior"
+            ]
+        },
+        "injury": [
+            {
+                "cats": [
+                    "m_c"
+                ],
+                "injuries": [
+                    "broken_back"
+                ]
+            }
+        ],
+        "history": [
+            {
+                "cats": [
+                    "m_c"
+                ],
+                "scar": "m_c was scarred when the ruins collapsed onto {PRONOUN/m_c/object}.",
+                "death": "m_c died from {PRONOUN/m_c/poss} wounds after the ruins collapsed onto {PRONOUN/m_c/object}."
+            }
+        ]
     }
+    
 ]

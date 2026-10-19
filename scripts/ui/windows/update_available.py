@@ -1,4 +1,5 @@
 import os
+import webbrowser
 
 import pygame
 import pygame_gui
@@ -12,7 +13,7 @@ from scripts.ui.elements.image_button import UIImageButton
 from scripts.ui.elements.surface_image_button import UISurfaceImageButton
 from scripts.housekeeping.datadir import get_cache_dir
 from scripts.housekeeping.update import get_latest_version_number
-from scripts.housekeeping.version import get_version_info
+from scripts.housekeeping.game_version import get_version_info
 from scripts.ui.generate_button import get_button_dict, ButtonStyles
 from scripts.ui.windows.announce_restart import RestartAnnouncementWindow
 from scripts.ui.windows.window_base_class import GameWindow
@@ -28,7 +29,7 @@ class UpdateAvailableWindow(GameWindow):
 
         self.begin_update_title = UIImageButton(
             ui_scale(pygame.Rect((97, 15), (200, 40))),
-            "",
+            "windows.begin_update_title",
             object_id="#new_update_button",
             container=self,
         )
@@ -37,7 +38,7 @@ class UpdateAvailableWindow(GameWindow):
         current_version_number = "{:.16}".format(get_version_info().version_number)
 
         self.game_over_message = UITextBoxTweaked(
-            "update_available",
+            "windows.update_available",
             ui_scale(pygame.Rect((10, 80), (400, -1))),
             line_spacing=0.8,
             object_id="#update_popup_title",
@@ -56,7 +57,7 @@ class UpdateAvailableWindow(GameWindow):
 
         self.game_over_message = UITextBoxTweaked(
             "windows.install_update",
-            ui_scale(pygame.Rect((10, 131), (200, -1))),
+            ui_scale(pygame.Rect((10, 131), (300, -1))),
             line_spacing=0.8,
             object_id="#text_box_30",
             container=self,
@@ -111,10 +112,12 @@ class UpdateAvailableWindow(GameWindow):
 
     def process_event(self, event):
         if event.type == pygame_gui.UI_BUTTON_START_PRESS:
+            # open link to game in browser while updater is being repaired
             if event.ui_element == self.continue_button:
-                self.x = UpdateWindow(
-                    switch_get_value(Switch.cur_screen), self.announce_restart_callback
-                )
+                if get_version_info().is_dev():
+                    webbrowser.open("https://clangen.io/download-development")
+                else:
+                    webbrowser.open("https://clangen.io/download")
                 self.kill()
             elif event.ui_element == self.cancel_button:
                 self.kill()
@@ -137,6 +140,5 @@ class UpdateAvailableWindow(GameWindow):
         return super().process_event(event)
 
     def announce_restart_callback(self):
-        self.x.kill()
         y = RestartAnnouncementWindow(switch_get_value(Switch.cur_screen))
         y.update(1)

@@ -39,6 +39,12 @@ These articles hold information generally relevant when writing any content for 
 
     Guidelines on how to write content for specific traits. Following these will help keep our personality portrayals consistent.
 
+- __[Skill Dictionary](trait-dictionary.md)__
+
+    ---
+
+    Guidelines on how to write content for specific skills. Following these will help keep our personality portrayals consistent.
+
 - __[Biome Content](biomes.md)__
 
     ---
@@ -50,6 +56,12 @@ These articles hold information generally relevant when writing any content for 
     ---
 
     Warriors includes plenty of other animals, this article can guide you on how to include them within ClanGen content.
+
+- __[Herb Dictionary](herbs.md)__
+
+    ---
+
+    A list of the many herbs found within ClanGen as well as useful information on each one.
 
 - __[Common Errors](common-errors.md)__
 

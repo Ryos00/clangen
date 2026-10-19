@@ -16,14 +16,26 @@ class Pelt:
     # POSES
     all_poses = sprites.POSE_DATA["poses"]
     newborn_poses = [x for x in all_poses if "newborn" in x]
-    kitten_poses = [x for x in all_poses if "kitten" in x]
-    adolescent_long_poses = [x for x in all_poses if "adolescent_long" in x]
-    adolescent_short_poses = [
-        x for x in all_poses if "adolescent" in x and "long" not in x
+    kitten_poses = [x for x in all_poses if "kitten" in x and "sick" not in x]
+    adolescent_long_poses = [
+        x for x in all_poses if "adolescent_long" in x and "sick" not in x
     ]
-    adult_short_poses = [x for x in all_poses if "adult_short" in x and "para" not in x]
-    adult_long_poses = [x for x in all_poses if "adult_long" in x and "para" not in x]
-    senior_poses = [x for x in all_poses if "senior" in x]
+    adolescent_short_poses = [
+        x
+        for x in all_poses
+        if "adolescent" in x and "long" not in x and "sick" not in x
+    ]
+    adult_short_poses = [
+        x
+        for x in all_poses
+        if "adult_short" in x and "para" not in x and "sick" not in x
+    ]
+    adult_long_poses = [
+        x
+        for x in all_poses
+        if "adult_long" in x and "para" not in x and "sick" not in x
+    ]
+    senior_poses = [x for x in all_poses if "senior" in x and "sick" not in x]
 
     # PELT LENGTH
     pelt_length = ["short", "medium", "long"]
@@ -35,17 +47,23 @@ class Pelt:
     white_colours: list = []
     brown_colours: list = []
 
-    for sprite_list in sprites.PELT_DATA["sprite_list"]:
-        all_pelt_colours.extend(sprite_list.keys())
-        for colour in sprite_list:
-            if sprite_list[colour] == "white":
-                white_colours.append(colour)
-            elif sprite_list[colour] == "black":
-                black_colours.append(colour)
-            elif sprite_list[colour] == "ginger":
-                ginger_colours.append(colour)
-            elif sprite_list[colour] == "brown":
-                brown_colours.append(colour)
+    all_pelt_colours.extend(
+        list(sprites.GENERATION_GROUP_DATA["pelts"]["colors"].keys())
+    )
+    for colour in sprites.GENERATION_GROUP_DATA["pelts"]["colors"]:
+        group = sprites.GENERATION_GROUP_DATA["pelts"]["colors"][colour]
+
+        if group == "white":
+            white_colours.append(colour)
+        elif group == "black":
+            black_colours.append(colour)
+        elif group == "ginger":
+            ginger_colours.append(colour)
+        elif group == "brown":
+            brown_colours.append(colour)
+        else:
+            # Default
+            brown_colours.append(colour)
 
     # colour categories
     colour_categories: list[list] = [
@@ -56,10 +74,17 @@ class Pelt:
     ]
 
     # PELT PATTERNS
-    pelt_patterns: list = sprites.PELT_DATA["pattern_names"]
+    pelt_patterns: list = list(
+        sprites.GENERATION_GROUP_DATA["pelts"]["pattern_types"].keys()
+    )
 
     # pattern categories
-    pelt_categories: dict = sprites.PELT_DATA["pattern_categories"]
+    pelt_categories: dict = {}
+    for key, value in sprites.GENERATION_GROUP_DATA["pelts"]["pattern_types"].items():
+        if value in pelt_categories:
+            pelt_categories[value].append(key)
+        else:
+            pelt_categories[value] = [key]
 
     # individual pattern categories
     tabbies: list = pelt_categories["tabbies"]
@@ -68,6 +93,7 @@ class Pelt:
     exotic: list = pelt_categories["exotic"]
     torties: list = pelt_categories["torties"]
 
+    """
     # PELT SPRITE NAMES
     # pelt name used in save files: pelt's spritesheet
     pattern_sprite_names: dict = {}
@@ -80,44 +106,33 @@ class Pelt:
             "Calico": None,
         }
     )
+    """
 
     # TORTIE PATCHES
-    tortie_patches: list = []
+    tortie_patches: list = list(sprites.TORTIE_PATCH_COMBOS.keys())
     for sprite_list in sprites.TORTIE_DATA["sprite_list"]:
         tortie_patches.extend(sprite_list)
 
     # WHITE MARKINGS
-    little_white: list = []
-    mid_white: list = []
-    high_white: list = []
-    mostly_white: list = []
+    little_white: list = list(sprites.WHITE_PATCH_COMBOS.get("little", {}).keys())
+    for sprite_list in sprites.WHITE_LITTLE_DATA["sprite_list"]:
+        little_white.extend(sprite_list)
+    mid_white: list = list(sprites.WHITE_PATCH_COMBOS.get("mid", {}).keys())
+    for sprite_list in sprites.WHITE_MID_DATA["sprite_list"]:
+        mid_white.extend(sprite_list)
+    high_white: list = list(sprites.WHITE_PATCH_COMBOS.get("high", {}).keys())
+    for sprite_list in sprites.WHITE_HIGH_DATA["sprite_list"]:
+        high_white.extend(sprite_list)
+    mostly_white: list = list(sprites.WHITE_PATCH_COMBOS.get("mostly", {}).keys())
+    for sprite_list in sprites.WHITE_MOSTLY_DATA["sprite_list"]:
+        # have to remove FULLWHITE as it's handled special
+        mostly_white.extend([x for x in sprite_list if x != "FULLWHITE"])
     vitiligo_markings: list = []
+    for sprite_list in sprites.WHITE_VITILIGO_DATA["sprite_list"]:
+        vitiligo_markings.extend(sprite_list)
     point_markings: list = []
-
-    for sprite_list in sprites.WHITE_DATA["sprite_list"]:
-        for patch_type in sprite_list:
-            if sprite_list[patch_type] == "little":
-                little_white.append(patch_type)
-            elif sprite_list[patch_type] == "mid":
-                mid_white.append(patch_type)
-            elif sprite_list[patch_type] == "high":
-                high_white.append(patch_type)
-            elif sprite_list[patch_type] == "mostly":
-                mostly_white.append(patch_type)
-            elif sprite_list[patch_type] == "vitiligo":
-                vitiligo_markings.append(patch_type)
-            elif sprite_list[patch_type] == "point":
-                point_markings.append(patch_type)
-
-    white_patches_sprites: list[list] = [
-        little_white,
-        mid_white,
-        high_white,
-        mostly_white,
-        point_markings,
-        vitiligo_markings,
-        "FULLWHITE",
-    ]
+    for sprite_list in sprites.WHITE_POINT_DATA["sprite_list"]:
+        point_markings.extend(sprite_list)
 
     # EYES
     all_eye_colours: list = []
@@ -141,13 +156,16 @@ class Pelt:
 
     # SCARS
     # bite scars by @wood pank on discord
+    all_scars = []
     general_scars = []
-    for sprite_list in sprites.SCAR_DATA["sprite_list"]:
-        general_scars.extend(sprite_list)
-
     missing_part_scars = []
-    for sprite_list in sprites.SCAR_MISSING_PART_DATA["sprite_list"]:
-        missing_part_scars.extend(sprite_list)
+    for sprite_list in sprites.SCAR_DATA["sprite_list"]:
+        # missing parts are the last row of the sheet.
+        if sprite_list == sprites.SCAR_DATA["sprite_list"][-1]:
+            missing_part_scars.extend(sprite_list)
+        # general_scars is everything else
+        else:
+            general_scars.extend(sprite_list)
 
     all_scars = general_scars + missing_part_scars
 
@@ -159,6 +177,7 @@ class Pelt:
     tail_accessories = []
     body_accessories = []
     head_accessories = []
+    paw_accessories = []
 
     # here we create the master lists of each accessory type
     plant_accessories = []
@@ -171,6 +190,8 @@ class Pelt:
                 body_accessories.append(sprite)
             elif sprite_list[sprite] == "head":
                 body_accessories.append(sprite)
+            elif sprite_list[sprite] == "paw":
+                paw_accessories.append(sprite)
 
     wild_accessories = []
     for sprite_list in sprites.WILD_DATA["sprite_list"]:
@@ -182,6 +203,8 @@ class Pelt:
                 body_accessories.append(sprite)
             elif sprite_list[sprite] == "head":
                 body_accessories.append(sprite)
+            elif sprite_list[sprite] == "paw":
+                paw_accessories.append(sprite)
 
     collar_accessories = []
     collar_styles = []
@@ -195,7 +218,7 @@ class Pelt:
         for sprite_list in sprites.COLLAR_DATA["sprite_list"]:
             collar_accessories.extend(sprite_list)
 
-    # this is used for acc-giving events, only change if you're adding a new category tag to the event filter
+    # this is used for acc-giving events and acc constraints, only change if you're adding a new category tag to the event filter
     # adding a category here will automatically update the event editor's options
     acc_categories = {
         "PLANT": plant_accessories,
@@ -223,9 +246,9 @@ class Pelt:
         paralyzed: bool = False,
         opacity: int = 100,
         scars: list = None,
-        tint: str = "none",
+        tint: str | None = None,
         skin: str = "BLACK",
-        white_patches_tint: str = "none",
+        white_patches_tint: str | None = None,
         newborn_sprite: str = None,
         kitten_sprite: str = None,
         adol_sprite: str = None,
@@ -297,16 +320,16 @@ class Pelt:
                         self.cat_sprites[age] = "para_adult_short0"
                     continue
 
-                if age == CatAge.NEWBORN:
+                elif age == CatAge.NEWBORN:
                     self.cat_sprites[age] = (
                         "newborn2" if "newborn2" in self.newborn_poses else "newborn0"
                     )
                     continue
-                if age == CatAge.KITTEN:
+                elif age == CatAge.KITTEN:
                     # since these were at the top of the sheet, the pose nums were 0, 1, 2. thus they'll naturally match this fstring
-                    self.cat_sprites[age] = f"kitten{pose}"
+                    self.cat_sprites[age] = f"kitten{pose if pose in (0, 1, 2) else 0}"
                     continue
-                if age == CatAge.ADOLESCENT:
+                elif age == CatAge.ADOLESCENT:
                     if self.length == "long":
                         fur = "long"
                     else:
@@ -317,8 +340,15 @@ class Pelt:
                         self.cat_sprites[age] = f"adolescent_{fur}1"
                     elif pose == 5:
                         self.cat_sprites[age] = f"adolescent_{fur}2"
-                    continue
-                if age in (CatAge.YOUNG_ADULT, CatAge.ADULT, CatAge.SENIOR_ADULT):
+                    else:
+                        self.cat_sprites[age] = choice(
+                            (
+                                f"adolescent_{fur}0",
+                                f"adolescent_{fur}1",
+                                f"adolescent_{fur}2",
+                            )
+                        )
+                elif age in (CatAge.YOUNG_ADULT, CatAge.ADULT, CatAge.SENIOR_ADULT):
                     if pose in (0, 9):
                         self.cat_sprites[age] = "adult_long0"
                     elif pose in (1, 10):
@@ -331,13 +361,27 @@ class Pelt:
                         self.cat_sprites[age] = "adult_short1"
                     elif pose == 8:
                         self.cat_sprites[age] = "adult_short2"
-                if age == CatAge.SENIOR:
+                    else:
+                        if self.length == "long":
+                            self.cat_sprites[age] = choice(
+                                ("adult_long0", "adult_long1", "adult_long2")
+                            )
+                        else:
+                            self.cat_sprites[age] = choice(
+                                ("adult_short0", "adult_short1", "adult_short2")
+                            )
+
+                elif age == CatAge.SENIOR:
                     if pose in (3, 12):
                         self.cat_sprites[age] = "senior0"
                     elif pose in (4, 13):
                         self.cat_sprites[age] = "senior1"
                     elif pose in (5, 14):
                         self.cat_sprites[age] = "senior2"
+                    else:
+                        self.cat_sprites[age] = choice(
+                            ("senior0", "senior1", "senior2")
+                        )
 
         # now for the updating handling of pose name strings
         else:
@@ -648,9 +692,7 @@ class Pelt:
         possible_pelts = [
             Pelt.pelt_categories[x] for x in Pelt.pelt_categories if x != "torties"
         ]
-        chosen_pelt = choice(
-            random.choices(possible_pelts, weights=(35, 20, 30, 15), k=1)[0]
-        )
+        chosen_pelt = choice(random.choices(possible_pelts, weights=weights, k=1)[0])
 
         # Tortie chance
         tortie_chance_f = constants.CONFIG["cat_generation"][
@@ -673,9 +715,9 @@ class Pelt:
         if torbie:
             # If it is tortie, the chosen pelt above becomes the base pelt.
             chosen_tortie_base = chosen_pelt
-            if chosen_tortie_base in ("TwoColour", "SingleColour"):
-                chosen_tortie_base = "Single"
-            chosen_tortie_base = chosen_tortie_base.lower()
+            # if chosen_tortie_base in ("TwoColour", "SingleColour"):
+            #    chosen_tortie_base = "Single"
+            chosen_tortie_base = chosen_tortie_base
             chosen_pelt = random.choice(Pelt.torties)
 
         # ------------------------------------------------------------------------------------------------------------#
@@ -794,9 +836,9 @@ class Pelt:
         if torbie:
             # If it is tortie, the chosen pelt above becomes the base pelt.
             chosen_tortie_base = chosen_pelt
-            if chosen_tortie_base in ("TwoColour", "SingleColour"):
-                chosen_tortie_base = "Single"
-            chosen_tortie_base = chosen_tortie_base.lower()
+            # if chosen_tortie_base in ("TwoColour", "SingleColour"):
+            #    chosen_tortie_base = "Single"
+            chosen_tortie_base = chosen_tortie_base
             chosen_pelt = random.choice(Pelt.torties)
 
         # ------------------------------------------------------------------------------------------------------------#
@@ -911,7 +953,7 @@ class Pelt:
 
         if acc_display_choice == 1:
             self.accessory = tuple(
-                choice([choice(Pelt.plant_accessories), choice(Pelt.wild_accessories)])
+                (choice(Pelt.plant_accessories + Pelt.wild_accessories),)
             )
         else:
             self.accessory = tuple()
@@ -932,8 +974,10 @@ class Pelt:
                     # people are fans of the print message, so I'm putting it back
                     print("Wildcard tortie!")
 
-                    # Allow any pattern:
-                    self.tortie_pattern = choice(Pelt.pelt_patterns)
+                    # Allow any pattern, minus tories:
+                    self.tortie_pattern = choice(
+                        self.exotic + self.tabbies + self.spotted + self.plain
+                    )
 
                     # Allow any colors that aren't the base color.
                     possible_colors = Pelt.all_pelt_colours.copy()
@@ -942,21 +986,21 @@ class Pelt:
 
                 else:
                     # Normal generation
-                    if self.tortie_base in ("singlestripe", "smoke", "single"):
+                    if self.tortie_base in ("SingleStripe", "Smoke"):
                         self.tortie_pattern = choice(
                             [
-                                "tabby",
-                                "mackerel",
-                                "classic",
-                                "single",
-                                "smoke",
-                                "agouti",
-                                "ticked",
+                                "Tabby",
+                                "Mackerel",
+                                "Classic",
+                                "SingleColour",
+                                "Smoke",
+                                "Agouti",
+                                "Ticked",
                             ]
                         )
                     else:
                         self.tortie_pattern = random.choices(
-                            [self.tortie_base, "single"], weights=[97, 3], k=1
+                            [self.tortie_base, "SingleColour"], weights=[97, 3], k=1
                         )[0]
 
                     if self.colour == "WHITE":
@@ -1283,8 +1327,10 @@ class Pelt:
 
         return "".join(groups)
 
+    """
     def get_sprites_name(self):
         return Pelt.pattern_sprite_names[self.name]
+    """
 
 
 def _describe_pattern(cat, short=False):
@@ -1300,7 +1346,7 @@ def _describe_pattern(cat, short=False):
         if cat.pelt.white_patches == "FULLWHITE":
             # If the cat is fullwhite, discard all other information. They are just white
             color_name = i18n.t("cat.pelts.FULLWHITE")
-            pelt_name = ""
+            pelt_name = f"cat.pelts.SingleColour_long"
         elif cat.pelt.name != "Calico":
             white = i18n.t("cat.pelts.FULLWHITE")
             if i18n.t("cat.pelts.WHITE", count=1) in color_name:
@@ -1352,9 +1398,9 @@ def _describe_torties(cat, color_name, short=False) -> (str, str):
             "rosette",
             "speckled",
         ):
-            base = f"cat.pelts.{cat.pelt.tortie_base.capitalize()}_long"  # the extra space is intentional
+            base = f"cat.pelts.{cat.pelt.name}_tabby_long"
         else:
-            base = ""
+            base = f"cat.pelts.{cat.pelt.name}_long"
         return base, color_name
 
 

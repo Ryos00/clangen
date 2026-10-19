@@ -5,28 +5,33 @@ import pygame
 import pygame_gui
 
 from scripts.cat.cats import Cat
-from scripts.clan_resources.herb.herb_supply import MESSAGES
-from scripts.game_structure import game
-from scripts.game_structure.ui_elements import (
-    UIModifiedImage,
+from scripts.cat.conditions.coverage_check import (
+    amount_of_clan_covered_total,
 )
-from ..ui.elements.text_box_tweaked import UITextBoxTweaked
-from ..ui.elements.sprite_button import UISpriteButton
-from ..ui.elements.image_button import UIImageButton
-from ..ui.elements.surface_image_button import UISurfaceImageButton
-from ..ui.theme import get_text_box_theme
-from ..events_module.text_adjust import event_text_adjust, shorten_text_to_fit
-from ..ui.scale import ui_scale, ui_scale_offset
-from ..clan_package.get_clan_cats import find_alive_cats_with_rank
-from .Screens import Screens
-from .enums import GameScreen
-from ..cat.enums import CatRank
-from ..conditions import get_amount_cat_for_one_medic, amount_clanmembers_covered
-from ..game_structure.game.switches import switch_set_value, Switch
-from ..game_structure.screen_settings import MANAGER
-from ..ui.generate_box import BoxStyles, get_box
-from ..ui.generate_button import get_button_dict, ButtonStyles
-from ..ui.icon import Icon
+from scripts.cat.enums import CatRank
+from scripts.clan_package.get_clan_cats import find_alive_cats_with_rank
+from scripts.clan_resources.herb.herb_supply import MESSAGES
+from scripts.events_module.text_adjust import (
+    event_text_adjust,
+    shorten_text_to_fit,
+    process_text,
+)
+from scripts.game_structure import game
+from scripts.game_structure.game import Switch
+from scripts.game_structure.game.switches import switch_set_value
+from scripts.game_structure.screen_settings import MANAGER
+from scripts.screens.Screens import Screens
+from scripts.screens.enums import GameScreen
+from scripts.ui.elements.image_button import UIImageButton
+from scripts.ui.elements.modified_image import UIModifiedImage
+from scripts.ui.elements.sprite_button import UISpriteButton
+from scripts.ui.elements.surface_image_button import UISurfaceImageButton
+from scripts.ui.elements.text_box_tweaked import UITextBoxTweaked
+from scripts.ui.generate_box import BoxStyles, get_box
+from scripts.ui.generate_button import get_button_dict, ButtonStyles
+from scripts.ui.icon import Icon
+from scripts.ui.scale import ui_scale, ui_scale_offset
+from scripts.ui.theme import get_text_box_theme
 
 
 class MedDenScreen(Screens):
@@ -144,6 +149,7 @@ class MedDenScreen(Screens):
             get_button_dict(ButtonStyles.ICON, (34, 34)),
             object_id="@buttonstyles_icon",
             manager=MANAGER,
+            starting_height=2,
         )
         self.last_med = UISurfaceImageButton(
             ui_scale(pygame.Rect((600, 278), (34, 34))),
@@ -151,6 +157,7 @@ class MedDenScreen(Screens):
             get_button_dict(ButtonStyles.ICON, (34, 34)),
             object_id="@buttonstyles_icon",
             manager=MANAGER,
+            starting_height=2,
         )
 
         if game.clan.game_mode != "classic":
@@ -258,72 +265,44 @@ class MedDenScreen(Screens):
             self.injured_and_sick_cats = []
             for the_cat in Cat.all_cats_list:
                 if the_cat.status.alive_in_player_clan and (
-                    the_cat.injuries or the_cat.illnesses
+                    the_cat.temporary_conditions
                 ):
                     self.injured_and_sick_cats.append(the_cat)
             for cat in self.injured_and_sick_cats:
-                if cat.injuries:
-                    for injury in cat.injuries:
-                        if cat.injuries[injury][
-                            "severity"
-                        ] != "minor" and injury not in [
-                            "pregnant",
-                            "recovering from birth",
+                for condition in cat.temporary_conditions:
+                    if condition.severity != "minor" and condition.name not in (
+                        "pregnant",
+                        "recovering_from_birth",
+                        "sprain",
+                        "lingering_shock",
+                        "grief_stricken",
+                    ):
+                        if cat not in self.in_den_cats:
+                            self.in_den_cats.append(cat)
+                        if cat in self.out_den_cats:
+                            self.out_den_cats.remove(cat)
+                        elif cat in self.minor_cats:
+                            self.minor_cats.remove(cat)
+                        break
+                    elif (
+                        condition.name
+                        in (
+                            "recovering_from_birth",
                             "sprain",
-                            "lingering shock",
-                        ]:
-                            if cat not in self.in_den_cats:
-                                self.in_den_cats.append(cat)
-                            if cat in self.out_den_cats:
-                                self.out_den_cats.remove(cat)
-                            elif cat in self.minor_cats:
-                                self.minor_cats.remove(cat)
-                            break
-                        elif (
-                            injury
-                            in [
-                                "recovering from birth",
-                                "sprain",
-                                "lingering shock",
-                                "pregnant",
-                            ]
-                            and cat not in self.in_den_cats
-                        ):
-                            if cat not in self.out_den_cats:
-                                self.out_den_cats.append(cat)
-                            if cat in self.minor_cats:
-                                self.minor_cats.remove(cat)
-                            break
-                        elif cat not in (self.in_den_cats or self.out_den_cats):
-                            if cat not in self.minor_cats:
-                                self.minor_cats.append(cat)
-                if cat.illnesses:
-                    for illness in cat.illnesses:
-                        if (
-                            cat.illnesses[illness]["severity"] != "minor"
-                            and illness != "grief stricken"
-                        ):
-                            if cat not in self.in_den_cats:
-                                self.in_den_cats.append(cat)
-                            if cat in self.out_den_cats:
-                                self.out_den_cats.remove(cat)
-                            elif cat in self.minor_cats:
-                                self.minor_cats.remove(cat)
-                            break
-                        elif illness == "grief stricken":
-                            if cat not in self.in_den_cats:
-                                if cat not in self.out_den_cats:
-                                    self.out_den_cats.append(cat)
-                            if cat in self.minor_cats:
-                                self.minor_cats.remove(cat)
-                            break
-                        else:
-                            if (
-                                cat not in self.in_den_cats
-                                and cat not in self.out_den_cats
-                                and cat not in self.minor_cats
-                            ):
-                                self.minor_cats.append(cat)
+                            "lingering_shock",
+                            "pregnant",
+                            "grief_stricken",
+                        )
+                        and cat not in self.in_den_cats
+                    ):
+                        if cat not in self.out_den_cats:
+                            self.out_den_cats.append(cat)
+                        if cat in self.minor_cats:
+                            self.minor_cats.remove(cat)
+                        break
+                    elif cat not in (self.in_den_cats or self.out_den_cats):
+                        if cat not in self.minor_cats:
+                            self.minor_cats.append(cat)
             self.tab_list = self.in_den_cats
             self.current_page = 1
             self.update_sick_cats()
@@ -343,8 +322,7 @@ class MedDenScreen(Screens):
         if self.meds:
             med_messages = []
 
-            amount_per_med = get_amount_cat_for_one_medic(game.clan)
-            number = amount_clanmembers_covered(Cat.all_cats.values(), amount_per_med)
+            number = amount_of_clan_covered_total(Cat.all_cats.values())
 
             meds_cover = i18n.t(
                 "screens.med_den.meds_cover", clansize=number, count=len(self.meds)
@@ -431,7 +409,7 @@ class MedDenScreen(Screens):
         if not self.meds:
             all_pages = []
         else:
-            all_pages = self.chunks(self.meds, 1)
+            all_pages = self.get_list_chunks(self.meds, 1)
 
         if self.current_med > len(all_pages):
             if len(all_pages) == 0:
@@ -475,16 +453,14 @@ class MedDenScreen(Screens):
             )
             self.med_info = UITextBoxTweaked(
                 "",
-                ui_scale(pygame.Rect((580, 185), (120, 120))),
+                ui_scale(pygame.Rect((580, 185), (120, 90))),
                 object_id=get_text_box_theme("#text_box_22_horizcenter"),
                 line_spacing=1,
                 manager=MANAGER,
             )
             med_skill = cat.skills.skill_string(short=True)
-            med_exp = i18n.t("general.exp_label", exp=cat.experience_level)
-            med_working = True
-            if cat.not_working():
-                med_working = False
+            med_exp = i18n.t("general.exp_label", exp=cat.experience_level_string)
+            med_working = cat.can_work()
             if med_working is True:
                 work_status = i18n.t("general.can_work")
             else:
@@ -504,7 +480,7 @@ class MedDenScreen(Screens):
         if not tab_list:
             all_pages = []
         else:
-            all_pages = self.chunks(tab_list, 10)
+            all_pages = self.get_list_chunks(tab_list, 10)
 
         self.current_page = max(1, min(self.current_page, len(all_pages)))
 
@@ -534,30 +510,29 @@ class MedDenScreen(Screens):
         i = 0
         for cat in self.display_cats:
             condition_list = []
-            if cat.injuries:
+            if cat.temporary_conditions:
                 condition_list.extend(
                     [
-                        i18n.t(f"conditions.injuries.{injury}")
-                        for injury in list(cat.injuries.keys())
+                        i18n.t(f"conditions.temporary_conditions.{condition.name}")
+                        for condition in cat.temporary_conditions
                     ]
                 )
-            if cat.illnesses:
-                condition_list.extend(
-                    [
-                        i18n.t(f"conditions.illnesses.{illness}")
-                        for illness in list(cat.illnesses.keys())
-                    ]
-                )
-            if cat.permanent_condition:
-                for condition in cat.permanent_condition:
-                    if cat.permanent_condition[condition]["moons_until"] == -2:
+            if cat.permanent_conditions:
+                for condition in cat.permanent_conditions:
+                    if condition.moons_until_discovery == -2:
                         condition_list.extend(
                             [
-                                i18n.t(f"conditions.permanent_conditions.{permcond}")
-                                for permcond in list(cat.permanent_condition.keys())
+                                i18n.t(
+                                    f"conditions.permanent_conditions.{permcond.name}"
+                                )
+                                for permcond in list(cat.permanent_conditions)
                             ]
                         )
             conditions = ",<br>".join(condition_list)
+
+            conditions = process_text(
+                conditions, {"m_c": (str(cat.name), choice(cat.pronouns))}
+            )
 
             self.cat_buttons["able_cat" + str(i)] = UISpriteButton(
                 ui_scale(pygame.Rect((pos_x, pos_y), (50, 50))),
